@@ -10,7 +10,7 @@ function StatusBadge({ kind }: { kind: PageDefinition["kind"] }) {
 export function PlatformPage({ page }: { page: PageDefinition }) {
   return (
     <main className="platform-page">
-      <PageAnimations />
+      <PageAnimations key={page.englishTitle} />
       <header className="platform-header">
         <Link href="/" className="platform-brand" aria-label="العودة إلى الصفحة الرئيسية">
           <span className="platform-mark" aria-hidden="true">أ</span>
