@@ -23,4 +23,3 @@ export interface CursorPaginated<T> {
 export interface MessageResponse {
   message: string;
 }
-

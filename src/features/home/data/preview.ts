@@ -11,4 +11,3 @@ export const HOME_PREVIEW = {
     { label: "الأسئلة الشائعة" },
   ] satisfies PreviewNavigationItem[],
 };
-

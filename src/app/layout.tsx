@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
-import { Cairo, Tajawal } from "next/font/google";
+import type { ReactNode } from "react";
+import { Amiri, Cairo } from "next/font/google";
 import "./globals.css";
-
-const arabicSans = Tajawal({
-  variable: "--font-tajawal",
-  subsets: ["arabic", "latin"],
-  weight: ["400", "500", "700"],
-  display: "swap",
-});
 
 const arabicHeading = Cairo({
   variable: "--font-cairo",
   subsets: ["arabic", "latin"],
-  weight: ["600", "700", "800"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  display: "swap",
+});
+
+const quranFont = Amiri({
+  variable: "--font-amiri",
+  subsets: ["arabic", "latin"],
+  weight: ["400", "700"],
   display: "swap",
 });
 
@@ -28,11 +29,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ar" dir="rtl" className={`${arabicSans.variable} ${arabicHeading.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col font-sans">{children}</body>
+    <html lang="ar" dir="rtl" className={`${arabicHeading.variable} ${quranFont.variable} h-full antialiased`}>
+      <body suppressHydrationWarning className="flex min-h-full flex-col font-sans">{children}</body>
     </html>
   );
 }
-

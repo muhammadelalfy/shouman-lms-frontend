@@ -1,0 +1,125 @@
+import { isOfferingKind } from "@/features/pages/route-resolution";
+
+export type ExperienceArea = "public" | "learner" | "admin" | "directory";
+export type ExperienceRoute = { area: ExperienceArea; title: string; path: string[] };
+export type ExperienceRouteExample = { href: string; title: string; area: Exclude<ExperienceArea, "directory"> };
+
+export const experienceRoutes: ExperienceRouteExample[] = [
+  { href: "/preview/catalog", title: "كتالوج المعاينة", area: "public" },
+  { href: "/preview/catalog/demo-course", title: "تفاصيل دورة توضيحية", area: "public" },
+  { href: "/search", title: "البحث في المحتوى", area: "public" },
+  { href: "/faq", title: "الأسئلة الشائعة", area: "public" },
+  { href: "/about", title: "عن الأكاديمية", area: "public" },
+  { href: "/contact", title: "تواصل معنا", area: "public" },
+  { href: "/events", title: "الفعاليات", area: "public" },
+  { href: "/events/demo-event", title: "تفاصيل فعالية", area: "public" },
+  { href: "/meetings", title: "اللقاءات", area: "public" },
+  { href: "/meetings/demo-meeting", title: "تفاصيل اللقاء", area: "public" },
+  { href: "/meetings/mine", title: "لقاءاتي", area: "public" },
+  { href: "/community", title: "المجتمع التعليمي", area: "public" },
+  { href: "/community/groups/demo-group", title: "المجموعة التعليمية", area: "public" },
+  { href: "/community/groups/demo-group/posts/demo-post", title: "النقاش والتعليقات", area: "public" },
+  { href: "/checkout/demo-course", title: "مراجعة الطلب", area: "public" },
+  { href: "/checkout/demo-course/result", title: "حالات الطلب", area: "public" },
+  { href: "/certificates/verify", title: "التحقق من شهادة", area: "public" },
+  { href: "/verify/demo-certificate", title: "تصميم نتيجة التحقق", area: "public" },
+  { href: "/dashboard", title: "لوحة المتعلم", area: "learner" },
+  { href: "/my-learning", title: "تعلّمي", area: "learner" },
+  { href: "/learning/lessons/demo-lesson", title: "مشغّل الدرس", area: "learner" },
+  { href: "/quizzes", title: "اختباراتي", area: "learner" },
+  { href: "/quizzes/demo-quiz", title: "أسئلة الاختبار", area: "learner" },
+  { href: "/quizzes/demo-quiz/result", title: "مراجعة الإجابات", area: "learner" },
+  { href: "/certificates", title: "شهاداتي", area: "learner" },
+  { href: "/certificates/demo-certificate", title: "نموذج الشهادة", area: "learner" },
+  { href: "/projects", title: "مشروعات التخرج", area: "learner" },
+  { href: "/projects/demo-project", title: "تفاصيل المشروع", area: "learner" },
+  { href: "/notifications", title: "مركز الإشعارات", area: "learner" },
+  { href: "/achievements", title: "الإنجازات والشارات", area: "learner" },
+  { href: "/orders", title: "الطلبات", area: "learner" },
+  { href: "/preview/account", title: "إعدادات المعاينة", area: "learner" },
+  { href: "/instructor", title: "مساحة المدرّس", area: "learner" },
+  { href: "/supervisor", title: "مساحة المشرف", area: "learner" },
+  { href: "/evaluator", title: "مساحة المقيّم", area: "learner" },
+  { href: "/admin/dashboard", title: "لوحة الإدارة", area: "admin" },
+  { href: "/admin/users", title: "إدارة المستخدمين", area: "admin" },
+  { href: "/admin/users/demo-user", title: "ملف المتعلم", area: "admin" },
+  { href: "/admin/users/new", title: "محرّر المستخدم", area: "admin" },
+  { href: "/admin/roles", title: "الأدوار والصلاحيات", area: "admin" },
+  { href: "/admin/offerings", title: "المحتوى التعليمي", area: "admin" },
+  { href: "/admin/offerings/new", title: "إنشاء محتوى", area: "admin" },
+  { href: "/admin/offerings/demo-offering", title: "محرّر المحتوى", area: "admin" },
+  { href: "/admin/subjects/demo-subject", title: "محرّر المادة", area: "admin" },
+  { href: "/admin/lessons/demo-lesson", title: "محرّر الدرس والوسائط", area: "admin" },
+  { href: "/admin/quizzes", title: "إدارة الاختبارات", area: "admin" },
+  { href: "/admin/quizzes/demo-quiz", title: "محرّر الاختبار", area: "admin" },
+  { href: "/admin/question-bank", title: "بنك الأسئلة", area: "admin" },
+  { href: "/admin/payments", title: "المدفوعات", area: "admin" },
+  { href: "/admin/coupons", title: "القسائم والعروض", area: "admin" },
+  { href: "/admin/coupons/new", title: "محرّر القسيمة", area: "admin" },
+  { href: "/admin/offers", title: "العروض", area: "admin" },
+  { href: "/admin/groups", title: "المجموعات التعليمية", area: "admin" },
+  { href: "/admin/groups/demo-group", title: "إدارة المجموعة", area: "admin" },
+  { href: "/admin/moderation", title: "مراجعة المجتمع والبلاغات", area: "admin" },
+  { href: "/admin/events", title: "إدارة الفعاليات", area: "admin" },
+  { href: "/admin/events/new", title: "محرّر الفعالية", area: "admin" },
+  { href: "/admin/meetings", title: "إدارة اللقاءات", area: "admin" },
+  { href: "/admin/attendance", title: "سجل الحضور", area: "admin" },
+  { href: "/admin/certificates", title: "سجل الشهادات", area: "admin" },
+  { href: "/admin/certificates/rules", title: "قواعد الشهادات", area: "admin" },
+  { href: "/admin/certificates/templates", title: "قالب الشهادة", area: "admin" },
+  { href: "/admin/projects", title: "مشروعات التخرج", area: "admin" },
+  { href: "/admin/projects/demo-project", title: "مساحة التقييم", area: "admin" },
+  { href: "/admin/rubrics", title: "معايير التقييم", area: "admin" },
+  { href: "/admin/gamification", title: "التحفيز والشارات", area: "admin" },
+  { href: "/admin/distinguished", title: "الطلاب المتميزون", area: "admin" },
+  { href: "/admin/campaigns", title: "الحملات", area: "admin" },
+  { href: "/admin/notifications", title: "إدارة الإشعارات", area: "admin" },
+  { href: "/admin/reports", title: "مكتبة التقارير", area: "admin" },
+  { href: "/admin/analytics", title: "التحليلات", area: "admin" },
+  { href: "/admin/cms", title: "محتوى الموقع", area: "admin" },
+  { href: "/admin/audit-log", title: "سجل التدقيق", area: "admin" },
+  { href: "/admin/settings", title: "إعدادات الأكاديمية", area: "admin" },
+  { href: "/admin/integrations", title: "التكاملات", area: "admin" },
+  { href: "/admin/settings/integrations", title: "إعدادات التكاملات", area: "admin" },
+];
+
+const examplesByPath = new Map(experienceRoutes.map((route) => [route.href.slice(1), route]));
+const adminRecordSections = new Set(["users", "offerings", "subjects", "lessons", "quizzes", "question-bank", "payments", "coupons", "offers", "groups", "events", "meetings", "attendance", "certificates", "projects", "campaigns", "notifications", "audit-log"]);
+const adminEditorSections = new Set(["users", "offerings", "subjects", "lessons", "quizzes", "question-bank", "coupons", "offers", "groups", "events", "meetings", "campaigns", "notifications"]);
+const learnerSections = new Set(["dashboard", "learning", "my-learning", "quizzes", "certificates", "projects", "notifications", "achievements", "orders", "instructor", "supervisor", "evaluator"]);
+
+export function resolveExperienceRoute(slug: string[]): ExperienceRoute | null {
+  let path = [...slug];
+  if (path.length === 1 && path[0] === "preview") return { area: "directory", title: "جميع واجهات الأكاديمية", path };
+  if (path[0] === "catalog" && path[1] === "search" && path.length === 2) path = ["search"];
+  if (path[0] === "learning" && path.length === 1) path = ["my-learning"];
+  if (path[0] === "learn") {
+    if (!isOfferingKind(path[1])) return null;
+    if (path.length === 3) path = ["learning", "lessons", path[2]];
+    else if (path[3] === "quiz" && (path.length === 5 || path.length === 6 && path[5] === "result")) path = ["quizzes", path[4], ...(path.length === 6 ? ["result"] : [])];
+    else return null;
+  }
+  if (path[0] === "community" && path[1] !== "groups" && path.length > 1) path = ["community", "groups", ...path.slice(1)];
+  if (path[0] === "certificates" && path[1] === "verify" && path.length === 3) path = ["verify", path[2]];
+  if (path[0] === "admin" && path.length === 1) path = ["admin", "dashboard"];
+  if (path[0] === "admin" && ["tracks", "courses", "programs", "seasonal-programs", "initiatives"].includes(path[1])) path = ["admin", "offerings", ...path.slice(2)];
+  if (path[0] === "admin" && path[1] === "students") path = ["admin", "users", ...path.slice(2)];
+  if (path[0] === "admin" && ["events", "meetings"].includes(path[1]) && path.length === 4 && path[3] === "attendance") path = ["admin", "attendance", path[2]];
+  const example = examplesByPath.get(path.join("/"));
+  if (example) return { area: example.area, title: example.title, path };
+  if (path[0] === "verify" && path.length <= 2) return { area: "public", title: "التحقق من شهادة", path };
+  if (["events", "meetings", "checkout"].includes(path[0]) && path.length >= 2 && path.length <= (path[0] === "checkout" ? 3 : 2) && (path.length !== 3 || path[2] === "result")) return { area: "public", title: path[0] === "checkout" ? "مراجعة الطلب" : "تفاصيل اللقاء", path };
+  if (path[0] === "community" && path[1] === "groups" && (path.length === 3 || path.length === 5 && path[3] === "posts")) return { area: "public", title: "المجموعة والنقاشات", path };
+  if (path[0] === "learning" && path[1] === "lessons" && path.length === 3) return { area: "learner", title: "مشغّل الدرس", path };
+  if (learnerSections.has(path[0]) && (["quizzes", "certificates", "projects"].includes(path[0]) && path.length === 2 || path[0] === "quizzes" && path.length === 3 && path[2] === "result")) return { area: "learner", title: path[0] === "quizzes" ? "الاختبار والمراجعة" : path[0] === "projects" ? "تفاصيل المشروع" : "نموذج الشهادة", path };
+  if (path[0] === "admin" && adminRecordSections.has(path[1]) && path.length === 3 && (path[2] !== "new" || adminEditorSections.has(path[1]))) return { area: "admin", title: `${examplesByPath.get(`admin/${path[1]}`)?.title ?? "الإدارة"} — التفاصيل`, path };
+  if (path[0] === "admin" && adminEditorSections.has(path[1]) && path.length === 4 && path[2] !== "new" && path[3] === "edit") return { area: "admin", title: `${examplesByPath.get(`admin/${path[1]}`)?.title ?? "الإدارة"} — تحرير`, path };
+  return null;
+}
+
+/** Component ownership and navigation surface differ for shared community screens. */
+export function workspaceForExperience(route: ExperienceRoute): "learner" | "admin" | null {
+  if (route.area === "learner" || route.area === "admin") return route.area;
+  if (route.path[0] === "community" || route.path.join("/") === "meetings/mine") return "learner";
+  return null;
+}

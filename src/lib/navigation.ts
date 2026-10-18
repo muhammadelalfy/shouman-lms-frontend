@@ -13,4 +13,3 @@ export function safeRedirectPath(candidate: unknown, fallback = "/"): string {
 
   return candidate;
 }
-

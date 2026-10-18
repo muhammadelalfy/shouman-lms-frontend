@@ -9,12 +9,14 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    ".next-*/**",
     "out/**",
     "build/**",
     "next-env.d.ts",
     // User-supplied design exports are reference documents, not app source.
     "Full system design progress/**",
     "lovable-project/**",
+    "build-exactly-web/**",
   ]),
 ]);
 
