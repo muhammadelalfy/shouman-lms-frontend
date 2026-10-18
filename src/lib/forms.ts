@@ -49,4 +49,3 @@ export function apiFailure(error: unknown): FormState {
 
   return { status: "error", message: error.message, fieldErrors: {} };
 }
-

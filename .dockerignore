@@ -1,0 +1,10 @@
+.git
+.next
+node_modules
+coverage
+.env*
+Full system design progress
+lovable-project
+/build-exactly-web/
+/build-exactly-web.zip
+*.log

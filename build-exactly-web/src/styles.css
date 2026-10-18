@@ -1,0 +1,146 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system — Hazem Shoman Academy
+ * Warm cream / deep navy / gold Islamic aesthetic, RTL Arabic.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-gold: var(--gold);
+  --color-gold-foreground: var(--gold-foreground);
+  --color-gold-soft: var(--gold-soft);
+  --color-navy: var(--navy);
+  --color-navy-foreground: var(--navy-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --font-sans: "Cairo", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Cairo", ui-sans-serif, system-ui, sans-serif;
+  --font-quran: "Amiri", serif;
+}
+
+:root {
+  --radius: 0.875rem;
+  /* Warm cream paper */
+  --background: oklch(0.975 0.012 92);
+  --foreground: oklch(0.28 0.05 258);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.28 0.05 258);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.28 0.05 258);
+  /* Deep navy */
+  --primary: oklch(0.32 0.065 255);
+  --primary-foreground: oklch(0.975 0.012 92);
+  --navy: oklch(0.27 0.06 258);
+  --navy-foreground: oklch(0.96 0.015 92);
+  /* Gold */
+  --gold: oklch(0.72 0.115 78);
+  --gold-foreground: oklch(0.99 0.01 95);
+  --gold-soft: oklch(0.95 0.035 92);
+  --secondary: oklch(0.945 0.02 90);
+  --secondary-foreground: oklch(0.32 0.065 255);
+  --muted: oklch(0.95 0.015 92);
+  --muted-foreground: oklch(0.5 0.03 255);
+  --accent: oklch(0.95 0.035 92);
+  --accent-foreground: oklch(0.4 0.08 75);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: oklch(0.905 0.02 90);
+  --input: oklch(0.905 0.02 90);
+  --ring: oklch(0.72 0.115 78);
+  --chart-1: oklch(0.72 0.115 78);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.32 0.065 255);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.975 0.012 92);
+  --sidebar-foreground: oklch(0.28 0.05 258);
+  --sidebar-primary: oklch(0.32 0.065 255);
+  --sidebar-primary-foreground: oklch(0.975 0.012 92);
+  --sidebar-accent: oklch(0.95 0.035 92);
+  --sidebar-accent-foreground: oklch(0.4 0.08 75);
+  --sidebar-border: oklch(0.905 0.02 90);
+  --sidebar-ring: oklch(0.72 0.115 78);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+}
+
+/* Decorative Islamic pattern overlay */
+@utility pattern-arabesque {
+  background-image: radial-gradient(
+      circle at 1px 1px,
+      color-mix(in oklab, var(--color-gold) 14%, transparent) 1px,
+      transparent 0
+    );
+  background-size: 22px 22px;
+}
+
+@utility shadow-soft {
+  box-shadow: 0 10px 30px -12px color-mix(in oklab, var(--color-primary) 18%, transparent);
+}
+
+@utility shadow-gold {
+  box-shadow: 0 12px 32px -10px color-mix(in oklab, var(--color-gold) 45%, transparent);
+}
+
+@utility text-gradient-gold {
+  background: linear-gradient(
+    120deg,
+    var(--color-gold),
+    color-mix(in oklab, var(--color-gold) 70%, var(--color-primary))
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}

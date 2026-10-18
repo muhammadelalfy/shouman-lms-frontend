@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>الرئيسية — أكاديمية د. حازم شومان</title>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=Noto+Kufi+Arabic:wght@500;600;700;800&amp;family=Amiri:wght@400;700&amp;display=swap">
+<link rel="stylesheet" href="https://unpkg.com/lucide-static@0.460.0/font/lucide.css">
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;background:#F2EDDE;color:#1A3453;font-family:"IBM Plex Sans Arabic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#1A3453;text-decoration:none}
+a:hover{color:#263E5E}
+*{box-sizing:border-box}
+</style>
+</helmet>
+<section data-screen-label="Home" style="display:flex;flex-wrap:wrap;gap:64px;align-items:flex-start;padding:64px">
+
+<!-- ============ 2a DESKTOP ============ -->
+<div id="2a" style="display:flex;flex-direction:column;gap:14px">
+  <div style="display:flex;align-items:center;gap:10px;font-size:15px;color:#586474"><span style="background:#1A3453;color:#fff;font-weight:700;padding:2px 10px;border-radius:6px">2a</span>الرئيسية · سطح المكتب 1440</div>
+  <div dir="rtl" lang="ar" style="width:1440px;background:linear-gradient(180deg,#FFFFFF 0%,#F7F9FC 50%,#FFFFFF 100%);font-size:16px;line-height:1.75;overflow:hidden;box-shadow:0 12px 32px rgba(19,38,67,.14)">
+
+    <header style="height:80px;background:#fff;border-bottom:1px solid #E5DFD1;display:flex;align-items:center;gap:32px;padding:0 48px;position:relative;z-index:2">
+      <div style="display:flex;align-items:center;gap:12px;flex:none">
+        <img src="assets/logo-brand.png" alt="" style="height:52px;display:block">
+        <div style="display:flex;flex-direction:column;line-height:1.3"><span style="font-family:'Noto Kufi Arabic',sans-serif;font-weight:700;font-size:16px">أكاديمية د. حازم شومان</span><span dir="ltr" style="font-size:10px;letter-spacing:.18em;color:#604008;font-weight:600;text-align:end">DR. HAZEM SHOUMAN ACADEMY</span></div>
+      </div>
+      <nav style="display:flex;gap:4px;font-size:15px;font-weight:500">
+        <sc-for list="{{ nav }}" as="n" hint-placeholder-count="6">
+          <a href="#" style="height:80px;padding:0 12px;display:flex;align-items:center;color:{{ n.fg }};font-weight:{{ n.w }};border-bottom:3px solid {{ n.bar }}">{{ n.label }}</a>
+        </sc-for>
+      </nav>
+      <div style="margin-inline-start:auto;display:flex;align-items:center;gap:10px">
+        <button aria-label="بحث" style="width:44px;height:44px;border-radius:12px;border:1px solid #E5DFD1;background:#fff;color:#1A3453;display:grid;place-items:center;cursor:pointer"><i class="icon-search" style="font-size:19px"></i></button>
+        <a href="#" style="flex:none;white-space:nowrap;height:44px;padding:0 14px;border-radius:12px;border:1px solid #CEC5B3;color:#1A3453;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px"><i class="icon-external-link" style="font-size:16px"></i>العودة إلى الموقع الرسمي</a>
+        <sc-if value="{{ loggedIn }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;gap:10px;height:44px;padding:0 6px 0 14px;padding-inline-start:6px;border-radius:999px;background:#F3F3F1;font-size:14px;font-weight:600"><span style="width:34px;height:34px;border-radius:999px;background:#1A3453;color:#fff;display:grid;place-items:center">أ</span>حسابي<i class="icon-chevron-down" style="font-size:16px"></i></div>
+        </sc-if>
+        <sc-if value="{{ loggedOut }}" hint-placeholder-val="{{ true }}">
+          <a href="#" style="height:44px;padding:0 18px;border-radius:12px;background:#1A3453;color:#fff;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px"><i class="icon-user" style="font-size:16px"></i>تسجيل الدخول</a>
+        </sc-if>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <div style="position:relative;height:720px;background:#1A3453">
+      <div style="position:absolute;inset:0"><image-slot id="hero-portrait" shape="rect" placeholder="صورة د. حازم شومان (عرض كامل، الوجه في جهة اليسار)"></image-slot></div>
+      <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to left,rgba(19,38,67,.97) 0%,rgba(18,48,90,.85) 36%,rgba(18,48,90,.35) 64%,rgba(19,38,67,.15) 100%),linear-gradient(to top,rgba(19,38,67,.75) 0%,rgba(19,38,67,0) 35%)"></div>
+      <div style="position:absolute;inset:0;pointer-events:none;background-image:{{ arch }};background-size:140px 180px;background-repeat:repeat-y;background-position:right -40px top 0;opacity:.07;width:260px;inset-inline-start:0"></div>
+      <div style="position:relative;max-width:1344px;margin:0 auto;padding:96px 48px 0;display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none">
+        <div style="max-width:600px;display:flex;flex-direction:column;gap:20px;color:#fff;pointer-events:auto">
+          <span style="align-self:flex-start;display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 14px;border-radius:999px;background:rgba(204,155,73,.16);border:1px solid rgba(204,155,73,.45);color:#EAD8A9;font-size:13px;font-weight:600"><i class="icon-sparkles" style="font-size:14px"></i>أكاديمية إسلامية رقمية مجانية</span>
+          <h1 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:56px;line-height:1.3">أكاديمية د. حازم شومان</h1>
+          <div style="font-family:'Noto Kufi Arabic',sans-serif;font-size:26px;font-weight:600;color:#EAD8A9">رحلة علم .. وتربية .. وصناعة أثر</div>
+          <p style="margin:0;font-size:19px;line-height:1.8;color:#E7EBEF;text-wrap:pretty">أكاديمية إسلامية متكاملة تستهدف الشباب لتأهيل جيل واعٍ أقرب إلى الله بالعلم والعمل.</p>
+          <div style="display:flex;gap:12px;margin-top:8px">
+            <a href="#" style="height:56px;padding:0 28px;border-radius:12px;background:linear-gradient(135deg,#F7EED5 0%,#CC9B49 100%);box-shadow:0 6px 16px rgba(204,155,73,.28);color:#1A3453;font-size:17px;font-weight:700;display:flex;align-items:center;gap:10px">ابدأ رحلتك الآن<i class="icon-arrow-left" style="font-size:20px"></i></a>
+            <a href="#" style="height:56px;padding:0 24px;border-radius:12px;border:1.5px solid rgba(255,255,255,.6);color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;gap:10px"><i class="icon-circle-play" style="font-size:22px"></i>تعرّف على الأكاديمية</a>
+          </div>
+        </div>
+        <figure style="margin:120px 0 0;width:280px;padding:24px;border-radius:16px;background:rgba(19,38,67,.55);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(8px);color:#fff;display:flex;flex-direction:column;gap:12px;pointer-events:auto">
+          <i class="icon-quote" style="font-size:28px;color:#CC9B49"></i>
+          <blockquote style="margin:0;font-size:18px;line-height:1.8;font-weight:500">العلم ليس مجرد معلومات، بل هو طريق إلى حياة أقرب إلى الله</blockquote>
+          <figcaption style="font-size:14px;color:#CBD4DF">د. حازم شومان</figcaption>
+        </figure>
+      </div>
+      <div style="position:absolute;bottom:40px;inset-inline:48px;display:grid;grid-template-columns:repeat(5,1fr);border-radius:16px;background:rgba(7,21,42,.62);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(10px);color:#fff;pointer-events:none">
+        <sc-for list="{{ heroFeatures }}" as="f" hint-placeholder-count="5">
+          <div style="padding:22px 16px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;border-inline-start:1px solid rgba(255,255,255,.12)">
+            <i class="icon-{{ f.icon }}" style="font-size:28px;color:#CC9B49"></i>
+            <span style="font-size:15px;font-weight:600;line-height:1.5">{{ f.label }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- CONTINUE (logged-in) -->
+    <sc-if value="{{ loggedIn }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:1344px;margin:0 auto;padding:40px 48px 0">
+        <div style="display:flex;align-items:center;gap:24px;padding:20px 24px;border-radius:16px;background:#F3F3F1;border:1px solid #CBD4DF">
+          <div style="width:160px;aspect-ratio:16/9;border-radius:12px;overflow:hidden;flex:none;position:relative"><image-slot id="continue-thumb" shape="rect" placeholder="صورة الدرس"></image-slot></div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:6px">
+            <span style="font-size:13px;font-weight:600;color:#604008">أكمل من حيث توقفت</span>
+            <span style="font-family:'Noto Kufi Arabic',sans-serif;font-size:20px;font-weight:700">أذن خير · الدرس 4: معنى التوبة</span>
+            <div style="display:flex;align-items:center;gap:12px"><div style="flex:1;max-width:420px;height:8px;border-radius:4px;background:#CBD4DF;overflow:hidden"><div style="width:65%;height:100%;background:#1A3453;border-radius:4px"></div></div><span style="font-size:14px;color:#586474">65% من المسار · توقفت عند 12:40</span></div>
+          </div>
+          <a href="#" style="height:52px;padding:0 24px;border-radius:12px;background:#1A3453;color:#fff;font-weight:700;display:flex;align-items:center;gap:10px">أكمل الدرس<i class="icon-arrow-left" style="font-size:18px"></i></a>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ABOUT -->
+    <div style="position:relative;overflow:hidden"><div style="position:absolute;top:0;inset-inline-end:0;width:180px;height:100%;background-image:{{ archBlue }};background-size:110px 140px;opacity:.6;pointer-events:none"></div>
+    <div style="position:relative;max-width:1344px;margin:0 auto;padding:96px 48px 0;display:grid;grid-template-columns:5fr 7fr;gap:56px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:14px"><span style="width:48px;height:48px;border-radius:999px;background:linear-gradient(135deg,#1A3453 0%,#1A3453 100%);box-shadow:0 0 0 3px #fff,0 0 0 4px #CC9B49;color:#fff;font-family:'Noto Kufi Arabic',sans-serif;font-weight:700;font-size:20px;display:grid;place-items:center">1</span><h2 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:36px;line-height:1.4">فكرة الأكاديمية</h2></div>
+        <span style="width:64px;height:4px;border-radius:2px;background:#CC9B49;margin-inline-start:62px"></span>
+        <p style="margin:8px 0 0;font-size:18px;line-height:1.9;color:#586474;text-wrap:pretty"><b style="color:#1A3453">أكاديمية إسلامية رقمية مجانية</b> تهدف إلى تقديم المناهج والمواد العلمية والتربوية للدكتور حازم شومان بصورة منظمة.</p>
+        <div style="display:flex;align-items:center;gap:16px;padding:16px 20px;border-radius:16px;background:linear-gradient(90deg,#F7EED5 0%,#FAF7EE 100%);border:1px solid #EFE2C2;margin-top:8px">
+          <i class="icon-monitor-check" style="font-size:30px;color:#1A3453"></i>
+          <div style="display:flex;flex-direction:column;font-size:15px;line-height:1.6"><b>الأكاديمية جزء من الموقع الأساسي</b><span style="color:#586474">وتحافظ على نفس الهوية البصرية والحساب الشخصي للمستخدم.</span></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <span style="font-size:15px;color:#586474">وتجمع الأكاديمية بين:</span>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);border-radius:16px;background:linear-gradient(180deg,#F3F3F1 0%,#FAF7EE 100%);border:1px solid #E7EBEF">
+          <sc-for list="{{ pillars }}" as="p" hint-placeholder-count="5">
+            <div style="padding:28px 12px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;border-inline-start:1px solid #E5DFD1">
+              <i class="icon-{{ p.icon }}" style="font-size:36px;color:#1A3453"></i>
+              <span style="font-size:15px;font-weight:700;line-height:1.5">{{ p.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    </div>
+    <!-- TRACKS -->
+    <div style="position:relative;margin-top:96px;padding:80px 0;background:linear-gradient(180deg,#F1F5FB 0%,#FFFFFF 100%);overflow:hidden">
+      <div style="position:absolute;top:0;inset-inline-end:0;width:220px;height:100%;background-image:{{ archBlue }};background-size:110px 140px;opacity:.5;pointer-events:none"></div>
+      <div style="position:relative;max-width:1344px;margin:0 auto;padding:0 48px;display:flex;flex-direction:column;gap:40px">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:14px"><span style="width:48px;height:48px;border-radius:999px;background:linear-gradient(135deg,#1A3453 0%,#1A3453 100%);box-shadow:0 0 0 3px #fff,0 0 0 4px #CC9B49;color:#fff;font-family:'Noto Kufi Arabic',sans-serif;font-weight:700;font-size:20px;display:grid;place-items:center">2</span><h2 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:36px;line-height:1.4">المسارات التعليمية</h2></div>
+            <span style="width:64px;height:4px;border-radius:2px;background:#CC9B49;margin-inline-start:62px"></span>
+            <p style="margin:0;font-size:17px;color:#586474">اختر مسارك وابدأ رحلتك في طلب العلم.</p>
+          </div>
+          <a href="#" style="display:flex;align-items:center;gap:6px;font-weight:600;font-size:15px">جميع المسارات<i class="icon-arrow-left" style="font-size:17px"></i></a>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px">
+          <sc-for list="{{ tracks }}" as="t" hint-placeholder-count="4">
+            <article style="background:#fff;border:1px solid #E5DFD1;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 4px 12px rgba(19,38,67,.08)">
+              <div style="position:relative;aspect-ratio:16/10">
+                <image-slot id="track-{{ $index }}" shape="rect" placeholder="غلاف {{ t.name }}"></image-slot>
+                <span style="position:absolute;top:14px;inset-inline-end:14px;height:30px;padding:0 12px;border-radius:8px;background:{{ t.tagBg }};color:{{ t.tagFg }};font-size:13px;font-weight:700;display:flex;align-items:center;pointer-events:none">{{ t.n }}</span>
+                <span style="position:absolute;bottom:-26px;inset-inline-start:calc(50% - 28px);width:56px;height:56px;border-radius:999px;background:#1A3453;border:3px solid #fff;color:#CC9B49;display:grid;place-items:center;pointer-events:none"><i class="icon-{{ t.icon }}" style="font-size:24px"></i></span>
+              </div>
+              <div style="padding:40px 20px 20px;display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center;flex:1;background:linear-gradient(180deg,#F7EED5 0%,#FFFFFF 70%)">
+                <h3 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:24px;line-height:1.4">{{ t.name }}</h3>
+                <p style="margin:0;font-size:15px;line-height:1.7;color:#586474;min-height:52px;text-wrap:pretty">{{ t.desc }}</p>
+                <div style="display:flex;gap:16px;font-size:13px;color:#586474"><span style="display:flex;align-items:center;gap:4px"><i class="icon-layers" style="font-size:15px"></i>{{ t.subjects }}</span><span style="display:flex;align-items:center;gap:4px"><i class="icon-clock" style="font-size:15px"></i>{{ t.dur }}</span></div>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;width:100%;padding:14px 0;border-top:1px solid #EAD8A9;margin-top:4px">
+                  <sc-for list="{{ t.topics }}" as="tp" hint-placeholder-count="4">
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;color:#586474"><i class="icon-{{ tp.icon }}" style="font-size:20px;color:#604008"></i>{{ tp.label }}</div>
+                  </sc-for>
+                </div>
+                <a href="#" style="width:100%;height:48px;border-radius:12px;background:#F3F3F1;border:1px solid #CBD4DF;color:#1A3453;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:auto">استعرض المسار<i class="icon-arrow-left" style="font-size:17px"></i></a>
+              </div>
+            </article>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOW TO START + EXPLAINER -->
+    <div style="max-width:1344px;margin:0 auto;padding:96px 48px 0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px">
+      <div style="position:relative;min-height:280px;border-radius:20px;overflow:hidden;background:linear-gradient(180deg,#F3F3F1 0%,#FAF7EE 100%);border:1px solid #E7EBEF;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)">
+        <div style="padding:36px;display:flex;flex-direction:column;gap:14px;justify-content:center">
+          <h3 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:30px">كيف أبدأ؟</h3>
+          <p style="margin:0;font-size:16px;color:#586474;line-height:1.8">لست متأكداً من المسار المناسب لك؟ أجب عن بعض الأسئلة لنقترح لك أفضل بداية.</p>
+          <a href="#" style="align-self:flex-start;height:50px;padding:0 22px;border-radius:12px;background:#1A3453;color:#fff;font-weight:700;display:flex;align-items:center;gap:10px;margin-top:6px"><i class="icon-compass" style="font-size:18px"></i>حدّد مسارك الآن</a>
+        </div>
+        <div style="position:relative;min-width:0"><div style="position:absolute;inset:0"><image-slot id="howto" shape="rect" placeholder="صورة: حاسوب يعرض الأكاديمية"></image-slot></div></div>
+      </div>
+      <div style="position:relative;min-height:280px;border-radius:20px;overflow:hidden;background:#1A3453">
+        <div style="position:absolute;inset:0"><image-slot id="explainer" shape="rect" placeholder="صورة: طالب يتعلم عبر الأكاديمية"></image-slot></div>
+        <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to left,rgba(7,21,42,.95) 0%,rgba(7,21,42,.7) 50%,rgba(7,21,42,.1) 100%)"></div>
+        <div style="position:relative;height:100%;padding:36px;display:flex;flex-direction:column;gap:18px;justify-content:center;color:#fff;max-width:60%;pointer-events:none">
+          <h3 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:30px;line-height:1.45">شرح طريقة التعلم في الأكاديمية</h3>
+          <a href="#" style="align-self:flex-start;height:50px;padding:0 22px;border-radius:12px;background:#fff;color:#1A3453;font-weight:700;display:flex;align-items:center;gap:10px;pointer-events:auto"><i class="icon-circle-play" style="font-size:20px"></i>شاهد الفيديو</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEPS -->
+    <div style="max-width:1344px;margin:0 auto;padding:40px 48px 0">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+          <div style="display:flex;align-items:center;gap:14px;padding:18px 20px;border-radius:16px;background:#fff;border:1px solid #E5DFD1">
+            <span style="width:52px;height:52px;flex:none;border-radius:999px;background:#F7EED5;border:1px solid #EAD8A9;color:#604008;display:grid;place-items:center"><i class="icon-{{ s.icon }}" style="font-size:22px"></i></span>
+            <div style="display:flex;flex-direction:column;line-height:1.5"><span style="font-size:12px;font-weight:600;color:#604008">الخطوة {{ s.n }}</span><b style="font-size:16px">{{ s.label }}</b></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- INITIATIVES + SEASONAL -->
+    <div style="max-width:1344px;margin:0 auto;padding:96px 48px 0;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:24px">
+      <div style="padding:28px;border-radius:20px;background:#fff;border:1px solid #E5DFD1;display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:4px"><h2 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:26px;display:flex;align-items:center;gap:10px"><i class="icon-target" style="font-size:24px;color:#604008"></i>المبادرات والبرامج المكثفة</h2><span style="font-size:15px;color:#586474">برامج قصيرة ذات هدف واضح .. لتغيير حقيقي في حياتك</span></div>
+          <a href="#" style="display:flex;align-items:center;gap:6px;font-weight:600;font-size:14px;white-space:nowrap">جميع المبادرات<i class="icon-arrow-left" style="font-size:16px"></i></a>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px">
+          <sc-for list="{{ initiatives }}" as="it" hint-placeholder-count="4">
+            <a href="#" style="display:flex;flex-direction:column;border-radius:14px;overflow:hidden;border:1px solid #E5DFD1;background:#fff;color:#1A3453">
+              <div style="position:relative;aspect-ratio:4/3"><image-slot id="init-{{ $index }}" shape="rect" placeholder="{{ it.name }}"></image-slot></div>
+              <div style="padding:12px;display:flex;flex-direction:column;gap:2px;text-align:center"><b style="font-size:16px">{{ it.name }}</b><span style="font-size:13px;color:#586474;line-height:1.5">{{ it.desc }}</span></div>
+            </a>
+          </sc-for>
+        </div>
+      </div>
+      <div style="position:relative;padding:28px;border-radius:20px;background:{{ seasonBg }};border:{{ seasonBorder }};display:flex;flex-direction:column;gap:20px">
+        <sc-if value="{{ seasonOn }}" hint-placeholder-val="{{ true }}"><span style="position:absolute;top:-14px;inset-inline-start:28px;height:28px;padding:0 12px;border-radius:999px;background:#1A3453;color:#EAD8A9;font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px"><i class="icon-moon-star" style="font-size:14px"></i>الموسم الحالي: الاستعداد لرمضان</span></sc-if>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:4px"><h2 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:26px;display:flex;align-items:center;gap:10px"><i class="icon-calendar-days" style="font-size:24px;color:#604008"></i>البرامج الموسمية</h2><span style="font-size:15px;color:#586474">تظهر في أوقاتها المناسبة</span></div>
+          <a href="#" style="display:flex;align-items:center;gap:6px;font-weight:600;font-size:14px;white-space:nowrap">جميع البرامج<i class="icon-arrow-left" style="font-size:16px"></i></a>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px">
+          <sc-for list="{{ seasonal }}" as="se" hint-placeholder-count="3">
+            <a href="#" style="display:flex;flex-direction:column;border-radius:14px;overflow:hidden;border:1px solid #E5DFD1;background:#fff;color:#1A3453">
+              <div style="position:relative;aspect-ratio:4/3"><image-slot id="season-{{ $index }}" shape="rect" placeholder="{{ se.name }}"></image-slot></div>
+              <div style="padding:12px;display:flex;flex-direction:column;gap:2px;text-align:center"><b style="font-size:16px">{{ se.name }}</b><span style="font-size:13px;color:#586474;line-height:1.5">{{ se.desc }}</span></div>
+            </a>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAID COURSES -->
+    <div style="max-width:1344px;margin:0 auto;padding:96px 48px 0;display:flex;flex-direction:column;gap:32px">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px">
+        <div style="display:flex;flex-direction:column;gap:10px"><h2 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:32px">الدورات المتخصصة</h2><span style="width:64px;height:4px;border-radius:2px;background:#CC9B49"></span></div>
+        <a href="#" style="display:flex;align-items:center;gap:6px;font-weight:600;font-size:15px">جميع الدورات<i class="icon-arrow-left" style="font-size:17px"></i></a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
+        <sc-for list="{{ courses }}" as="c" hint-placeholder-count="3">
+          <article style="background:#fff;border:1px solid #E5DFD1;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+            <div style="position:relative;aspect-ratio:16/9"><image-slot id="course-{{ $index }}" shape="rect" placeholder="غلاف {{ c.name }}"></image-slot><span style="position:absolute;top:14px;inset-inline-start:14px;height:28px;padding:0 10px;border-radius:8px;background:#1A3453;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;pointer-events:none">مدفوع</span></div>
+            <div style="padding:20px;display:flex;flex-direction:column;gap:10px;flex:1">
+              <span style="font-size:14px;color:#586474">{{ c.by }}</span>
+              <h3 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:700;font-size:21px">{{ c.name }}</h3>
+              <div style="display:flex;gap:16px;font-size:13px;color:#586474"><span>{{ c.lessons }}</span><span>{{ c.hours }}</span><span style="display:flex;align-items:center;gap:4px"><i class="icon-award" style="font-size:14px;color:#604008"></i>شهادة</span></div>
+              <div style="display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:14px;border-top:1px solid #E5DFD1">
+                <span style="font-size:24px;font-weight:700">{{ c.price }}</span>
+                <sc-if value="{{ c.old }}" hint-placeholder-val="{{ false }}"><span style="font-size:15px;color:#586474;text-decoration:line-through">{{ c.old }}</span><span style="font-size:13px;font-weight:700;color:#B42318;background:#FDECEA;padding:2px 8px;border-radius:6px">{{ c.off }}</span></sc-if>
+                <a href="#" style="margin-inline-start:auto;height:44px;padding:0 18px;border-radius:12px;background:#1A3453;color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center">اشترك</a>
+              </div>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- MEETINGS + EVENTS -->
+    <div style="max-width:1344px;margin:0 auto;padding:96px 48px 0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px">
+      <div style="padding:28px;border-radius:20px;background:linear-gradient(180deg,#F3F3F1 0%,#FAF7EE 100%);border:1px solid #E7EBEF;display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:26px;display:flex;align-items:center;gap:10px"><i class="icon-radio" style="font-size:24px;color:#604008"></i>اللقاءات القادمة</h2><a href="#" style="display:flex;align-items:center;gap:6px;font-weight:600;font-size:14px">كل اللقاءات<i class="icon-arrow-left" style="font-size:16px"></i></a></div>
+        <sc-for list="{{ meetings }}" as="m" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:16px;padding:16px;border-radius:14px;background:#fff;border:1px solid #E5DFD1">
+            <div style="width:64px;flex:none;border-radius:12px;background:#1A3453;color:#fff;text-align:center;padding:8px 0;line-height:1.2"><div style="font-size:22px;font-weight:700">{{ m.day }}</div><div style="font-size:12px;color:#EAD8A9">{{ m.month }}</div></div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><b style="font-size:16px">{{ m.title }}</b><span style="font-size:13px;color:#586474">{{ m.meta }}</span></div>
+            <sc-if value="{{ m.live }}" hint-placeholder-val="{{ false }}"><a href="#" style="height:44px;padding:0 16px;border-radius:12px;background:#B42318;color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px"><span style="width:8px;height:8px;border-radius:999px;background:#fff"></span>انضم الآن</a></sc-if>
+            <sc-if value="{{ m.soon }}" hint-placeholder-val="{{ true }}"><a href="#" style="height:44px;padding:0 16px;border-radius:12px;border:1px solid #CEC5B3;background:#fff;color:#1A3453;font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px"><i class="icon-bell-plus" style="font-size:16px"></i>ذكّرني</a></sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <div style="padding:28px;border-radius:20px;background:linear-gradient(180deg,#F7EED5 0%,#FAF7EE 100%);border:1px solid #EFE2C2;display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:26px;display:flex;align-items:center;gap:10px"><i class="icon-presentation" style="font-size:24px;color:#604008"></i>ورش العمل والفعاليات</h2><a href="#" style="display:flex;align-items:center;gap:6px;font-weight:600;font-size:14px">كل الفعاليات<i class="icon-arrow-left" style="font-size:16px"></i></a></div>
+        <sc-for list="{{ events }}" as="e" hint-placeholder-count="2">
+          <div style="display:flex;flex-direction:column;gap:12px;padding:18px;border-radius:14px;background:#fff;border:1px solid #EAD8A9">
+            <div style="display:flex;gap:14px;align-items:flex-start">
+              <div style="width:64px;flex:none;border-radius:12px;background:#F7EED5;border:1px solid #EAD8A9;text-align:center;padding:8px 0;line-height:1.2"><div style="font-size:22px;font-weight:700;color:#604008">{{ e.day }}</div><div style="font-size:12px;color:#604008">{{ e.month }}</div></div>
+              <div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:#586474">{{ e.type }}</span><b style="font-size:17px">{{ e.title }}</b><span style="font-size:13px;color:#586474">{{ e.trainer }}</span></div>
+              <a href="#" style="height:44px;padding:0 18px;border-radius:12px;background:#1A3453;color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center">سجّل</a>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px"><div style="flex:1;height:6px;border-radius:3px;background:#F2EDDE;overflow:hidden"><div style="width:{{ e.fill }};height:100%;background:#8F5300"></div></div><span style="font-size:13px;font-weight:600;color:#8F5300;white-space:nowrap">{{ e.seats }}</span></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- CERTIFICATES -->
+    <div style="position:relative;overflow:hidden">
+    <div style="position:absolute;bottom:0;inset-inline-start:0;width:420px;height:300px;background-image:{{ swooshBR }};background-size:100% 100%;pointer-events:none"></div>
+    <div style="position:absolute;top:56px;inset-inline-end:40px;width:96px;height:72px;background-image:{{ dots }};pointer-events:none"></div>
+    <div style="position:relative;max-width:1344px;margin:0 auto;padding:96px 48px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;flex-direction:column;gap:10px"><h2 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:36px">الشهادات</h2><span style="width:64px;height:4px;border-radius:2px;background:#CC9B49"></span></div>
+        <p style="margin:0;font-size:18px;line-height:1.9;color:#586474;text-wrap:pretty">بعد إتمام الدورة يتم إصدار شهادة تقدير تحتوي كل واحدة على رقم أو QR Code للتحقق منها إلكترونياً من موقع الأكاديمية.</p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);border-radius:16px;background:linear-gradient(180deg,#F3F3F1 0%,#FAF7EE 100%);border:1px solid #E7EBEF">
+          <sc-for list="{{ certFeatures }}" as="cf" hint-placeholder-count="3">
+            <div style="padding:22px 12px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;border-inline-start:1px solid #E5DFD1"><span style="width:56px;height:56px;border-radius:999px;background:#F7EED5;color:#1A3453;display:grid;place-items:center"><i class="icon-{{ cf.icon }}" style="font-size:26px"></i></span><b style="font-size:15px;line-height:1.5">{{ cf.label }}</b></div>
+          </sc-for>
+        </div>
+        <a href="#" style="align-self:flex-start;height:50px;padding:0 22px;border-radius:12px;border:1.5px solid #1A3453;color:#1A3453;font-weight:700;display:flex;align-items:center;gap:10px"><i class="icon-shield-check" style="font-size:18px"></i>تحقّق من شهادة</a>
+      </div>
+      <div style="position:relative;aspect-ratio:1.414/1;border-radius:6px;background:#FFFDF7;box-shadow:0 12px 32px rgba(19,38,67,.14);overflow:hidden;padding:12px">
+        <div style="position:absolute;top:0;inset-inline-start:0;width:0;height:0;border-top:80px solid #1A3453;border-left:80px solid transparent"></div>
+        <div style="position:absolute;bottom:0;inset-inline-end:0;width:0;height:0;border-bottom:80px solid #1A3453;border-right:80px solid transparent"></div>
+        <div style="position:relative;height:100%;border:1.5px solid #CC9B49;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;padding:24px 76px">
+          <img src="assets/logo-brand.png" alt="" style="height:64px;display:block">
+          <span style="font-size:13px;color:#586474">أكاديمية د. حازم شومان</span>
+          <div style="font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:26px">شهادة إتمام دورة</div>
+          <span style="font-size:13px;color:#586474">تُمنح هذه الشهادة إلى</span>
+          <div style="font-family:'Noto Kufi Arabic',sans-serif;font-weight:700;font-size:24px;color:#604008">أحمد محمد</div>
+          <span style="font-size:13px;color:#586474">لإتمامه بنجاح متطلبات دورة</span>
+          <b style="font-size:17px">التوبة وأثرها في حياة المسلم</b>
+          <div style="width:100%;display:flex;justify-content:space-between;align-items:flex-end;margin-top:12px;font-size:11px;color:#586474">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><i class="icon-qr-code" style="font-size:44px;color:#1A3453"></i>تحقق من الشهادة</div>
+            <div style="display:flex;flex-direction:column;align-items:center"><span>رقم الشهادة</span><b dir="ltr" style="font-size:12px;color:#1A3453">HZS-A-2026-001234</b></div>
+            <div style="display:flex;flex-direction:column;align-items:center"><span>تاريخ الإصدار</span><b dir="ltr" style="font-size:12px;color:#1A3453">2026/10/01</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+    <!-- STATS + CTA -->
+    <div style="position:relative;background:linear-gradient(100deg,#1A3453 0%,#263E5E 55%,#1A3453 100%);color:#fff;overflow:hidden">
+      <div style="position:absolute;inset:0;background-image:{{ orn }};background-size:80px 80px;opacity:.07;pointer-events:none"></div>
+      <div style="position:relative;max-width:1344px;margin:0 auto;padding:56px 48px;display:grid;grid-template-columns:1.3fr repeat(4,1fr);align-items:center">
+        <div style="font-family:'Noto Kufi Arabic',sans-serif;font-weight:700;font-size:26px;line-height:1.5;color:#EAD8A9">«معاً .. نصنع جيلاً أقرب إلى الله»</div>
+        <sc-for list="{{ stats }}" as="st" hint-placeholder-count="4">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;border-inline-start:1px solid rgba(255,255,255,.14)"><i class="icon-{{ st.icon }}" style="font-size:26px;color:#CC9B49"></i><span dir="ltr" style="font-size:32px;font-weight:700;line-height:1.2">{{ st.v }}</span><span style="font-size:14px;color:#CBD4DF">{{ st.l }}</span></div>
+        </sc-for>
+      </div>
+      <div style="position:relative;border-top:1px solid rgba(255,255,255,.12)">
+        <div style="max-width:1344px;margin:0 auto;padding:40px 48px;display:flex;align-items:center;gap:24px">
+          <div style="flex:1;display:flex;flex-direction:column;gap:4px"><span style="font-family:'Noto Kufi Arabic',sans-serif;font-weight:700;font-size:26px">ابدأ رحلتك التعليمية اليوم</span><span style="color:#CBD4DF">التسجيل مجاني، وتختار مسارك الأول في دقيقة.</span></div>
+          <a href="#" style="height:56px;padding:0 28px;border-radius:12px;background:linear-gradient(135deg,#F7EED5 0%,#CC9B49 100%);box-shadow:0 6px 16px rgba(204,155,73,.28);color:#1A3453;font-size:17px;font-weight:700;display:flex;align-items:center;gap:10px">إنشاء حساب مجاني<i class="icon-arrow-left" style="font-size:20px"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer style="background:linear-gradient(180deg,#F7F9FC 0%,#EAF0F8 100%);color:#586474;font-size:15px;border-top:1px solid #E7EBEF">
+      <div style="max-width:1344px;margin:0 auto;padding:56px 48px 32px;display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr;gap:48px">
+        <div style="display:flex;flex-direction:column;gap:16px"><img src="assets/logo-brand.png" alt="د. حازم شومان" style="width:132px;display:block"><p style="margin:0;line-height:1.8;text-wrap:pretty">أكاديمية إسلامية رقمية مجانية تقدّم مناهج د. حازم شومان العلمية والتربوية بصورة منظمة.</p></div>
+        <div style="display:flex;flex-direction:column;gap:10px"><b style="color:#1A3453;font-size:16px;margin-bottom:4px">روابط سريعة</b><sc-for list="{{ quickLinks }}" as="q" hint-placeholder-count="5"><a href="#" style="color:#586474">{{ q }}</a></sc-for></div>
+        <div style="display:flex;flex-direction:column;gap:10px"><b style="color:#1A3453;font-size:16px;margin-bottom:4px">المساعدة</b><sc-for list="{{ helpLinks }}" as="h" hint-placeholder-count="4"><a href="#" style="color:#586474">{{ h }}</a></sc-for></div>
+        <div style="display:flex;flex-direction:column;gap:14px"><b style="color:#1A3453;font-size:16px">تابعنا على</b>
+          <div style="display:flex;gap:10px"><sc-for list="{{ socials }}" as="so" hint-placeholder-count="6"><a href="#" aria-label="{{ so.label }}" style="width:44px;height:44px;border-radius:999px;background:linear-gradient(135deg,#1A3453,#1A3453);color:#fff;display:grid;place-items:center"><i class="icon-{{ so.icon }}" style="font-size:18px"></i></a></sc-for></div>
+          <span style="display:flex;align-items:center;gap:8px"><i class="icon-mail" style="font-size:16px"></i><span dir="ltr">info@hazemshouman.academy</span></span>
+        </div>
+      </div>
+      <div style="max-width:1344px;margin:0 auto;padding:20px 48px;border-top:1px solid #DCE4EF;display:flex;justify-content:space-between;font-size:13px;color:#586474"><span>© 2026 أكاديمية د. حازم شومان. جميع الحقوق محفوظة.</span><span>الدعوة … حياة أقرب إلى الله</span></div>
+    </footer>
+  </div>
+</div>
+
+<!-- ============ 2b MOBILE ============ -->
+<div id="2b" style="display:flex;flex-direction:column;gap:14px">
+  <div style="display:flex;align-items:center;gap:10px;font-size:15px;color:#586474"><span style="background:#1A3453;color:#fff;font-weight:700;padding:2px 10px;border-radius:6px">2b</span>الرئيسية · جوال 390</div>
+  <div dir="rtl" lang="ar" style="width:390px;background:#fff;font-size:16px;line-height:1.75;overflow:hidden;border-radius:32px;border:8px solid #1A3453;box-shadow:0 12px 32px rgba(19,38,67,.14)">
+
+    <header style="height:64px;background:#fff;border-bottom:1px solid #E5DFD1;display:flex;align-items:center;gap:4px;padding:0 8px 0 12px;padding-inline-start:12px">
+      <img src="assets/logo-brand.png" alt="أكاديمية د. حازم شومان" style="height:44px;display:block">
+      <span style="font-family:'Noto Kufi Arabic',sans-serif;font-weight:700;font-size:14px;flex:1">أكاديمية د. حازم شومان</span>
+      <button aria-label="بحث" style="width:44px;height:44px;border:none;background:none;color:#1A3453;display:grid;place-items:center"><i class="icon-search" style="font-size:21px"></i></button>
+      <button aria-label="القائمة" style="width:44px;height:44px;border:none;background:none;color:#1A3453;display:grid;place-items:center"><i class="icon-menu" style="font-size:22px"></i></button>
+    </header>
+
+    <div style="position:relative;background:#1A3453;color:#fff">
+      <div style="position:relative;height:300px"><image-slot id="hero-portrait-m" shape="rect" placeholder="صورة د. حازم شومان"></image-slot><div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,#1A3453 0%,rgba(19,38,67,.4) 45%,rgba(19,38,67,0) 70%)"></div></div>
+      <div style="padding:0 20px 28px;margin-top:-40px;position:relative;display:flex;flex-direction:column;gap:12px">
+        <h1 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:32px;line-height:1.35">أكاديمية د. حازم شومان</h1>
+        <div style="font-family:'Noto Kufi Arabic',sans-serif;font-size:18px;font-weight:600;color:#EAD8A9">رحلة علم .. وتربية .. وصناعة أثر</div>
+        <p style="margin:0;font-size:16px;line-height:1.8;color:#E7EBEF">أكاديمية إسلامية متكاملة تستهدف الشباب لتأهيل جيل واعٍ أقرب إلى الله بالعلم والعمل.</p>
+        <a href="#" style="height:52px;border-radius:12px;background:linear-gradient(135deg,#F7EED5 0%,#CC9B49 100%);box-shadow:0 6px 16px rgba(204,155,73,.28);color:#1A3453;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:6px">ابدأ رحلتك الآن<i class="icon-arrow-left" style="font-size:19px"></i></a>
+        <a href="#" style="height:52px;border-radius:12px;border:1.5px solid rgba(255,255,255,.55);color:#fff;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:10px"><i class="icon-circle-play" style="font-size:20px"></i>تعرّف على الأكاديمية</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid rgba(255,255,255,.12)">
+        <sc-for list="{{ heroFeaturesM }}" as="f" hint-placeholder-count="4">
+          <div style="padding:16px 12px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.1);border-inline-start:1px solid rgba(255,255,255,.1)"><i class="icon-{{ f.icon }}" style="font-size:22px;color:#CC9B49;flex:none"></i><span style="font-size:13px;font-weight:600;line-height:1.45">{{ f.label }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+
+    <sc-if value="{{ loggedIn }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:20px 16px 0">
+        <div style="padding:14px;border-radius:16px;background:#F3F3F1;border:1px solid #CBD4DF;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;gap:12px;align-items:center">
+            <div style="width:96px;aspect-ratio:16/9;border-radius:10px;overflow:hidden;flex:none;position:relative"><image-slot id="continue-thumb" shape="rect" placeholder="درس"></image-slot></div>
+            <div style="flex:1;display:flex;flex-direction:column;line-height:1.5"><span style="font-size:12px;font-weight:600;color:#604008">أكمل من حيث توقفت</span><b style="font-size:15px">الدرس 4: معنى التوبة</b><span style="font-size:12px;color:#586474">أذن خير · 65%</span></div>
+          </div>
+          <div style="height:6px;border-radius:3px;background:#CBD4DF;overflow:hidden"><div style="width:65%;height:100%;background:#1A3453"></div></div>
+          <a href="#" style="height:48px;border-radius:12px;background:#1A3453;color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px">أكمل الدرس<i class="icon-arrow-left" style="font-size:17px"></i></a>
+        </div>
+      </div>
+    </sc-if>
+
+    <div style="padding:40px 16px 0;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:999px;background:linear-gradient(135deg,#1A3453 0%,#1A3453 100%);box-shadow:0 0 0 3px #fff,0 0 0 4px #CC9B49;color:#fff;font-family:'Noto Kufi Arabic',sans-serif;font-weight:700;font-size:16px;display:grid;place-items:center">1</span><h2 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:24px">فكرة الأكاديمية</h2></div>
+      <span style="width:48px;height:4px;border-radius:2px;background:#CC9B49;margin-inline-start:46px"></span>
+      <p style="margin:0;font-size:16px;line-height:1.85;color:#586474"><b style="color:#1A3453">أكاديمية إسلامية رقمية مجانية</b> تهدف إلى تقديم المناهج والمواد العلمية والتربوية للدكتور حازم شومان بصورة منظمة.</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+        <sc-for list="{{ pillars }}" as="p" hint-placeholder-count="5">
+          <div style="padding:14px 6px;border-radius:14px;background:#F3F3F1;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center"><i class="icon-{{ p.icon }}" style="font-size:26px;color:#1A3453"></i><span style="font-size:12px;font-weight:700;line-height:1.45">{{ p.label }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="margin-top:40px;padding:32px 0;background:linear-gradient(180deg,#F1F5FB 0%,#FFFFFF 100%);display:flex;flex-direction:column;gap:18px">
+      <div style="padding:0 16px;display:flex;align-items:flex-end;justify-content:space-between">
+        <div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:999px;background:linear-gradient(135deg,#1A3453 0%,#1A3453 100%);box-shadow:0 0 0 3px #fff,0 0 0 4px #CC9B49;color:#fff;font-family:'Noto Kufi Arabic',sans-serif;font-weight:700;font-size:16px;display:grid;place-items:center">2</span><h2 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:24px">المسارات التعليمية</h2></div><span style="width:48px;height:4px;border-radius:2px;background:#CC9B49;margin-inline-start:46px"></span></div>
+        <a href="#" style="font-size:14px;font-weight:600;display:flex;align-items:center;gap:4px;min-height:44px">الكل<i class="icon-arrow-left" style="font-size:15px"></i></a>
+      </div>
+      <div style="display:flex;gap:12px;overflow-x:auto;padding:4px 16px 8px;scroll-snap-type:x mandatory">
+        <sc-for list="{{ tracks }}" as="t" hint-placeholder-count="2">
+          <article style="flex:none;width:280px;scroll-snap-align:start;background:#fff;border:1px solid #E5DFD1;border-radius:18px;overflow:hidden;display:flex;flex-direction:column">
+            <div style="position:relative;aspect-ratio:16/10"><image-slot id="track-{{ $index }}" shape="rect" placeholder="{{ t.name }}"></image-slot><span style="position:absolute;top:10px;inset-inline-end:10px;height:26px;padding:0 10px;border-radius:7px;background:{{ t.tagBg }};color:{{ t.tagFg }};font-size:12px;font-weight:700;display:flex;align-items:center;pointer-events:none">{{ t.n }}</span></div>
+            <div style="padding:16px;display:flex;flex-direction:column;gap:8px;background:linear-gradient(180deg,#F7EED5 0%,#FFFFFF 70%);flex:1">
+              <h3 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:20px">{{ t.name }}</h3>
+              <p style="margin:0;font-size:14px;line-height:1.65;color:#586474">{{ t.desc }}</p>
+              <div style="display:flex;gap:14px;font-size:12px;color:#586474"><span style="display:flex;align-items:center;gap:4px"><i class="icon-layers" style="font-size:14px"></i>{{ t.subjects }}</span><span style="display:flex;align-items:center;gap:4px"><i class="icon-clock" style="font-size:14px"></i>{{ t.dur }}</span></div>
+              <a href="#" style="height:46px;border-radius:12px;background:#F3F3F1;border:1px solid #CBD4DF;color:#1A3453;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:auto">استعرض المسار<i class="icon-arrow-left" style="font-size:16px"></i></a>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="padding:32px 16px 0;display:flex;flex-direction:column;gap:12px">
+      <div style="padding:20px;border-radius:18px;background:linear-gradient(180deg,#F3F3F1 0%,#FAF7EE 100%);border:1px solid #E7EBEF;display:flex;flex-direction:column;gap:10px">
+        <h3 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:22px">كيف أبدأ؟</h3>
+        <p style="margin:0;font-size:15px;color:#586474;line-height:1.75">لست متأكداً من المسار المناسب لك؟ أجب عن بعض الأسئلة لنقترح لك أفضل بداية.</p>
+        <div style="display:flex;flex-direction:column;gap:8px;margin:4px 0">
+          <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4"><div style="display:flex;align-items:center;gap:10px;font-size:14px"><span style="width:28px;height:28px;flex:none;border-radius:999px;background:#F7EED5;border:1px solid #EAD8A9;color:#604008;font-weight:700;font-size:13px;display:grid;place-items:center">{{ s.n }}</span><b>{{ s.label }}</b></div></sc-for>
+        </div>
+        <a href="#" style="height:48px;border-radius:12px;background:#1A3453;color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px"><i class="icon-compass" style="font-size:17px"></i>حدّد مسارك الآن</a>
+      </div>
+      <div style="position:relative;height:180px;border-radius:18px;overflow:hidden;background:#1A3453">
+        <div style="position:absolute;inset:0"><image-slot id="explainer" shape="rect" placeholder="صورة الفيديو التعريفي"></image-slot></div>
+        <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to left,rgba(7,21,42,.95),rgba(7,21,42,.3))"></div>
+        <div style="position:relative;height:100%;padding:20px;display:flex;flex-direction:column;justify-content:center;gap:12px;color:#fff;max-width:72%;pointer-events:none"><b style="font-family:'Noto Kufi Arabic',sans-serif;font-size:19px;line-height:1.5">شرح طريقة التعلم في الأكاديمية</b><a href="#" style="align-self:flex-start;height:44px;padding:0 16px;border-radius:12px;background:#fff;color:#1A3453;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px;pointer-events:auto"><i class="icon-circle-play" style="font-size:18px"></i>شاهد الفيديو</a></div>
+      </div>
+    </div>
+
+    <div style="padding:40px 0 0;display:flex;flex-direction:column;gap:14px">
+      <div style="padding:0 16px;display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:21px">المبادرات والبرامج المكثفة</h2><a href="#" style="font-size:14px;font-weight:600;min-height:44px;display:flex;align-items:center">الكل</a></div>
+      <div style="display:flex;gap:10px;overflow-x:auto;padding:0 16px 4px">
+        <sc-for list="{{ initiatives }}" as="it" hint-placeholder-count="3"><a href="#" style="flex:none;width:150px;border-radius:14px;overflow:hidden;border:1px solid #E5DFD1;color:#1A3453"><div style="position:relative;aspect-ratio:4/3"><image-slot id="init-{{ $index }}" shape="rect" placeholder="{{ it.name }}"></image-slot></div><div style="padding:10px;text-align:center;font-weight:700;font-size:14px">{{ it.name }}</div></a></sc-for>
+      </div>
+    </div>
+
+    <div style="padding:32px 16px 0">
+      <div style="position:relative;padding:18px 0 16px;border-radius:18px;background:{{ seasonBg }};border:{{ seasonBorder }};display:flex;flex-direction:column;gap:12px">
+        <div style="padding:0 16px;display:flex;flex-direction:column;gap:2px"><sc-if value="{{ seasonOn }}" hint-placeholder-val="{{ true }}"><span style="align-self:flex-start;height:26px;padding:0 10px;border-radius:999px;background:#1A3453;color:#EAD8A9;font-size:11px;font-weight:700;display:flex;align-items:center;gap:6px;margin-bottom:6px"><i class="icon-moon-star" style="font-size:13px"></i>الموسم الحالي</span></sc-if><h2 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:21px">البرامج الموسمية</h2></div>
+        <div style="display:flex;gap:10px;overflow-x:auto;padding:0 16px 4px">
+          <sc-for list="{{ seasonal }}" as="se" hint-placeholder-count="3"><a href="#" style="flex:none;width:150px;border-radius:14px;overflow:hidden;border:1px solid #E5DFD1;background:#fff;color:#1A3453"><div style="position:relative;aspect-ratio:4/3"><image-slot id="season-{{ $index }}" shape="rect" placeholder="{{ se.name }}"></image-slot></div><div style="padding:10px;text-align:center;font-weight:700;font-size:14px">{{ se.name }}</div></a></sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:40px 16px 0;display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:21px">اللقاءات القادمة</h2><a href="#" style="font-size:14px;font-weight:600;min-height:44px;display:flex;align-items:center">الكل</a></div>
+      <sc-for list="{{ meetings }}" as="m" hint-placeholder-count="2">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:#F3F3F1">
+          <div style="width:52px;flex:none;border-radius:10px;background:#1A3453;color:#fff;text-align:center;padding:6px 0;line-height:1.2"><div style="font-size:18px;font-weight:700">{{ m.day }}</div><div style="font-size:11px;color:#EAD8A9">{{ m.month }}</div></div>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.5"><b style="font-size:14px">{{ m.title }}</b><span style="font-size:12px;color:#586474">{{ m.metaShort }}</span></div>
+          <sc-if value="{{ m.live }}" hint-placeholder-val="{{ false }}"><a href="#" style="height:44px;padding:0 12px;border-radius:12px;background:#B42318;color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center">انضم</a></sc-if>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="padding:40px 16px;display:flex;flex-direction:column;gap:14px">
+      <h2 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;font-weight:800;font-size:21px">الشهادات</h2>
+      <p style="margin:0;font-size:15px;line-height:1.8;color:#586474">بعد إتمام الدورة يتم إصدار شهادة تقدير تحتوي كل واحدة على رقم أو QR Code للتحقق منها إلكترونياً من موقع الأكاديمية.</p>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <sc-for list="{{ certFeatures }}" as="cf" hint-placeholder-count="3"><div style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:#F7EED5"><i class="icon-{{ cf.icon }}" style="font-size:22px;color:#1A3453"></i><b style="font-size:14px">{{ cf.label }}</b></div></sc-for>
+      </div>
+      <a href="#" style="height:48px;border-radius:12px;border:1.5px solid #1A3453;color:#1A3453;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px"><i class="icon-shield-check" style="font-size:17px"></i>تحقّق من شهادة</a>
+    </div>
+
+    <div style="background:linear-gradient(160deg,#1A3453 0%,#263E5E 60%,#1A3453 100%);color:#fff;padding:28px 16px;display:flex;flex-direction:column;gap:20px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px 8px">
+        <sc-for list="{{ stats }}" as="st" hint-placeholder-count="4"><div style="display:flex;flex-direction:column;align-items:center;gap:2px"><i class="icon-{{ st.icon }}" style="font-size:22px;color:#CC9B49"></i><span dir="ltr" style="font-size:24px;font-weight:700;line-height:1.3">{{ st.v }}</span><span style="font-size:13px;color:#CBD4DF">{{ st.l }}</span></div></sc-for>
+      </div>
+      <a href="#" style="height:52px;border-radius:12px;background:linear-gradient(135deg,#F7EED5 0%,#CC9B49 100%);box-shadow:0 6px 16px rgba(204,155,73,.28);color:#1A3453;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px">إنشاء حساب مجاني<i class="icon-arrow-left" style="font-size:18px"></i></a>
+    </div>
+    <footer style="background:linear-gradient(180deg,#F7F9FC 0%,#EAF0F8 100%);color:#586474;padding:28px 16px;display:flex;flex-direction:column;gap:18px;font-size:14px">
+      <img src="assets/logo-brand.png" alt="د. حازم شومان" style="width:104px;display:block">
+      <div style="display:flex;flex-wrap:wrap;gap:8px 18px"><sc-for list="{{ quickLinks }}" as="q" hint-placeholder-count="5"><a href="#" style="color:#586474">{{ q }}</a></sc-for></div>
+      <div style="display:flex;gap:8px"><sc-for list="{{ socials }}" as="so" hint-placeholder-count="6"><a href="#" aria-label="{{ so.label }}" style="width:44px;height:44px;border-radius:999px;background:linear-gradient(135deg,#1A3453,#1A3453);color:#fff;display:grid;place-items:center"><i class="icon-{{ so.icon }}" style="font-size:17px"></i></a></sc-for></div>
+      <span style="font-size:12px;color:#586474">© 2026 أكاديمية د. حازم شومان</span>
+    </footer>
+  </div>
+</div>
+
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;loggedIn&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;الحالة&quot;},&quot;seasonHighlight&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;الحالة&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const loggedIn = this.props.loggedIn ?? false;
+    const seasonOn = this.props.seasonHighlight ?? true;
+    const svg = s => `url("data:image/svg+xml,${encodeURIComponent(s)}")`;
+    const star = c => `<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke='${c}' stroke-width='1.2'><rect x='24' y='24' width='32' height='32'/><rect x='24' y='24' width='32' height='32' transform='rotate(45 40 40)'/><circle cx='40' cy='40' r='7'/><path d='M0 0L17 17M80 0L63 17M0 80L17 63M80 80L63 63M40 0V12M40 68V80M0 40H12M68 40H80'/></g></svg>`;
+    const arch = c => `<svg xmlns='http://www.w3.org/2000/svg' width='110' height='140' viewBox='0 0 110 140'><g fill='none' stroke='${c}' stroke-width='1.4'><path d='M12 140V62C12 34 34 14 55 4C76 14 98 34 98 62V140'/><path d='M24 140V66C24 44 40 28 55 20C70 28 86 44 86 66V140'/><path d='M55 20V30M40 80H70'/></g></svg>`;
+    const tracks = [
+      { n: 'المسار الأول', name: 'أذن خير', desc: '7 مواد لبناء قلبك وتقوية علاقتك بالله', subjects: '7 مواد', dur: '10 أسابيع', icon: 'sprout', tagBg: '#fff', tagFg: '#1A3453', topics: [['heart-handshake', 'التوبة'], ['hand-heart', 'الصلاة'], ['sparkles', 'المعاني'], ['ellipsis', 'وغيرها']] },
+      { n: 'المسار الثاني', name: 'إنه محمد ﷺ', desc: 'سيرة نبوية بأسلوب تربوي يغيّر حياتك', subjects: '8 مواد', dur: '12 أسبوعاً', icon: 'moon-star', tagBg: '#EAD8A9', tagFg: '#1A3453', topics: [['scroll-text', 'السيرة'], ['gem', 'القيم'], ['users', 'التربية'], ['ellipsis', 'وغيرها']] },
+      { n: 'المسار الثالث', name: 'سنة أولى علم', desc: 'بداية رحلتك في العلوم الشرعية بصورة مبسطة ومنهجية', subjects: '9 مواد', dur: '6 أشهر', icon: 'book-open', tagBg: '#E7EBEF', tagFg: '#314A69', topics: [['library', 'الفقه'], ['landmark', 'العقيدة'], ['book-open-text', 'التفسير'], ['ellipsis', 'وغيرها']] },
+      { n: 'المسار الرابع', name: 'المعهد القرآني الدعوي', desc: 'إعداد جيل قرآني داعٍ مؤثر', subjects: '6 مواد', dur: 'سنة', icon: 'landmark', tagBg: '#1A3453', tagFg: '#fff', topics: [['book-open-text', 'قرآني'], ['sprout', 'تربوي'], ['megaphone', 'دعوي'], ['clipboard-list', 'إداري']] }
+    ].map(t => ({ ...t, topics: t.topics.map(([icon, label]) => ({ icon, label })) }));
+    const heroFeatures = [['file-text', 'محتوى منظم ومسارات واضحة'], ['radio', 'لقاءات مباشرة وتفاعلية'], ['users', 'مجتمع طلابي ودعم مستمر'], ['award', 'شهادات إتمام مجانية'], ['monitor-smartphone', 'تعلّم في أي وقت ومن أي مكان']].map(([icon, label]) => ({ icon, label }));
+    return {
+      loggedIn, loggedOut: !loggedIn, seasonOn,
+      seasonBg: seasonOn ? 'linear-gradient(180deg,#F7EED5 0%,#FAF7EE 100%)' : '#fff', seasonBorder: seasonOn ? '1.5px solid #CC9B49' : '1px solid #E5DFD1',
+      orn: svg(star('#CC9B49')),
+      swooshBR: svg(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 300' preserveAspectRatio='none'><path d='M0 300V120C70 150 150 150 230 200C290 238 350 262 420 300Z' fill='#E7EBEF'/><path d='M0 300V170C80 190 160 200 240 240C290 265 330 285 360 300Z' fill='#1A3453'/><path d='M0 300V205C70 220 140 235 210 270C235 282 255 292 270 300Z' fill='#1A3453'/><path d='M0 150C90 165 175 185 255 232C310 264 360 285 420 296' fill='none' stroke='#CC9B49' stroke-width='2.5'/></svg>`),
+      dots: svg(`<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><circle cx='3' cy='3' r='2' fill='#CC9B49' opacity='.7'/></svg>`), arch: svg(arch('#ffffff')), archBlue: svg(arch('#CBD4DF')),
+      nav: ['الرئيسية', 'المسارات', 'المبادرات', 'البرامج', 'اللقاءات', 'الأسئلة الشائعة'].map((label, i) => ({ label, fg: i === 0 ? '#1A3453' : '#586474', w: i === 0 ? 700 : 500, bar: i === 0 ? '#CC9B49' : 'transparent' })),
+      heroFeatures, heroFeaturesM: heroFeatures.slice(0, 4),
+      pillars: [['landmark', 'العلم الشرعي'], ['sprout', 'التربية الإيمانية'], ['book-open', 'القرآن'], ['users', 'الدعوة'], ['user-cog', 'بناء الشخصية والعمل']].map(([icon, label]) => ({ icon, label })),
+      tracks,
+      steps: [['user-plus', 'أنشئ حسابك المجاني'], ['route', 'اختر مسارك'], ['circle-play', 'تعلّم واختبر نفسك'], ['award', 'احصل على شهادتك']].map(([icon, label], i) => ({ icon, label, n: i + 1 })),
+      initiatives: [['سبّح تفرح', 'رحلة مع التسبيح وأثره في حياتك'], ['استغفر تفرح', 'اكتشف جمال الاستغفار'], ['الدورة القرآنية السنوية', 'رحلة علم مع كتاب الله'], ['مبادرات أخرى', 'المزيد من البرامج']].map(([name, desc]) => ({ name, desc })),
+      seasonal: [['سلسلة رمضان', 'دروس يومية في رمضان'], ['الاستعداد لرمضان', 'دورة عملية متكاملة'], ['قبل العشر بعشر', 'تهيئة إيمانية لذي الحجة']].map(([name, desc]) => ({ name, desc })),
+      courses: [
+        { name: 'فقه القلوب', by: 'د. حازم شومان', lessons: '24 درساً', hours: '9 ساعات', price: '450 ج.م', old: '600 ج.م', off: 'خصم 25%' },
+        { name: 'التدبّر العملي للقرآن', by: 'د. حازم شومان', lessons: '18 درساً', hours: '7 ساعات', price: '300 ج.م', old: '', off: '' },
+        { name: 'مهارات الداعية المؤثر', by: 'د. حازم شومان', lessons: '20 درساً', hours: '8 ساعات', price: '520 ج.م', old: '650 ج.م', off: 'خصم 20%' }],
+      meetings: [
+        { day: '8', month: 'أكتوبر', title: 'مجلس الأسئلة المفتوحة', meta: 'د. حازم شومان · 8:00 م (القاهرة) · لجميع الطلاب', metaShort: '8:00 م · مباشر الآن', live: true, soon: false },
+        { day: '12', month: 'أكتوبر', title: 'لقاء مسار أذن خير الشهري', meta: 'د. حازم شومان · 9:00 م · طلاب أذن خير', metaShort: '9:00 م · طلاب أذن خير', live: false, soon: true },
+        { day: '19', month: 'أكتوبر', title: 'مراجعة المادة الثالثة: السيرة', meta: 'أ. محمود علي · 7:30 م · طلاب إنه محمد ﷺ', metaShort: '7:30 م · طلاب إنه محمد ﷺ', live: false, soon: true }],
+      events: [
+        { day: '22', month: 'أكتوبر', type: 'ورشة عمل · 3 ساعات', title: 'مهارات البحث الشرعي', trainer: 'المدرب: أ. سارة عبد الله', fill: '85%', seats: 'متبقٍ 6 مقاعد' },
+        { day: '5', month: 'نوفمبر', type: 'فعالية حضورية · القاهرة', title: 'ملتقى طلاب الأكاديمية', trainer: 'بحضور د. حازم شومان', fill: '40%', seats: 'متبقٍ 120 مقعداً' }],
+      certFeatures: [['file-badge', 'تصميم معتمد بهوية الأكاديمية'], ['shield-check', 'رقم فريد لكل شهادة'], ['qr-code', 'QR Code للتحقق الإلكتروني']].map(([icon, label]) => ({ icon, label })),
+      stats: [['users', '+25,000', 'طالب وطالبة'], ['book-marked', '+120', 'دورة وبرنامج'], ['route', '4', 'مسارات تعليمية'], ['badge-check', '90%', 'معدل إتمام الدورات']].map(([icon, v, l]) => ({ icon, v, l })),
+      quickLinks: ['المسارات', 'المبادرات', 'البرامج', 'اللقاءات', 'التحقق من الشهادات'],
+      helpLinks: ['الأسئلة الشائعة', 'تواصل معنا', 'سياسة الخصوصية', 'الشروط والأحكام'],
+      socials: [['youtube', 'يوتيوب'], ['facebook', 'فيسبوك'], ['instagram', 'إنستغرام'], ['send', 'تيليجرام'], ['twitter', 'إكس'], ['music-2', 'تيك توك']].map(([icon, label]) => ({ icon, label }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,7 +23,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
   "include": [
@@ -28,8 +34,24 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    ".next-image-verification-20261016/types/**/*.ts",
+    ".next-image-verification-20261016/dev/types/**/*.ts",
+    ".next-e5-20261018/types/**/*.ts",
+    ".next-e5-20261018/dev/types/**/*.ts",
+    ".next-e5-final-20261018/types/**/*.ts",
+    ".next-e5-final-20261018/dev/types/**/*.ts",
+    ".next-e5-ready-20261018/types/**/*.ts",
+    ".next-e5-ready-20261018/dev/types/**/*.ts",
+    ".next-e5-delivery-20261018/types/**/*.ts",
+    ".next-e5-delivery-20261018/dev/types/**/*.ts",
+    ".next-hero-spacing-20261018/types/**/*.ts",
+    ".next-hero-spacing-20261018/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "lovable-project", "Full system design progress"]
+  "exclude": [
+    "node_modules",
+    "lovable-project",
+    "Full system design progress",
+    "build-exactly-web"
+  ]
 }
-

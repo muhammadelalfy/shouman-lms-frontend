@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState, type ReactNode, type RefObject } from "react";
 import { ArrowLeft, Menu, Search, X } from "lucide-react";
+import Link from "next/link";
 import { HOME_PREVIEW, type PreviewNavigationItem } from "../data/preview";
 
 function useModal(open: boolean, ref: RefObject<HTMLDialogElement | null>) {
@@ -70,13 +71,15 @@ export function PreviewDialog({ open, onClose, title, children, drawer = false }
   );
 }
 
-export function ComingSoonButton({ children, title = "هذه الميزة", className = "", ariaLabel }: {
+export function ComingSoonButton({ children, title = "هذه الميزة", className = "", ariaLabel, href }: {
   children: ReactNode;
   title?: string;
   className?: string;
   ariaLabel?: string;
+  href?: string;
 }) {
   const [open, setOpen] = useState(false);
+  if (href) return <Link href={href} className={className} aria-label={ariaLabel}>{children}</Link>;
   return (
     <>
       <button type="button" className={className} aria-label={ariaLabel} onClick={() => setOpen(true)}>{children}</button>
@@ -89,15 +92,17 @@ export function ComingSoonButton({ children, title = "هذه الميزة", clas
   );
 }
 
-export function MobileNavigation() {
+export function MobileNavigation({ navigation = HOME_PREVIEW.navigation }: {
+  navigation?: PreviewNavigationItem[];
+} = {}) {
   const [open, setOpen] = useState(false);
   const [comingSoon, setComingSoon] = useState<string | null>(null);
   return (
     <>
-      <button type="button" className="icon-button mobile-menu-button lg:hidden" aria-label="فتح قائمة التنقل" aria-expanded={open} onClick={() => setOpen(true)}><Menu className="h-5 w-5" /></button>
+      <button type="button" className="icon-button mobile-menu-button xl:hidden" aria-label="فتح قائمة التنقل" aria-expanded={open} onClick={() => setOpen(true)}><Menu className="h-5 w-5" /></button>
       <PreviewDialog open={open} onClose={() => setOpen(false)} title="قائمة التنقل" drawer>
         <nav aria-label="التنقل على الهاتف">
-          {HOME_PREVIEW.navigation.map((item: PreviewNavigationItem) => item.href ? (
+          {navigation.map((item) => item.href ? (
             <a href={item.href} key={item.label} onClick={() => setOpen(false)}>{item.label}<ArrowLeft className="h-4 w-4" /></a>
           ) : (
             <button key={item.label} type="button" onClick={() => { setOpen(false); setComingSoon(item.label); }}>{item.label}<span>قريبًا</span></button>
@@ -131,10 +136,13 @@ export function NewsletterForm() {
   const [open, setOpen] = useState(false);
   const emailId = useId();
   const inputRef = useRef<HTMLInputElement>(null);
+  const [error, setError] = useState("");
 
   function previewSubscription() {
     const input = inputRef.current;
-    if (!input || !input.reportValidity()) return;
+    if (!input) return;
+    if (!input.validity.valid) { setError("أدخل بريدًا إلكترونيًا صالحًا لمعاينة الواجهة."); input.focus(); return; }
+    setError("");
     input.value = "";
     setOpen(true);
   }
@@ -149,6 +157,8 @@ export function NewsletterForm() {
           id={emailId}
           type="email"
           required
+          aria-invalid={Boolean(error)}
+          aria-describedby={error ? `${emailId}-error` : undefined}
           autoComplete="email"
           placeholder="بريدك الإلكتروني"
           className="min-w-0 flex-1 rounded-md border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
@@ -156,6 +166,7 @@ export function NewsletterForm() {
         />
         <button className="rounded-md bg-primary px-5 py-2 text-sm font-bold text-primary-foreground" type="button" onClick={previewSubscription}>اشتراك</button>
       </div>
+      {error ? <p id={`${emailId}-error`} className="text-sm text-destructive" role="alert">{error}</p> : null}
       <span className="mt-1 block text-xs text-muted-foreground">معاينة فقط — لن يُرسل بريدك أو يُحفظ.</span>
       <PreviewDialog open={open} onClose={() => setOpen(false)} title="النشرة البريدية — قريبًا">
         <p>خدمة الاشتراك قيد التجهيز. لم يُرسل بريدك الإلكتروني ولم يُحفظ، ولم يحدث أي اشتراك.</p>
@@ -164,4 +175,3 @@ export function NewsletterForm() {
     </>
   );
 }
-
