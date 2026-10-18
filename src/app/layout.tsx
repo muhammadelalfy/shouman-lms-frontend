@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { Amiri, Cairo } from "next/font/google";
 import "./globals.css";
 
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ar" dir="rtl" className={`${arabicHeading.variable} ${quranFont.variable} h-full antialiased`}>
       <body suppressHydrationWarning className="flex min-h-full flex-col font-sans">{children}</body>
