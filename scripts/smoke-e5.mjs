@@ -9,8 +9,8 @@ if (!exampleBlock) throw new Error("Could not read the E5 route examples");
 const examples = [...exampleBlock.matchAll(/\{ href: "([^"]+)"/g)].map((match) => match[1]);
 const aliases = [
   "/admin",
-  "/admin/tracks",
-  "/admin/students",
+  "/preview/admin/tracks",
+  "/preview/admin/students",
   "/learning",
   "/learn/track/demo-lesson",
   "/catalog/search",

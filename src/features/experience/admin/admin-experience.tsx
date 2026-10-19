@@ -41,7 +41,7 @@ export function AdminExperience({ path }: { path: string[] }) {
   const detailTitles: Record<string, string> = { users: "ملف المستخدم التجريبي", offerings: "محرر المحتوى التعليمي", quizzes: "محرر الاختبار", "question-bank": "محرر السؤال", groups: "إدارة مجموعة تجريبية", payments: "تفاصيل طلب توضيحي", attendance: "مراجعة حضور توضيحي", projects: "مساحة المقيّم", "audit-log": "تفاصيل حدث تدقيق توضيحي", campaigns: "محرر الحملة", notifications: "محرر الإشعار" };
   const title = record && !editing ? detailTitles[section] || baseTitle : baseTitle;
   const description = workspace?.[1] || table?.description;
-  const action = table?.createHref && !record ? <Link className="xp-button" href={table.createHref}>{table.createLabel}</Link> : record && table ? <Link className="xp-button xp-button-outline" href={`/admin/${section}`}>العودة إلى {table.title}</Link> : undefined;
+  const action = table?.createHref && !record ? <Link className="xp-button" href={table.createHref}>{table.createLabel}</Link> : record && table ? <Link className="xp-button xp-button-outline" href={`/preview/admin/${section}`}>العودة إلى {table.title}</Link> : undefined;
   let content;
 
   if (section === "dashboard") content = <AdminDashboard />;
@@ -62,7 +62,7 @@ export function AdminExperience({ path }: { path: string[] }) {
   else if (section === "settings" || section === "integrations") content = <SettingsWorkspace initialTab={section === "integrations" || record === "integrations" ? "integrations" : "general"} />;
   else if (editorSections.includes(section as EditorKind) && (record || section === "subjects" || section === "lessons")) content = <AdminRecordEditor key={segments.join("/")} kind={section as EditorKind} isNew={record === "new"} />;
   else if (table) content = <div className="xp-stack"><AdminTable key={section} definition={table} />{table.related && <nav className="admin-related-links" aria-label="أدوات ذات صلة">{table.related.map((link) => <Link className="xp-button xp-button-outline" key={link.href} href={link.href}>{link.label} ←</Link>)}</nav>}</div>;
-  else content = <section className="xp-card"><h2>اختر أداة من لوحة الإدارة</h2><p>القوائم المتاحة تقود إلى نماذج المحتوى والحسابات والمراجعة والتقارير.</p><Link className="xp-button" href="/admin/dashboard">لوحة الإدارة</Link></section>;
+  else content = <section className="xp-card"><h2>اختر أداة من لوحة الإدارة</h2><p>القوائم المتاحة تقود إلى نماذج المحتوى والحسابات والمراجعة والتقارير.</p><Link className="xp-button" href="/preview/admin/dashboard">لوحة الإدارة</Link></section>;
 
   return <div className="admin-experience"><ExperienceHeading eyebrow="إدارة الأكاديمية · معاينة" title={record && editing ? `${record === "new" ? "إضافة" : "تحرير"} — ${title}` : title} description={description} action={action} />{content}</div>;
 }

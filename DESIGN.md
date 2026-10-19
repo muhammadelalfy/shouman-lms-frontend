@@ -97,7 +97,7 @@ Public navigation uses a compact header and real route links. Authenticated dest
 
 ### Forms and overlays
 
-Forms reuse the existing Zod schemas and Next.js Server Actions. Laravel calls are server-only; session credentials stay in httpOnly cookies. Errors render inline and at a summary; preserve non-sensitive values, never echo passwords. Native dialog is the canonical forthcoming-feature explanation until a shared overlay primitive is justified.
+Operational forms reuse feature Zod schemas and Next.js Server Actions. Laravel calls are server-only; session credentials stay in httpOnly cookies. Errors render inline and at a summary; preserve non-sensitive values, never echo passwords. Native dialog remains the preview explanation owner; live administration uses the shared confirmation dialog in `src/features/administration/components/confirmation-dialog.tsx`.
 
 ### Iconography
 
@@ -121,3 +121,9 @@ The `/preview` directory links the public, learner, and admin screen examples. E
 - **Do:** keep API-backed catalog content traceable to visible offering resources.
 - **Don't:** imply enrollment, payment, certificate issuance, quiz passing, upload, or admin mutations succeeded without a backend operation.
 - **Don't:** use muted gold as small text on white/cream or use decorative patterns behind body copy.
+
+## Frontend administration increment — 2026-10-19
+
+Supported user/role and curriculum administration now lives in `src/features/administration`. Its live `/admin/users`, `/admin/roles`, and `/admin/offerings` routes use existing cream/navy/gold shared styles and server-owned API adapters. These routes supersede earlier preview-only descriptions for those capabilities. Every admin design example is explicitly under `/preview/admin/...`; unsupported legacy administration destinations remain labeled previews.
+
+The live authoring signature is the restrained gold start-edge on nested curriculum cards: it expresses subject/lesson hierarchy rather than introducing a separate visual system. Forms use persistent inline feedback, native selects, typed ISO timestamps preserving offsets, and cancel-first native confirmation dialogs. No new tokens or fonts were introduced.

@@ -133,3 +133,8 @@ describe("complete admin frontend previews", () => {
     expect(storageSpy).not.toHaveBeenCalled();
   });
 });
+
+it("keeps admin fixture links in the explicit preview namespace",()=>{
+ const {container}=render(<AdminExperience path={["admin","users"]}/>);
+ for(const link of container.querySelectorAll("a"))expect(link.getAttribute("href")).not.toMatch(/^\/admin\//);
+});

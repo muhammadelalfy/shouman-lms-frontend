@@ -1,0 +1,111 @@
+.admin-live {
+  min-width: 0;
+}
+.admin-live h1 {
+  overflow-wrap: anywhere;
+}
+.admin-live .admin-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 14px;
+  margin-block: 20px;
+}
+.admin-toolbar .xp-field {
+  flex: 1 1 150px;
+  margin: 0;
+}
+.admin-fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0 0 18px;
+  min-width: 0;
+}
+.admin-feedback {
+  border-inline-start: 3px solid var(--primary);
+  background: var(--background);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-block: 16px;
+  overflow-wrap: anywhere;
+}
+.admin-feedback.xp-error {
+  border-color: var(--destructive);
+}
+.admin-check-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+  gap: 8px;
+  margin-block: 12px 20px;
+}
+.admin-check-list label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+.admin-check-list input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+}
+.admin-live textarea {
+  resize: vertical;
+}
+.admin-live .xp-card {
+  overflow-wrap: anywhere;
+}
+.admin-live dl {
+  display: grid;
+  grid-template-columns: minmax(90px, 1fr) minmax(0, 2fr);
+  gap: 10px;
+}
+.admin-live dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.admin-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-block: 20px;
+}
+.admin-outline-item {
+  border: 1px solid var(--border);
+  border-inline-start: 3px solid var(--gold);
+  border-radius: 12px;
+  padding: 18px;
+  margin-block: 16px;
+}
+.admin-outline-item h3 {
+  margin-block: 0 14px;
+}
+.admin-live .admin-live-notice {
+  background: var(--background);
+  border: 1px solid var(--border);
+  padding: 10px 16px;
+  border-radius: 9px;
+  margin-bottom: 24px;
+  color: var(--muted-foreground);
+}
+.admin-live .xp-table-wrap {
+  position: relative;
+  overscroll-behavior-inline: contain;
+}
+@media (max-width: 540px) {
+  .admin-live dl {
+    grid-template-columns: 1fr;
+  }
+  .admin-live dd {
+    margin-bottom: 10px;
+  }
+  .admin-toolbar > .xp-button {
+    width: 100%;
+  }
+  .admin-outline-item {
+    padding: 12px;
+  }
+}

@@ -40,3 +40,6 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# Local browser verification artifacts
+/.frontend-evidence/
