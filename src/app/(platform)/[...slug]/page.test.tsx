@@ -27,6 +27,10 @@ describe("operational catalog search orchestration", () => {
     await expect(page({ q: "\u0085\u00a0", kind: "course", pricing: "free" })).rejects.toThrow("REDIRECT:/search?kind=course&pricing=free");
     expect(list).not.toHaveBeenCalled();
   });
+  it("clears a stale cursor when canonicalizing whitespace q while retaining all filters", async () => {
+    await expect(page({ q: "\u0085\u00a0\u3000", kind: "course", pricing: "free", featured: "1", per_page: "5", cursor: "OLD" })).rejects.toEqual(new Error("REDIRECT:/search?kind=course&pricing=free&featured=1&per_page=5"));
+    expect(list).not.toHaveBeenCalled();
+  });
   it("accepts 120 supplementary codepoints and rejects 121 without a broadened API call", async () => {
     render(await page({ q: "😀".repeat(120) }));
     expect(list).toHaveBeenCalledTimes(1);

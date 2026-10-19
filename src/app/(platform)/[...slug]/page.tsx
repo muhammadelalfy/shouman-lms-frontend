@@ -109,7 +109,7 @@ export default async function PlatformRoute({ params, searchParams }: PlatformRo
 
   if (catalogRoute?.type === "listing") {
     const parsed = parseCatalogQuery(query, catalogRoute.kinds[0]);
-    if (first(query.q) !== undefined && !parsed.values.q) redirect(catalogListingHref(catalogRoute.basePath, parsed.values));
+    if (first(query.q) !== undefined && !parsed.values.q) redirect(catalogListingHref(catalogRoute.basePath, { ...parsed.values, cursor: undefined }));
     let offerings: CatalogOffering[] = [];
     let nextCursor: string | null = null;
     let previousCursor: string | null = null;
