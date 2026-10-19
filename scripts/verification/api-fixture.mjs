@@ -223,8 +223,13 @@ http
         data: subject.lessons[0],
       });
     }
-    if (p === "/catalog/offerings")
-      return send(200, page([{ ...offering, lesson_count: 2 }]));
+    if (p === "/catalog/offerings") {
+      if (scenario === "search-validation") return send(422, { message: "fixture validation", errors: { q: ["fixture q rejected"] } });
+      if (scenario === "search-throttled") return send(429, { message: "fixture throttled" });
+      if (scenario === "search-unavailable") return send(503, { message: "fixture unavailable" });
+      if (scenario === "search-network") return req.socket.destroy();
+      return send(200, page(scenario === "search-empty" ? [] : [{ ...offering, lesson_count: 2 }]));
+    }
     if (p === "/catalog/offerings/test-course")
       return send(200, {
         data: {

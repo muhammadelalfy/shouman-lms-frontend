@@ -61,3 +61,15 @@ Never display credential manifests or commit them. Search execution mutates publ
 The search harness writes per-case JSON and responsive screenshots at320/360/390/768/1024/1440px. It asserts actual API matching, literal wildcard handling, Unicode limits, public resource fields, visibility, filters, cursor ordering, browser query state and real detail navigation. A hide between page requests checks visibility without claiming snapshot consistency. Reduced-motion preference and keyboard/label checks are automated; visual focus contrast,200% zoom and detailed motion inspection remain separate manual review.
 
 No mocked dependency failures run in this real-API harness. For422/429/503/network UI injection use an independent HTTP fixture and a separate Next server/build pointing to it. Browser request interception cannot intercept Next's server-side Laravel requests. Never stop or reconfigure the shared real Laravel process for injection, and never present fixture authorization as Laravel evidence. The execution report must distinguish these checks.
+
+### Isolated mocked search failures
+
+`search-states-check.mjs` checks injected422(q association),429,503 and a destroyed upstream socket, followed by successful fixture-backed retry, plus distinct empty/no-match. These are mocked dependency/UI checks, **not real Laravel authorization evidence**. Modes affect catalog only and run on a dedicated fixture/Next pair; they never toggle the shared integration backend.
+
+```bash
+FRONTEND_FIXTURE_PORT=8113 node scripts/verification/api-fixture.mjs
+API_BASE_URL=http://127.0.0.1:8113/api/v1 NEXT_BUILD_DIR=.next-search-final npm run start -- --hostname 127.0.0.1 --port 3117
+PLAYWRIGHT_MODULE=/tmp/shouman-browser/node_modules/playwright/index.mjs PLATFORM_BASE_URL=http://127.0.0.1:3117 FRONTEND_FIXTURE_URL=http://127.0.0.1:8113 FRONTEND_EVIDENCE_DIR=.frontend-evidence/search-states node scripts/verification/search-states-check.mjs
+```
+
+Use a matching existing production build; confirm runtime API environment points to the fixture. Separate terminals/process sessions are required. The browser harness rejects root integration ports3115/3116. Stop only your owned fixture/Next sessions after execution. 2026-10-19 UTC run:9/9 groups passed, exit0; workspace evidence `docs/service-continuation/evidence/search-states/`. This does not replace real search/security/regression checks.
