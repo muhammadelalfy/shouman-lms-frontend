@@ -56,13 +56,13 @@
 
 ## Dataset navigation
 
-- **Admin tables:** none are operational in this increment; no mock table may imply live users, permissions, or analytics.
+- **Admin tables:** operational user and offering lists use backend cursor pagination; role lists use the unpaginated resource collection. Synthetic tables remain explicitly preview-only.
 - **Exploratory lists:** public catalog list is server-rendered from the published-offering API; related types use approved `kind` filters.
 - **URL state:** committed catalog `kind`, `pricing`, and `cursor` filters belong in query params. Cursor APIs do not gain synthetic numbered pages. Auth field data is not placed in URLs except the API-approved password reset token/email query.
 - **Page size:** use supported API default; do not invent a per-page selector unless the endpoint and UI need it.
 - **Empty/no-results/error/loading:** loading uses server navigation state where applicable; empty published catalog is not the same as API failure; no-results offers clear filters; failure has retry/navigation; missing detail uses Next `notFound()`.
 - **Back/scroll restoration:** preserve browser-native route/query history.
-- **Selection scope:** not applicable; no live staff selection.
+- **Selection scope:** no bulk record selection; role/permission checkbox selections apply only to the named record after confirmation.
 
 ## Flow ledger
 
@@ -83,18 +83,18 @@
 - **Route error / 403 page behavior:** unknown resource is distinct from unauthenticated/forbidden; preserve navigation and offer home/catalog/login links. Never reveal raw API payloads.
 - **Breadcrumb/tab/route-state policy:** use real links for hierarchy and related routes. Tabs only when content state is accessible and either URL-backed or explicitly transient.
 - **Sidebar/drawer/bottom-sheet transformation:** marketing shell stays compact. `MobileNavigation` uses an accessible button with `aria-expanded`/`aria-controls`; Escape closes it and restores trigger focus, route selection closes it, and authenticated account/logout actions remain explicit. This menu is non-modal and does not trap focus.
-- **Responsive tables:** no API-backed data table is included in this increment; future admin table design follows a separate analyzed workflow.
+- **Responsive tables:** API user/offering tables scroll inside labeled, keyboard-focusable containers. Page content must reflow without viewport overflow.
 - **Truncation/full-value access:** do not truncate titles, prices, or identifiers without an accessible full-value path.
 - **Focus restoration/sticky obstruction:** dialogs restore focus to the opener; sticky elements must not cover focused content.
 
 ## Overlays and feedback
 
 - **Dialog primitive:** existing native `<dialog>` for explanatory preview only; labelled title, Escape close, focus restoration. Do not put a pretend backend action inside it.
-- **Destructive confirmation:** no destructive client action in this increment.
+- **Destructive confirmation:** live content deletion and status/permission changes use the shared cancel-first native confirmation dialog with object and consequence.
 - **Toast:** no toast for API-backed forms; use persistent inline live-region feedback. Do not claim a toast provider exists.
 - **Alert/banner:** one form-level summary plus field-level details; distinguish rate-limited, validation, disabled-account, and unexpected-safe failures.
 - **Tooltip:** not required for first release; accessible names stay present without hover.
-- **Unsaved changes:** browser-native navigation behavior until a real draft workflow is analyzed.
+- **Unsaved changes:** browser-native navigation behavior; rejected actions retain in-memory drafts and selections. No browser storage persistence.
 - **Layer order:** native dialog is topmost; no custom portal stack is introduced.
 
 ## Async and resilience
@@ -132,7 +132,7 @@ The E5 request expands generic preview bodies into dedicated public, learner, st
 
 - `features/experience/shared/ui.tsx` owns headings, preview/data labels, badges, progress and empty states. `shared/interactions.tsx` owns explanatory preview dialogs and searchable-input clear behavior. Native dialogs are app-styled, use browser modal focus containment, Escape, and trigger focus restoration.
 - `shared/workspace.tsx` owns the responsive learner/staff/admin navigation, document scroll, start-side desktop navigation and learner mobile bottom navigation. The mobile section menu is a documented non-modal disclosure; it does not trap focus.
-- `shared/experience.css` owns shared cards, buttons, fields, local filter controls and data tables. Native select/date/time popups remain platform-owned; their trigger/layout is styled by the application. Tables are bounded fixture datasets with local paging; table overflow stays on the table surface. No live staff CRUD is authorized by preview controls.
+- `shared/experience.css` owns shared cards, buttons, fields, local filter controls and data tables. Native select/date/time popups remain platform-owned; their trigger/layout is styled by the application. Tables are bounded fixture datasets with local paging; table overflow stays on the table surface. No live staff CRUD is authorized by preview controls. Operational controls are owned separately by `features/administration`.
 - Public, learner and admin components own distinct layouts and transient interaction islands in their feature folders. Every sample screen has a persistent notice, and dataset sections carry sample labels. No actual people, emails, phones, payment details, access tokens, private media, QR identity, or real records are seeded.
 - Preview forms use inline validation and announce that data was not saved/sent. Local input, sort, filters, choices, unread flags and draft metadata reset on reload or route change. Route-specific component keys prevent drafts carrying to another screen. Committed search may initialize from `q`; it searches the bounded sample dataset locally. This explicit preview-only override does not change API-backed catalog URL/cursor behavior.
 - No preview uses fetch, Server Actions, browser storage, session writes, telemetry, provider calls, or business transitions. OP-1…OP-10 remain unresolved. Learner progress/quiz choices/attendance/certificates/payments shown in samples never become authoritative outcomes.
@@ -143,3 +143,22 @@ The E5 request expands generic preview bodies into dedicated public, learner, st
 - Tests: existing Vitest + targeted schema/route/component coverage; frontend gates are lint, typecheck, Vitest, production build, and dependency audit.
 - Browser matrix: 360, 390, 768, 1024, 1280, 1440px; keyboard/focus, mobile navigation, reduced motion, and API empty/error/not-found states.
 - Performance: record browser, viewport, cache, CPU, network, LCP, CLS, and build when claiming measured performance. No throughput or production readiness claim from the local preview.
+
+### Operational administration ownership — 2026-10-19
+
+This section supersedes E4/E5 preview-only statements for the supported capabilities below. Laravel Identity/Course request classes, resources, controllers, policies and tests in the sibling backend repository are the inspected contract evidence. Shared source-review documentation identifies missing legacy requirements; no absent document is claimed as reviewed.
+
+| Capability | Owner | Contract and behavior |
+|---|---|---|
+| Protected routes | `administration/route-resolution.ts`, `pages.tsx` | Live numeric resource IDs; malformed/synthetic identifiers cannot fall back to generic previews. Auth checked against `/me`; forbidden/error responses never load fixtures. |
+| Users and roles | `administration/identity` | Cursor list, detail, status/role PUTs, role collection and permission PUTs. No live user creation. Locked roles stay read-only. |
+| Curriculum | `administration/courses` | Offering CRUD, status and instructors; nested subject/lesson CRUD, status and complete sibling-ID ordering. Parent ownership is checked before child edits; Laravel revalidates under its own authorization/transactions. |
+| Mutations | `administration/server/mutate.ts` | Recheck cookie session and capability on every call; validate before write; refresh only after success. No token enters FormState or client props. |
+| Form feedback | `administration/components/action-form.tsx`, `fields.tsx` | Manual action dispatch prevents React resetting rejected drafts. Pending disables controls, field errors are associated and first invalid field receives focus. Persistent summary covers non-field errors. |
+| Confirmation | `administration/components/confirmation-dialog.tsx` | Native modal focus containment; explicit consequence; cancel-first focus; Escape and close restore trigger focus. |
+| Data entry | Native fields/selects + feature schemas | Arabic labels; exact ISO timestamps with explicit offsets; integer minor-unit prices. EGP mirrors current Course configuration, not approval of a payment gateway. |
+| Preview routes | `experience/route-registry.ts` | All admin samples use `/preview/admin/...`; local fixture links remain in that namespace. Preview components never import live actions or make requests. |
+
+Successful offering creation navigates to the returned numeric record; deletion returns to the offering list. Other edits remain in context with persistent feedback. API 401/403/404/422/429/conflict/network failures are distinct from saved outcomes. List filters and cursors live in URLs and reset cursors when filters change. Reorder requests include all current siblings; a stale set requires a fresh read rather than pretending success. Instructor IDs are validated by the backend; the directory link is shown only with `users.view`. Media upload and learner-domain services remain unavailable.
+
+Arabic RTL and existing shared tokens remain canonical. The workspace mobile menu now supports Escape with trigger focus restoration. Browser and API verification distinguish disposable fixtures from live Laravel evidence; release acceptance belongs to the Product Owner.

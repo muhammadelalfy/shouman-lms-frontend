@@ -1,3 +1,5 @@
+import { resolveAdminRoute, isLiveAdminPath } from "@/features/administration/route-resolution";
+import { AdministrationPage } from "@/features/administration/pages";
 import type { Metadata } from "next";
 import { cache } from "react";
 import { notFound, redirect } from "next/navigation";
@@ -74,6 +76,8 @@ async function loadOfferings(route: Extract<NonNullable<ReturnType<typeof resolv
 
 export async function generateMetadata({ params }: RouteParams): Promise<Metadata> {
   const { slug } = await params;
+  const adminRoute = resolveAdminRoute(slug);
+  if (adminRoute) return { title: "إدارة الأكاديمية", robots: { index: false, follow: false } };
   const experience = resolveExperienceRoute(slug);
   if (experience) return { title: experience.title, description: "واجهة أكاديمية د. حازم شومان — معاينة تصميم تفاعلية ببيانات تجريبية.", robots: { index: false, follow: false } };
   const route = resolveCatalogRoute(slug);
@@ -100,6 +104,9 @@ export default async function PlatformRoute({ params, searchParams }: PlatformRo
     const queryString = new URLSearchParams(Object.entries(query).flatMap(([key, value]) => { const item = first(value); return item === undefined ? [] : [[key, item]]; })).toString();
     redirect(`${authAlias}${queryString ? `?${queryString}` : ""}`);
   }
+  const adminRoute = resolveAdminRoute(slug);
+  if (adminRoute) return <PlatformFrame><AdministrationPage route={adminRoute} query={Object.fromEntries(Object.entries(query).map(([key,value])=>[key,first(value)]))}/></PlatformFrame>;
+  if (isLiveAdminPath(slug)) notFound();
   const experience = resolveExperienceRoute(slug);
   if (experience) {
     const previewQuery = { q: first(query.q) };
@@ -111,7 +118,7 @@ export default async function PlatformRoute({ params, searchParams }: PlatformRo
           : <AdminExperience key={previewKey} path={experience.path} />;
     return <PlatformFrame><div className="experience">{!workspace
       ? <main id="platform-main" className="xp-public-main"><PreviewNotice />{content}</main>
-      : <ExperienceWorkspace area={workspace} currentPath={`/${experience.path.join("/")}`}><main id="platform-main"><PreviewNotice />{content}</main></ExperienceWorkspace>}
+      : <ExperienceWorkspace area={workspace} currentPath={`${experience.area === "admin" ? "/preview" : ""}/${experience.path.join("/")}`}><main id="platform-main"><PreviewNotice />{content}</main></ExperienceWorkspace>}
     </div></PlatformFrame>;
   }
   const catalogRoute = resolveCatalogRoute(slug);
