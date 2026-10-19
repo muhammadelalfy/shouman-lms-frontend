@@ -42,4 +42,22 @@ PLAYWRIGHT_MODULE=/tmp/shouman-browser/node_modules/playwright/index.mjs PLATFOR
 
 Start the backend from its isolated checkout so its own environment loads correctly, and run the frontend with `API_BASE_URL` pointing to that backend. The default credential file can be overridden with `LIVE_INTEGRATION_FIXTURE`. `FRONTEND_EVIDENCE_DIR` controls JSON/screenshot output as above. Every full run needs freshly seeded disposable records because it changes roles, status, publication state, prices, ordering and sessions. Reset only the explicitly isolated database between runs.
 
-At the 2026-10-19 verification, the main matrix passed 15/17 checks and the CRUD matrix passed 8/8. The two failing checks reproduce open defects: non-UTC offering timestamps shift their instant on backend persistence, and curriculum reordering loses its success confirmation during refresh. The main script intentionally exits nonzero while those defects remain. Do not substitute fixture-only success for this result.
+The initial 2026-10-19 run passed 15/17 main checks and8/8 CRUD checks. Subsequent real-browser repair verification passed17/17 and8/8, both exit0, as recorded in workspace `docs/service-continuation/progress.md` and `docs/service-continuation/evidence/`. These historical results close the timestamp and reorder reproductions for that revision; they do not certify later search changes. Rerun both matrices with independent fresh fixtures for search regression.
+
+
+## Real catalog search verification (SH-204V)
+
+`live-catalog-search-check.mjs` requires the same loopback Laravel/PostgreSQL/Redis and matching production Next build. It defaults to approved wide title/summary/description search; `SEARCH_SCOPE=title` supports the intermediate title-only revision and records that scope in its report. Do not run the wide scope against the intermediate implementation and report it passing.
+
+Coordinator must exclusively prepare a fresh `shouman_integration` schema, required roles/permissions, then run `seed-live-laravel.php` if the regular matrices need it. The separate search seeder requires the **active default connection** to be PostgreSQL and named `shouman_integration`; it adds synthetic search offerings and a randomly named synthetic administrator. It uses a fresh private manifest path and refuses to overwrite an existing file. It does not reset the database.
+
+```bash
+LARAVEL_BACKEND_PATH=/absolute/path/to/isolated/backend SEARCH_INTEGRATION_FIXTURE=/tmp/shouman-search-run-unique.json php scripts/verification/seed-live-catalog-search.php
+PLAYWRIGHT_MODULE=/tmp/shouman-browser/node_modules/playwright/index.mjs PLATFORM_BASE_URL=http://127.0.0.1:3114 LARAVEL_API_URL=http://127.0.0.1:8130/api/v1 SEARCH_INTEGRATION_FIXTURE=/tmp/shouman-search-run-unique.json FRONTEND_EVIDENCE_DIR=.frontend-evidence/search node scripts/verification/live-catalog-search-check.mjs
+```
+
+Never display credential manifests or commit them. Search execution mutates publication state and creates a real disposable session. Reset/reseed independently before each search,17-check main, and8-check CRUD run; those suites mutate roles, permissions, sessions and content. Coordinator owns reset, seed, build and runtime scheduling. Do not run while another agent owns a database or production build.
+
+The search harness writes per-case JSON and responsive screenshots at320/360/390/768/1024/1440px. It asserts actual API matching, literal wildcard handling, Unicode limits, public resource fields, visibility, filters, cursor ordering, browser query state and real detail navigation. A hide between page requests checks visibility without claiming snapshot consistency. Reduced-motion preference and keyboard/label checks are automated; visual focus contrast,200% zoom and detailed motion inspection remain separate manual review.
+
+No mocked dependency failures run in this real-API harness. For422/429/503/network UI injection use an independent HTTP fixture and a separate Next server/build pointing to it. Browser request interception cannot intercept Next's server-side Laravel requests. Never stop or reconfigure the shared real Laravel process for injection, and never present fixture authorization as Laravel evidence. The execution report must distinguish these checks.
