@@ -325,16 +325,13 @@ function Hero() {
             .. مع محتوى موثوق وإشراف مباشر
           </p>
 
-          {/* Search */}
-          <ComingSoonButton
-            href="/search"
-            title="البحث في الأكاديمية"
-            ariaLabel="ابحث عن دورة أو موضوع"
-            className="mt-8 flex w-full max-w-xl items-center gap-2 rounded-full border border-border bg-card p-2 text-start shadow-soft"
-          >
-            <Search className="ms-3 size-5 shrink-0 text-muted-foreground" />
-            <span className="w-full text-start text-sm font-medium text-muted-foreground">ابحث عن دورة، موضوع، أو كلمة مفتاحية ...</span>
-          </ComingSoonButton>
+          {/* Native GET search shares the operational catalog URL state. */}
+          <form action="/search" method="get" noValidate className="mt-8 flex w-full max-w-xl items-center gap-2 rounded-full border border-border bg-card p-2 text-start shadow-soft">
+            <Search className="ms-3 size-5 shrink-0 text-muted-foreground" aria-hidden="true" />
+            <label htmlFor="home-catalog-query" className="sr-only">ابحث عن دورة أو موضوع</label>
+            <input id="home-catalog-query" type="search" name="q" placeholder="ابحث في المحتوى المنشور ..." className="min-h-11 min-w-0 w-full bg-transparent text-sm font-medium text-foreground outline-offset-2" />
+            <button type="submit" className="min-h-11 shrink-0 rounded-full bg-primary px-4 text-sm font-bold text-primary-foreground">بحث</button>
+          </form>
 
           {/* Chips */}
           <div className="mt-4 flex flex-wrap gap-2">

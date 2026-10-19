@@ -7,7 +7,6 @@ export type ExperienceRouteExample = { href: string; title: string; area: Exclud
 export const experienceRoutes: ExperienceRouteExample[] = [
   { href: "/preview/catalog", title: "كتالوج المعاينة", area: "public" },
   { href: "/preview/catalog/demo-course", title: "تفاصيل دورة توضيحية", area: "public" },
-  { href: "/search", title: "البحث في المحتوى", area: "public" },
   { href: "/faq", title: "الأسئلة الشائعة", area: "public" },
   { href: "/about", title: "عن الأكاديمية", area: "public" },
   { href: "/contact", title: "تواصل معنا", area: "public" },
@@ -94,7 +93,6 @@ export function resolveExperienceRoute(slug: string[]): ExperienceRoute | null {
   if (explicitAdminPreview) path = path.slice(1);
   if (!explicitAdminPreview && path[0] === "admin" && ["users", "roles", "offerings", "subjects", "lessons", "students", "tracks", "courses", "programs", "seasonal-programs", "initiatives"].includes(path[1])) return null;
   if (path.length === 1 && path[0] === "preview") return { area: "directory", title: "جميع واجهات الأكاديمية", path };
-  if (path[0] === "catalog" && path[1] === "search" && path.length === 2) path = ["search"];
   if (path[0] === "learning" && path.length === 1) path = ["my-learning"];
   if (path[0] === "learn") {
     if (!isOfferingKind(path[1])) return null;

@@ -66,7 +66,8 @@
   font-weight: 700;
 }
 
-.public-catalog__filter-field select {
+.public-catalog__filter-field select,
+.public-catalog__filter-field input[type="search"] {
   min-height: 46px;
   padding: 9px 12px;
   border: 1px solid var(--border);
@@ -567,3 +568,8 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+.public-catalog__search-field { flex: 1 1 280px; min-width: 0; }
+.public-catalog__filter-field input[type="search"] { width: 100%; min-width: 0; }
+.public-catalog__filter-field [aria-invalid="true"] { border-color: var(--destructive); }
+.public-catalog__filter-field p[role="alert"] { color: var(--destructive); margin: 0; }

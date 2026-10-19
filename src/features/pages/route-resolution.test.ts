@@ -1,7 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { catalogRouteAcceptsKind, isOfferingKind, isPricingModel, resolveCatalogRoute, resolveAuthAlias } from "./route-resolution";
+import { catalogRouteAcceptsKind, isOfferingKind, isPricingModel, resolveCatalogRoute, resolveAuthAlias, resolveCatalogSearchAlias } from "./route-resolution";
 
 describe("catalog route resolution", () => {
+  it("assigns canonical search to the operational listing", () => {
+    expect(resolveCatalogRoute(["search"])).toMatchObject({ type: "listing", basePath: "/search", kinds: [] });
+  });
+  it("redirects the search alias with only supported fields and first repeated scalar", () => {
+    expect(resolveCatalogSearchAlias(["catalog", "search"], { q: ["علم % &", "ignored"], kind: "track", featured: "0", per_page: "5", cursor: "token", unknown: "drop" })).toBe("/search?q=%D8%B9%D9%84%D9%85+%25+%26&kind=track&featured=0&per_page=5&cursor=token");
+    expect(resolveCatalogSearchAlias(["courses", "search"], {})).toBeNull();
+  });
   it("maps public list routes to only their supported kinds", () => {
     expect(resolveCatalogRoute(["tracks"])).toMatchObject({ type: "listing", kinds: ["track"] });
     expect(resolveCatalogRoute(["courses"])).toMatchObject({ type: "listing", kinds: ["course"] });

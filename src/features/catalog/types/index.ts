@@ -60,6 +60,7 @@ export interface CatalogOfferingDetail extends CatalogOffering {
 }
 
 export interface CatalogFilters {
+  q?: string;
   kind?: OfferingKind;
   pricing?: PricingModel;
   featured?: boolean;

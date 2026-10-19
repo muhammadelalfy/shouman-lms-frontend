@@ -8,12 +8,13 @@ import { ProfileSettings } from "@/features/account/components/profile-settings"
 import { getCurrentUser } from "@/features/account/api";
 import { PublicCatalogListing, PublicOfferingDetail } from "@/features/catalog/components/public-catalog";
 import { getCatalogOffering, listCatalogOfferings } from "@/features/catalog/api";
-import type { CatalogOffering, CatalogOfferingDetail, CatalogFilters, OfferingKind, PricingModel } from "@/features/catalog/types";
+import type { CatalogOffering, CatalogOfferingDetail } from "@/features/catalog/types";
+import { catalogListingHref, parseCatalogQuery } from "@/features/catalog/search-query";
 import { isApiError } from "@/lib/api/errors";
 import { apiFailure } from "@/lib/forms";
 import { getSessionToken } from "@/lib/auth/session";
 import { PlatformFrame, PlatformPage } from "@/features/pages/page-shell";
-import { catalogRouteAcceptsKind, isOfferingKind, isPricingModel, resolveCatalogRoute, resolveAuthAlias } from "@/features/pages/route-resolution";
+import { catalogRouteAcceptsKind, isOfferingKind, resolveCatalogRoute, resolveAuthAlias, resolveCatalogSearchAlias } from "@/features/pages/route-resolution";
 import { getPageDefinition, isKnownPlatformRoute } from "@/features/pages/page-content";
 import { resolveExperienceRoute, workspaceForExperience } from "@/features/experience/route-registry";
 import { PublicExperience } from "@/features/experience/public/public-experience";
@@ -55,25 +56,6 @@ function matchesRouteKind(route: NonNullable<ReturnType<typeof resolveCatalogRou
   return route.type !== "detail" || catalogRouteAcceptsKind(route, offering.kind);
 }
 
-async function loadOfferings(route: Extract<NonNullable<ReturnType<typeof resolveCatalogRoute>>, { type: "listing" }>, query: Record<string, string | string[] | undefined>) {
-  const pricingValue = first(query.pricing);
-  const pricing: PricingModel | undefined = isPricingModel(pricingValue) ? pricingValue : undefined;
-  const queryKind = first(query.kind);
-  const selectedKind: OfferingKind | undefined = route.basePath === "/catalog" && isOfferingKind(queryKind) ? queryKind : undefined;
-  const cursor = first(query.cursor) ?? null;
-  const kinds: Array<OfferingKind | undefined> = selectedKind ? [selectedKind] : route.kinds.length ? route.kinds : [undefined];
-  const results = await Promise.all(kinds.map(async (kind) => {
-    const filters: CatalogFilters = { ...(kind ? { kind } : {}), pricing, cursor };
-    return listCatalogOfferings(filters);
-  }));
-
-  const offerings = results.flatMap((result) => result.data);
-  const nextCursor = results.map((result) => result.meta.next_cursor).find(Boolean) ?? null;
-  const previousCursor = results.map((result) => result.meta.prev_cursor).find(Boolean) ?? null;
-
-  return { offerings, pricing, nextCursor, previousCursor };
-}
-
 export async function generateMetadata({ params }: RouteParams): Promise<Metadata> {
   const { slug } = await params;
   const adminRoute = resolveAdminRoute(slug);
@@ -99,6 +81,8 @@ export async function generateMetadata({ params }: RouteParams): Promise<Metadat
 
 export default async function PlatformRoute({ params, searchParams }: PlatformRouteProps) {
   const [{ slug }, query] = await Promise.all([params, searchParams]);
+  const searchAlias = resolveCatalogSearchAlias(slug, query);
+  if (searchAlias) redirect(searchAlias);
   const authAlias = resolveAuthAlias(slug);
   if (authAlias) {
     const queryString = new URLSearchParams(Object.entries(query).flatMap(([key, value]) => { const item = first(value); return item === undefined ? [] : [[key, item]]; })).toString();
@@ -124,58 +108,49 @@ export default async function PlatformRoute({ params, searchParams }: PlatformRo
   const catalogRoute = resolveCatalogRoute(slug);
 
   if (catalogRoute?.type === "listing") {
-    let result: Awaited<ReturnType<typeof loadOfferings>> | null = null;
-    let loadError: unknown;
-    try {
-      result = await loadOfferings(catalogRoute, query);
-    } catch (error) {
-      loadError = error;
+    const parsed = parseCatalogQuery(query, catalogRoute.kinds[0]);
+    if (first(query.q) !== undefined && !parsed.values.q) redirect(catalogListingHref(catalogRoute.basePath, parsed.values));
+    let offerings: CatalogOffering[] = [];
+    let nextCursor: string | null = null;
+    let previousCursor: string | null = null;
+    let errorMessage: string | undefined;
+    let queryError = parsed.queryError;
+    const fieldErrors = { ...parsed.fieldErrors };
+    if (Object.keys(fieldErrors).length) errorMessage = "راجع قيم التصفية أو امسحها ثم أعد البحث.";
+    if (!queryError && !errorMessage) {
+      try {
+        const result = await listCatalogOfferings(parsed.filters);
+        offerings = result.data;
+        nextCursor = result.meta.next_cursor;
+        previousCursor = result.meta.prev_cursor;
+      } catch (error) {
+        if (isApiError(error) && error.status === 422) {
+          errorMessage = "تعذر تطبيق بيانات البحث والتصفية. راجع القيم ثم أعد المحاولة.";
+          if (error.fieldErrors.q) queryError = "تعذر تطبيق عبارة البحث. استخدم ١٢٠ حرفًا أو أقل ثم أعد المحاولة.";
+          for (const key of ["kind", "pricing", "featured", "per_page", "cursor"]) {
+            if (error.fieldErrors[key]) fieldErrors[key] = "هذه القيمة غير صالحة؛ عدّل التصفية أو امسحها.";
+          }
+        } else if (isApiError(error) && error.status === 429) {
+          errorMessage = "طلبات البحث كثيرة الآن. انتظر قليلًا ثم أعد المحاولة.";
+        } else if (isApiError(error) && (error.status === 401 || error.status === 403)) {
+          errorMessage = "تعذر إتاحة الفهرس للزوار الآن. حاول مرة أخرى لاحقًا.";
+        } else {
+          errorMessage = "تعذر الاتصال بالفهرس مؤقتًا. حاول مرة أخرى لاحقًا.";
+        }
+      }
     }
-
-    const selectedKind = first(query.kind);
-    const selectedPricingValue = first(query.pricing);
-    const selectedPricing = isPricingModel(selectedPricingValue) ? selectedPricingValue : undefined;
-    const title = catalogRoute.basePath === "/catalog" && isOfferingKind(selectedKind)
-      ? catalogTitle(selectedKind)
-      : catalogRoute.title;
-    if (loadError) {
-      const empty: CatalogOffering[] = [];
-      return (
-        <PlatformFrame>
-          <div id="platform-main" className="platform-main">
-            <PublicCatalogListing
-              title={catalogRoute.title}
-              description={catalogRoute.description}
-              basePath={catalogRoute.basePath}
-              offerings={empty}
-              kind={selectedKind && catalogRoute.basePath === "/catalog" && isOfferingKind(selectedKind) ? selectedKind : undefined}
-              pricing={selectedPricing}
-              nextCursor={null}
-              previousCursor={null}
-              errorMessage={safeErrorMessage(loadError, "تعذر تحميل الفهرس. حاول مرة أخرى لاحقًا.")}
-            />
-          </div>
-        </PlatformFrame>
-      );
-    }
-    if (!result) throw new Error("Catalog request completed without a result");
-
-    return (
-      <PlatformFrame>
-        <div id="platform-main" className="platform-main">
-          <PublicCatalogListing
-            title={title}
-            description={catalogRoute.description}
-            basePath={catalogRoute.basePath}
-            offerings={result.offerings as CatalogOffering[]}
-            kind={selectedKind && catalogRoute.basePath === "/catalog" && isOfferingKind(selectedKind) ? selectedKind : undefined}
-            pricing={result.pricing}
-            nextCursor={result.nextCursor}
-            previousCursor={result.previousCursor}
-          />
-        </div>
-      </PlatformFrame>
-    );
+    const title = catalogRoute.basePath === "/catalog" && isOfferingKind(parsed.values.kind)
+      ? catalogTitle(parsed.values.kind) : catalogRoute.title;
+    return <PlatformFrame><div id="platform-main" className="platform-main">
+      <PublicCatalogListing
+        title={title} description={catalogRoute.description} basePath={catalogRoute.basePath}
+        offerings={offerings} q={parsed.values.q} kind={parsed.filters.kind} pricing={parsed.filters.pricing}
+        featured={parsed.filters.featured} perPage={parsed.filters.perPage} submittedFilters={parsed.values}
+        queryError={queryError} fieldErrors={fieldErrors} errorMessage={errorMessage}
+        nextCursor={nextCursor} previousCursor={previousCursor}
+        retryHref={catalogListingHref(catalogRoute.basePath, parsed.values)}
+      />
+    </div></PlatformFrame>;
   }
 
   if (catalogRoute?.type === "detail") {

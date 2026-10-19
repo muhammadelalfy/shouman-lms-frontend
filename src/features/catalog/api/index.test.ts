@@ -18,6 +18,15 @@ describe("catalog api", () => {
     expect(fetchMock.mock.calls[0]![0]).toBe("http://api.test/api/v1/catalog/offerings?kind=track&featured=1&cursor=abc");
   });
 
+  it("serializes literal Arabic search and false featured with supported filters", async () => {
+    fetchMock.mockResolvedValue(Response.json({ data: [], links: {}, meta: {} }));
+    await listCatalogOfferings({ q: "علم % &", featured: false, perPage: 5 });
+    const url = new URL(String(fetchMock.mock.calls[0]![0]));
+    expect(url.searchParams.get("q")).toBe("علم % &");
+    expect(url.searchParams.get("featured")).toBe("0");
+    expect(url.searchParams.get("per_page")).toBe("5");
+  });
+
   it("encodes Arabic slugs in the detail URL", async () => {
     fetchMock.mockResolvedValue(Response.json({ data: { slug: "سنة-أولى-علم" } }));
 

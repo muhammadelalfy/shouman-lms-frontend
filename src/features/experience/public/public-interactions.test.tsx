@@ -89,8 +89,6 @@ describe("public synthetic experience interactions", () => {
   });
 
   it.each([
-    ["search", "خطوتك التالية تبدأ بسؤال"],
-    ["catalog/search", "خطوتك التالية تبدأ بسؤال"],
     ["preview/catalog", "أمثلة تصميم المحتوى التعليمي"],
     ["faq", "أسئلة توضيحية، وإجابات واضحة"],
     ["about", "علمٌ يوجّه الرحلة، وتربيةٌ تصنع الأثر"],

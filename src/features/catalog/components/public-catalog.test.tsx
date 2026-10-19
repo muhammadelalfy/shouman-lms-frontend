@@ -4,7 +4,7 @@ import { cleanup, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { formatPrice } from "@/lib/format/price";
 import type { CatalogOffering, CatalogOfferingDetail } from "../types";
-import { PublicCatalogListing, PublicOfferingDetail } from "./public-catalog";
+import { PublicCatalogListing, PublicOfferingDetail, type PublicCatalogListingProps } from "./public-catalog";
 
 afterEach(cleanup);
 
@@ -31,16 +31,7 @@ const track: CatalogOffering = {
 
 function listingProps(
   offerings: CatalogOffering[],
-  overrides: Partial<{
-    title: string;
-    description: string;
-    basePath: string;
-    kind: CatalogOffering["kind"];
-    pricing: "free" | "paid";
-    nextCursor: string | null;
-    previousCursor: string | null;
-    errorMessage: string | null;
-  }> = {},
+  overrides: Partial<PublicCatalogListingProps> = {},
 ) {
   return {
     offerings,
@@ -54,6 +45,32 @@ function listingProps(
 }
 
 describe("public catalog listing", () => {
+  it("submits URL search without cursor and retains the full tuple in pagination and clear", () => {
+    const { container } = render(<PublicCatalogListing {...listingProps([track], { basePath: "/search", q: "علم % &", kind: "track", pricing: "free", featured: true, perPage: 5, nextCursor: "opaque" })} />);
+    const input = screen.getByLabelText("البحث في المحتوى") as HTMLInputElement;
+    expect(input.value).toBe("علم % &");
+    const form = input.closest("form")!;
+    expect(form.method).toBe("get");
+    expect(form.action).toContain("/search");
+    expect(new FormData(form).get("cursor")).toBeNull();
+    expect(new FormData(form).get("featured")).toBe("1");
+    expect(new FormData(form).get("per_page")).toBe("5");
+    const next = new URL(screen.getByRole("link", { name: /المحتوى التالي/ }).getAttribute("href")!, "https://test.local");
+    expect(Object.fromEntries(next.searchParams)).toEqual({ q: "علم % &", kind: "track", pricing: "free", featured: "1", per_page: "5", cursor: "opaque" });
+    const clear = new URL(screen.getByRole("link", { name: "مسح البحث" }).getAttribute("href")!, "https://test.local");
+    expect(Object.fromEntries(clear.searchParams)).toEqual({ kind: "track", pricing: "free", featured: "1", per_page: "5" });
+    expect(screen.getByRole("link", { name: "مسح الكل" }).getAttribute("href")).toBe("/search");
+    expect(container.textContent).not.toContain("تجريبية");
+  });
+  it("distinguishes no matches and associated query validation from empty success", () => {
+    const { rerender } = render(<PublicCatalogListing {...listingProps([], { q: "لا تطابق" })} />);
+    expect(screen.getByRole("heading", { name: "لا توجد نتائج مطابقة لبحثك" })).toBeDefined();
+    rerender(<PublicCatalogListing {...listingProps([], { q: "😀".repeat(121), queryError: "استخدم ١٢٠ حرفًا أو أقل." })} />);
+    const input = screen.getByLabelText("البحث في المحتوى");
+    expect(input.getAttribute("aria-invalid")).toBe("true");
+    expect(input.getAttribute("aria-describedby")).toContain("catalog-query-error");
+    expect(screen.queryByText("لا توجد مواد منشورة للعرض الآن")).toBeNull();
+  });
   it("renders visible API cards, returned prices, selected filters, and safe cursor navigation", () => {
     const { container } = render(
       <PublicCatalogListing

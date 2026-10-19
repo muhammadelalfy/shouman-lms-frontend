@@ -8,9 +8,10 @@ import type { CatalogFilters, CatalogOffering, CatalogOfferingDetail } from "../
 export async function listCatalogOfferings(filters: CatalogFilters = {}): Promise<CursorPaginated<CatalogOffering>> {
   return apiRequest<CursorPaginated<CatalogOffering>>("/catalog/offerings", {
     query: {
+      ...(filters.q ? { q: filters.q } : {}),
       kind: filters.kind,
       pricing: filters.pricing,
-      featured: filters.featured ? 1 : undefined,
+      featured: filters.featured === undefined ? undefined : filters.featured ? 1 : 0,
       per_page: filters.perPage,
       cursor: filters.cursor,
     },

@@ -1,3 +1,4 @@
+import { catalogListingHref, catalogQueryValues } from "@/features/catalog/search-query";
 import type { OfferingKind } from "@/features/catalog/types";
 
 export type CatalogListingRoute = {
@@ -17,6 +18,10 @@ export type CatalogDetailRoute = {
 export type CatalogRoute = CatalogListingRoute | CatalogDetailRoute;
 
 const listingRoutes: Record<string, CatalogListingRoute> = {
+  search: {
+    type: "listing", basePath: "/search", title: "البحث في المحتوى",
+    description: "ابحث في المحتوى المنشور من الأكاديمية وصفِّ النتائج حسب النوع والسعر.", kinds: [],
+  },
   catalog: {
     type: "listing", basePath: "/catalog", title: "الفهرس التعليمي",
     description: "تصفح المسارات والبرامج والدورات المنشورة من الأكاديمية.", kinds: [],
@@ -75,4 +80,10 @@ export function isOfferingKind(value: string | undefined): value is OfferingKind
 
 export function isPricingModel(value: string | undefined): value is "free" | "paid" {
   return value === "free" || value === "paid";
+}
+
+/** Must run before any offering-slug resolution. Preserve the first supported scalar. */
+export function resolveCatalogSearchAlias(slug: string[], query: Record<string, string | string[] | undefined>): string | null {
+  return slug.length === 2 && slug[0] === "catalog" && slug[1] === "search"
+    ? catalogListingHref("/search", catalogQueryValues(query)) : null;
 }

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { catalogListingHref, type CatalogQueryValues } from "../search-query";
 import { formatPrice } from "@/lib/format/price";
 import type {
   CatalogOffering,
@@ -38,6 +39,14 @@ export interface PublicCatalogListingProps {
   nextCursor: string | null;
   previousCursor: string | null;
   errorMessage?: string | null;
+  q?: string;
+  featured?: boolean;
+  perPage?: number;
+  queryError?: string;
+  /** Keep rejected non-sensitive URL fields visible rather than silently dropping them. */
+  submittedFilters?: CatalogQueryValues;
+  fieldErrors?: Record<string, string>;
+  retryHref?: string;
 }
 
 export function PublicCatalogListing({
@@ -49,15 +58,23 @@ export function PublicCatalogListing({
   kind,
   nextCursor,
   previousCursor,
-  errorMessage,
+  errorMessage, q, featured, perPage, queryError, submittedFilters, fieldErrors = {}, retryHref,
 }: PublicCatalogListingProps) {
   const hasItems = offerings.length > 0;
-  const previousHref = previousCursor
-    ? buildListingHref(basePath, kind, pricing, previousCursor)
-    : null;
-  const nextHref = nextCursor
-    ? buildListingHref(basePath, kind, pricing, nextCursor)
-    : null;
+  const values: CatalogQueryValues = {
+    q, kind, pricing,
+    featured: featured === undefined ? undefined : featured ? "1" : "0",
+    per_page: perPage === undefined ? undefined : String(perPage),
+    ...submittedFilters,
+  };
+  const selectedKind = values.kind ?? "";
+  const selectedPricing = values.pricing ?? "";
+  const previousHref = previousCursor ? catalogListingHref(basePath, { ...values, cursor: previousCursor }) : null;
+  const nextHref = nextCursor ? catalogListingHref(basePath, { ...values, cursor: nextCursor }) : null;
+  const clearQueryHref = catalogListingHref(basePath, { ...values, q: undefined, cursor: undefined });
+  const isUnscoped = basePath === "/catalog" || basePath === "/search";
+  const hasFilters = !!(values.kind || values.pricing || values.featured || values.per_page);
+  const hasError = !!(queryError || errorMessage || Object.keys(fieldErrors).length);
 
   return (
     <main className="public-catalog" dir="rtl">
@@ -69,19 +86,31 @@ export function PublicCatalogListing({
 
       <section className="public-catalog__controls" aria-label="تصفية المحتوى">
         <form className="public-catalog__filter-form" action={basePath} method="get" noValidate>
-          {basePath === "/catalog" ? (
+          <div className="public-catalog__filter-field public-catalog__search-field">
+            <label htmlFor="catalog-query">البحث في المحتوى</label>
+            <input id="catalog-query" name="q" type="search" key={q ?? ""} defaultValue={q ?? ""}
+              aria-invalid={queryError ? true : undefined} aria-describedby={queryError ? "catalog-query-error" : undefined} />
+            {queryError ? <p id="catalog-query-error" role="alert">{queryError}</p> : null}
+            {q ? <Link className="public-catalog__clear-filter" href={clearQueryHref}>مسح البحث</Link> : null}
+          </div>
+          {values.featured !== undefined ? <input type="hidden" name="featured" value={values.featured} /> : null}
+          {values.per_page !== undefined ? <input type="hidden" name="per_page" value={values.per_page} /> : null}
+          {!isUnscoped && values.kind !== undefined ? <input type="hidden" name="kind" value={values.kind} /> : null}
+          {isUnscoped ? (
             <div className="public-catalog__filter-field">
               <label htmlFor="catalog-kind">نوع المحتوى</label>
-              <select id="catalog-kind" name="kind" key={kind ?? "all"} defaultValue={kind ?? ""}>
+              <select id="catalog-kind" name="kind" key={selectedKind || "all"} defaultValue={selectedKind} aria-invalid={fieldErrors.kind ? true : undefined} aria-describedby={fieldErrors.kind ? "catalog-kind-error" : undefined}>
                 <option value="">كل المحتوى</option>
+                {selectedKind && !Object.hasOwn(kindLabels, selectedKind) ? <option value={selectedKind}>{selectedKind} — غير صالح</option> : null}
                 {Object.entries(kindLabels).map(([value, label]) => <option value={value} key={value}>{label}</option>)}
               </select>
             </div>
           ) : null}
           <div className="public-catalog__filter-field">
             <label htmlFor="catalog-pricing">نوع السعر</label>
-            <select id="catalog-pricing" name="pricing" key={pricing ?? "all"} defaultValue={pricing ?? ""}>
+            <select id="catalog-pricing" name="pricing" key={selectedPricing || "all"} defaultValue={selectedPricing} aria-invalid={fieldErrors.pricing ? true : undefined} aria-describedby={fieldErrors.pricing ? "catalog-pricing-error" : undefined}>
               <option value="">كل الأسعار</option>
+              {selectedPricing && !["free", "paid"].includes(selectedPricing) ? <option value={selectedPricing}>{selectedPricing} — غير صالح</option> : null}
               <option value="free">مجاني</option>
               <option value="paid">مدفوع</option>
             </select>
@@ -91,16 +120,19 @@ export function PublicCatalogListing({
           </button>
         </form>
         {pricing ? (
-          <Link className="public-catalog__clear-filter" href={buildListingHref(basePath, kind)}>
+          <Link className="public-catalog__clear-filter" href={catalogListingHref(basePath, { ...values, pricing: undefined, cursor: undefined })}>
             إزالة التصفية
           </Link>
         ) : null}
+        {(q || hasFilters) ? <Link className="public-catalog__clear-filter" href={basePath}>مسح الكل</Link> : null}
+        {Object.entries(fieldErrors).map(([key, message]) => <p id={`catalog-${key}-error`} key={key} role="alert">{message}{values[key as keyof CatalogQueryValues] ? ` (${values[key as keyof CatalogQueryValues]})` : ""}</p>)}
       </section>
 
-      {errorMessage ? (
+      {hasError ? (
         <section className="public-catalog__error" role="alert">
-          <h2>تعذر تحميل المحتوى</h2>
-          <p>{errorMessage}</p>
+          <h2>{queryError || Object.keys(fieldErrors).length ? "راجع بيانات البحث والتصفية" : "تعذر تحميل المحتوى"}</h2>
+          {errorMessage ? <p>{errorMessage}</p> : null}
+          {!queryError && !Object.keys(fieldErrors).length ? <Link className="public-catalog__empty-link" href={retryHref ?? catalogListingHref(basePath, values)}>إعادة المحاولة</Link> : null}
         </section>
       ) : hasItems ? (
         <>
@@ -116,14 +148,14 @@ export function PublicCatalogListing({
       ) : (
         <section className="public-catalog__empty" aria-live="polite">
           <span className="public-catalog__empty-mark" aria-hidden="true">✦</span>
-          <h2>{pricing ? "لا توجد مواد منشورة بهذه التصفية" : "لا توجد مواد منشورة للعرض الآن"}</h2>
+          <h2>{q ? "لا توجد نتائج مطابقة لبحثك" : hasFilters ? "لا توجد مواد منشورة بهذه التصفية" : "لا توجد مواد منشورة للعرض الآن"}</h2>
           <p>
-            {pricing
+            {q ? "جرّب كلمات أخرى أو امسح البحث مع الاحتفاظ بالتصفية." : hasFilters
               ? "جرّب اختيار نوع سعر آخر لعرض المواد المنشورة المتاحة."
               : "ستظهر هنا المواد التي تنشرها الأكاديمية وتتيحها للزوار."}
           </p>
           {pricing ? (
-              <Link className="public-catalog__empty-link" href={buildListingHref(basePath, kind)}>
+              <Link className="public-catalog__empty-link" href={catalogListingHref(basePath, { ...values, pricing: undefined, cursor: undefined })}>
               عرض كل المحتوى
             </Link>
           ) : null}
@@ -322,15 +354,6 @@ function Pagination({ previousHref, nextHref }: { previousHref: string | null; n
       {nextHref ? <Link href={nextHref}>المحتوى التالي <span aria-hidden="true">←</span></Link> : null}
     </nav>
   );
-}
-
-function buildListingHref(basePath: string, kind?: OfferingKind, pricing?: PricingModel, cursor?: string): string {
-  const query = new URLSearchParams();
-  if (kind) query.set("kind", kind);
-  if (pricing) query.set("pricing", pricing);
-  if (cursor) query.set("cursor", cursor);
-  const queryString = query.toString();
-  return queryString ? `${basePath}?${queryString}` : basePath;
 }
 
 function kindListLabel(kind: OfferingKind): string {

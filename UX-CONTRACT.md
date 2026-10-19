@@ -50,7 +50,7 @@
 | Icon button | Accessible Arabic name | Match button | Visible ring | Pressed response | Native disabled | Preserve size | Inline/banner context |
 | Input | Visible associated label | No meaning by hover | Visible ring | Native | Read-only/disabled distinguished | Preserve value | `aria-invalid` + inline message |
 | Secret input | Masked; allow paste/autofill | n/a | Visible ring | n/a | Native disabled | Never echo secret | Generic auth error; field-specific schema errors only |
-| Search | Preview-only unless backed by an API | n/a | Visible ring | n/a | Do not imply results | No fake result state | Explain not connected |
+| Search | API-backed `/search` and catalog listing GET forms | n/a | Visible ring | Native GET submit | No fabricated results | Server navigation | Associated query/field validation; safe temporary failure |
 | Textarea | Visible label | n/a | Visible ring | Native | Native disabled | Preserve entered non-sensitive text | Inline message |
 | List | API-backed catalog list or explicit preview cards | Cards do not imply hidden actions | Real link focus | n/a | n/a | Server render / explicit retry | Distinguish empty, no results, and fetch failure |
 
@@ -58,7 +58,7 @@
 
 - **Admin tables:** operational user and offering lists use backend cursor pagination; role lists use the unpaginated resource collection. Synthetic tables remain explicitly preview-only.
 - **Exploratory lists:** public catalog list is server-rendered from the published-offering API; related types use approved `kind` filters.
-- **URL state:** committed catalog `kind`, `pricing`, and `cursor` filters belong in query params. Cursor APIs do not gain synthetic numbered pages. Auth field data is not placed in URLs except the API-approved password reset token/email query.
+- **URL state:** committed catalog `q`, `kind`, `pricing`, `featured`, `per_page`, and `cursor` filters belong in query params. Cursor APIs do not gain synthetic numbered pages. Auth field data is not placed in URLs except the API-approved password reset token/email query.
 - **Page size:** use supported API default; do not invent a per-page selector unless the endpoint and UI need it.
 - **Empty/no-results/error/loading:** loading uses server navigation state where applicable; empty published catalog is not the same as API failure; no-results offers clear filters; failure has retry/navigation; missing detail uses Next `notFound()`.
 - **Back/scroll restoration:** preserve browser-native route/query history.
@@ -162,3 +162,13 @@ This section supersedes E4/E5 preview-only statements for the supported capabili
 Successful offering creation navigates to the returned numeric record; deletion returns to the offering list. Other edits remain in context with persistent feedback. API 401/403/404/422/429/conflict/network failures are distinct from saved outcomes. List filters and cursors live in URLs and reset cursors when filters change. Reorder requests include all current siblings; a stale set requires a fresh read rather than pretending success. Instructor IDs are validated by the backend; the directory link is shown only with `users.view`. Media upload and learner-domain services remain unavailable.
 
 Arabic RTL and existing shared tokens remain canonical. The workspace mobile menu now supports Escape with trigger focus restoration. Browser and API verification distinguish disposable fixtures from live Laravel evidence; release acceptance belongs to the Product Owner.
+
+### Operational public search ownership — SH-204B, 2026-10-19
+
+`features/catalog/components/public-catalog.tsx` owns the live search/list form and cards; `features/catalog/search-query.ts` owns URL fields, exact Unicode White_Space boundary normalization (including U+0085 and NBSP, excluding BOM), and 120-code-point validation. `/search` and `/catalog?q=...` read the existing server-only public catalog endpoint. `/catalog/search` redirects before slug resolution, retaining the first supported scalar value. Existing fixed-kind routes keep one kind and one API cursor stream. `/preview/catalog` remains an explicitly synthetic local explorer; it is never a fallback for live failures.
+
+Search is explicitly submitted through native GET forms, including the active `BuildExactlyHome` hero; its header and topic chips navigate to `/search`. This server-navigation override uses no debounce, client fetch, or local result filtering. Submitted q/filter values survive validation and safe error states; invalid supported filter values remain visible rather than broadening the request. Query validation is associated with the search field. Laravel independently validates all API input and owns visible resources. No search total, score, or academy policy is inferred.
+
+Submitting new search/filter values excludes cursor. Pagination rebuilds same-origin links with the full query/filter tuple. The explicit “مسح البحث” navigation removes q/cursor and retains filters; “مسح الكل” removes all query state. Clearing uses native full-page link navigation and browser focus/history behavior rather than client-only field state. Empty catalog, search with no matches, 422 validation, 429 throttling, guest-access failure, and network/server failure remain distinct; temporary failures offer a manual retry. No private upstream error messages are rendered. Native search-field clearing is also available where the browser supplies it; Enter commits the cleared value.
+
+Source evidence: workspace `docs/all-services-architecture.md` §§ SH-204A/SH-204B and approved `docs/superpowers/plans/2026-10-19-public-catalog-search.md` Task 2; installed Next 16.3.8 `dist/docs/01-app/03-api-reference/03-file-conventions/page.md` (async searchParams) and `04-functions/redirect.md` (redirect outside catch). No absent legacy SRS/ADR is claimed as reviewed. Product Owner acceptance and live browser evidence remain separate from automated implementation checks.

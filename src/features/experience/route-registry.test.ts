@@ -14,7 +14,7 @@ describe("complete frontend route registry", () => {
   it("supports design-brief aliases without intercepting live catalog or identity", () => {
     expect(resolveExperienceRoute(["learn", "track", "demo-lesson"])?.path).toEqual(["learning", "lessons", "demo-lesson"]);
     expect(resolveExperienceRoute(["community", "demo-group"])?.path).toEqual(["community", "groups", "demo-group"]);
-    for (const route of [["catalog"], ["courses"], ["auth", "login"], ["account"]]) expect(resolveExperienceRoute(route)).toBeNull();
+    for (const route of [["search"], ["catalog", "search"], ["catalog"], ["courses"], ["auth", "login"], ["account"]]) expect(resolveExperienceRoute(route)).toBeNull();
   });
   it("keeps unknown routes and malformed paths outside the registry", () => {
     for (const route of [["admin", "unknown"], ["something"], ["quizzes", "demo", "unknown"], ["events", "demo", "unknown"], ["community", "groups", "demo", "unknown"]]) expect(resolveExperienceRoute(route)).toBeNull();

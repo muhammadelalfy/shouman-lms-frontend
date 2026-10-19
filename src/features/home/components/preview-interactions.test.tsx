@@ -269,7 +269,10 @@ describe("rendered homepage preview", () => {
     expect(screen.getByRole("link", { name: "الأسئلة الشائعة" }).getAttribute("href")).toBe("#faq");
     expect(screen.getByRole("button", { name: "عن الشيخ" })).toBeDefined();
 
-    expect(screen.getByRole("link", { name: "ابحث عن دورة أو موضوع" }).getAttribute("href")).toBe("/search");
+    const search = screen.getByRole("searchbox", { name: "ابحث عن دورة أو موضوع" });
+    expect(search.getAttribute("name")).toBe("q");
+    expect(search.closest("form")?.getAttribute("action")).toBe("/search");
+    expect(search.closest("form")?.getAttribute("method")).toBe("get");
     expect(screen.getByRole("link", { name: /تسجيل الدخول/ }).getAttribute("href")).toBe("/auth/login");
     expect(screen.getByRole("link", { name: /إنشاء حساب/ }).getAttribute("href")).toBe("/auth/register");
     expect(screen.getByRole("link", { name: "استكشف جميع الواجهات" }).getAttribute("href")).toBe("/preview");
