@@ -14,16 +14,49 @@ function OrderEditor({
   offeringId: number;
   subjectId?: number;
 }) {
-  const [ordered, setOrdered] = useState(items);
+  const incoming = items.map((item) => item.id).join(",");
+  const [draft, setDraft] = useState({
+    source: incoming,
+    ids: items.map((item) => item.id),
+    changed: false,
+  });
+  if (draft.source !== incoming) {
+    const dirty = draft.ids.join(",") !== draft.source;
+    const currentIds = new Set(items.map((item) => item.id));
+    // Preserve a local draft's relative order, dropping deleted siblings and
+    // appending new ones. A clean editor follows the refreshed server order.
+    const retained = draft.ids.filter((id) => currentIds.has(id));
+    setDraft({
+      source: incoming,
+      ids: dirty
+        ? [
+            ...retained,
+            ...items
+              .filter((item) => !retained.includes(item.id))
+              .map((item) => item.id),
+          ]
+        : items.map((item) => item.id),
+      changed: dirty && draft.ids.join(",") !== incoming,
+    });
+  }
+  const ordered = draft.ids.flatMap((id) => {
+    const item = items.find((item) => item.id === id);
+    return item ? [item] : [];
+  });
   const move = (index: number, delta: number) =>
-    setOrdered((current) => {
-      const next = [...current];
+    setDraft((current) => {
+      const next = [...current.ids];
       [next[index], next[index + delta]] = [next[index + delta], next[index]];
-      return next;
+      return { ...current, ids: next };
     });
   return (
     <details className="admin-outline-item">
       <summary>ترتيب {subjectId ? "الدروس" : "المواد"}</summary>
+      {draft.changed && (
+        <p role="status" className="xp-muted">
+          تغيّرت القائمة أثناء التحرير. احتُفظ بترتيبك للعناصر الحالية. راجع القائمة المحدّثة قبل الحفظ.
+        </p>
+      )}
       <ActionForm action={reorderContentAction} label="حفظ الترتيب">
         <input type="hidden" name="offering_id" value={offeringId} />
         <input
@@ -103,7 +136,7 @@ export function OutlineEditor({
       )}
       {manage && subjects.length > 1 && (
         <OrderEditor
-          key={subjects.map((s) => s.id).join(",")}
+          key={`subjects-${offering.id}`}
           items={subjects}
           offeringId={offering.id}
         />
@@ -176,7 +209,7 @@ export function OutlineEditor({
               </Link>
               {(s.lessons?.length ?? 0) > 1 && (
                 <OrderEditor
-                  key={s.lessons!.map((l) => l.id).join(",")}
+                  key={`lessons-${offering.id}-${s.id}`}
                   items={[...s.lessons!].sort(
                     (a, b) => a.position - b.position,
                   )}
