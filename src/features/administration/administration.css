@@ -53,7 +53,8 @@
   accent-color: var(--primary);
 }
 .admin-live textarea {
-  resize: vertical;
+  resize: none;
+  min-height: 160px;
 }
 .admin-live .xp-card {
   overflow-wrap: anywhere;
@@ -109,3 +110,5 @@
     padding: 12px;
   }
 }
+
+.admin-live .xp-tabs a[aria-current="page"] { background: var(--primary); color: var(--primary-foreground); border-color: var(--primary); }

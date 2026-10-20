@@ -112,7 +112,11 @@ export async function AdministrationPage({
       <OfferingDetail offering={result.data} permissions={user.permissions} />
     );
   return (
-    <AdminShell title={title} permissions={user.permissions}>
+    <AdminShell
+      title={title}
+      permissions={user.permissions}
+      currentSection={route.section}
+    >
       {route.mode !== "list" && (
         <p>
           <Link

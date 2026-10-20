@@ -39,10 +39,29 @@ export function MobileNavigation({ hasSession }: { hasSession: boolean }) {
       </button>
       {open ? (
         <nav id="platform-mobile-navigation" aria-label="قائمة التنقل للجوال">
-          {links.map((item) => <Link href={item.href} key={item.href} onClick={() => setOpen(false)}>{item.label}</Link>)}
-          {hasSession
-            ? <Link href="/account" onClick={() => setOpen(false)}>حسابي</Link>
-            : <Link href="/auth/register" onClick={() => setOpen(false)}>إنشاء حساب <span aria-hidden="true">←</span></Link>}
+          {links.map((item) => (
+            <Link
+              href={item.href}
+              key={item.href}
+              onClick={() => setOpen(false)}
+            >
+              {item.label}
+            </Link>
+          ))}
+          {hasSession ? (
+            <>
+              <Link href="/dashboard" onClick={() => setOpen(false)}>
+                لوحتي
+              </Link>
+              <Link href="/account" onClick={() => setOpen(false)}>
+                حسابي
+              </Link>
+            </>
+          ) : (
+            <Link href="/auth/register" onClick={() => setOpen(false)}>
+              إنشاء حساب <span aria-hidden="true">←</span>
+            </Link>
+          )}
         </nav>
       ) : null}
     </div>

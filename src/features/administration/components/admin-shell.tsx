@@ -5,10 +5,12 @@ export function AdminShell({
   children,
   title,
   permissions = [],
+  currentSection,
 }: {
   children: ReactNode;
   title: string;
   permissions?: Permission[];
+  currentSection?: "dashboard" | "users" | "roles" | "offerings";
 }) {
   return (
     <div className="experience">
@@ -16,14 +18,37 @@ export function AdminShell({
         <p className="xp-eyebrow">إدارة الأكاديمية</p>
         <h1>{title}</h1>
         <nav className="xp-tabs" aria-label="إدارة السجلات">
+          {permissions.length > 0 && (
+            <Link
+              href="/admin/dashboard"
+              aria-current={currentSection === "dashboard" ? "page" : undefined}
+            >
+              لوحة الإدارة
+            </Link>
+          )}
           {permissions.includes("offerings.view") && (
-            <Link href="/admin/offerings">المحتوى التعليمي</Link>
+            <Link
+              href="/admin/offerings"
+              aria-current={currentSection === "offerings" ? "page" : undefined}
+            >
+              المحتوى التعليمي
+            </Link>
           )}
           {permissions.includes("users.view") && (
-            <Link href="/admin/users">المستخدمون</Link>
+            <Link
+              href="/admin/users"
+              aria-current={currentSection === "users" ? "page" : undefined}
+            >
+              المستخدمون
+            </Link>
           )}
           {permissions.includes("roles.manage-permissions") && (
-            <Link href="/admin/roles">الأدوار والصلاحيات</Link>
+            <Link
+              href="/admin/roles"
+              aria-current={currentSection === "roles" ? "page" : undefined}
+            >
+              الأدوار والصلاحيات
+            </Link>
           )}
           <Link href="/account">حسابي</Link>
           <Link href="/preview">معرض الواجهات</Link>

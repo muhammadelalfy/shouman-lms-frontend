@@ -1,6 +1,11 @@
 const base = process.env.PLATFORM_BASE_URL ?? "http://127.0.0.1:3111";
 const results = [];
 for (const path of [
+  "/admin",
+  "/admin/dashboard",
+  "/dashboard",
+  "/my-learning",
+  "/learning",
   "/admin/users",
   "/admin/users/42",
   "/admin/roles",

@@ -12,7 +12,7 @@ export function ListFilters({
   users?: boolean;
 }) {
   return (
-    <form action={base} className="admin-toolbar">
+    <form action={base} className="admin-toolbar" noValidate>
       <Field
         name="search"
         label="البحث"

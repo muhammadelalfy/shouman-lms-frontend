@@ -73,3 +73,13 @@ PLAYWRIGHT_MODULE=/tmp/shouman-browser/node_modules/playwright/index.mjs PLATFOR
 ```
 
 Use a matching existing production build; confirm runtime API environment points to the fixture. Separate terminals/process sessions are required. The browser harness rejects root integration ports3115/3116. Stop only your owned fixture/Next sessions after execution. 2026-10-19 UTC run:9/9 groups passed, exit0; workspace evidence `docs/service-continuation/evidence/search-states/`. This does not replace real search/security/regression checks.
+
+## Authenticated workspace verification
+
+`workspace-check.mjs` uses existing synthetic admin/student accounts on a loopback Docker stack. It never seeds, resets, edits profiles/roles/passwords or creates content. Sign-in/out creates authentication sessions and updates login timestamps. Supply a private mode0600 JSON file via `WORKSPACE_ACCOUNTS` with `{ "admin": { "email": "...@integration.example.invalid", "password": "..." }, "student": { "email": "...@integration.example.invalid", "password": "..." } }`; never commit that file.
+
+```sh
+PLAYWRIGHT_MODULE=/tmp/shouman-browser/node_modules/playwright/index.mjs PLATFORM_BASE_URL=http://localhost:3118 WORKSPACE_ACCOUNTS=/private/path/accounts.json FRONTEND_EVIDENCE_DIR=.frontend-evidence/workspaces node scripts/verification/workspace-check.mjs
+```
+
+Covers guest/expired/forbidden access, actual account context and admin record summaries, honest learning-service availability, explicit previews/active navigation, four page families at320/390/768/1440px, mobile Escape/menu navigation, compact viewport and browser errors. It uses an existing production build. Server partial-failure/permission branches have component tests; this real-service script does not interrupt the backend. Use `npm test -- --maxWorkers=2` for the full suite when machine load makes the default worker count hit existing rendering timeouts. No assertions or timeout thresholds are relaxed.

@@ -12,7 +12,7 @@ import "./learner.css";
 
 function Dashboard() {
   return <div className="xp-stack learner-page">
-    <ExperienceHeading eyebrow="مساحتك في الأكاديمية" title="خطوة جديدة في رحلة التعلّم" description="تابع دروسك، ورتّب أولوياتك، وارجع إلى ما بدأت. هذه مساحة شخصية ببيانات توضيحية فقط." action={<Link className="xp-button xp-button-outline" href="/my-learning">كل أمثلة تعلّمي<ArrowLeft size={17} aria-hidden="true" />
+    <ExperienceHeading eyebrow="مساحتك في الأكاديمية" title="خطوة جديدة في رحلة التعلّم" description="تابع دروسك، ورتّب أولوياتك، وارجع إلى ما بدأت. هذه مساحة شخصية ببيانات توضيحية فقط." action={<Link className="xp-button xp-button-outline" href="/preview/my-learning">كل أمثلة تعلّمي<ArrowLeft size={17} aria-hidden="true" />
     </Link>} />
     <section className="learner-welcome">
       <div className="learner-welcome-copy">
@@ -45,7 +45,7 @@ function Dashboard() {
       <section className="xp-stack">
         <div className="learner-section-heading">
           <h2>أكمل رحلتك</h2>
-          <Link href="/my-learning">عرض الكل<ArrowLeft size={15} aria-hidden="true" />
+          <Link href="/preview/my-learning">عرض الكل<ArrowLeft size={15} aria-hidden="true" />
           </Link>
         </div>
         <div className="xp-grid xp-grid-2">{sampleLearning.slice(0, 2).map((item) => <StudyCard key={item.id} item={item} />)}</div>

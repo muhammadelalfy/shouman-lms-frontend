@@ -41,6 +41,7 @@ export function Field({
       </label>
       {textarea ? (
         <textarea
+          className="resize-none"
           id={id}
           name={name}
           defaultValue={value ?? ""}

@@ -34,6 +34,7 @@ export async function PlatformFrame({ children }: { children: ReactNode }) {
         <div className="platform-header-actions">
           {hasSession ? (
             <>
+              <Link href="/dashboard" className="platform-login">لوحتي</Link>
               <Link href="/account" className="platform-login">حسابي</Link>
               <form action={logoutAction} noValidate><button className="platform-login platform-logout" type="submit">تسجيل الخروج</button></form>
             </>

@@ -22,8 +22,8 @@ export const experienceRoutes: ExperienceRouteExample[] = [
   { href: "/checkout/demo-course/result", title: "حالات الطلب", area: "public" },
   { href: "/certificates/verify", title: "التحقق من شهادة", area: "public" },
   { href: "/verify/demo-certificate", title: "تصميم نتيجة التحقق", area: "public" },
-  { href: "/dashboard", title: "لوحة المتعلم", area: "learner" },
-  { href: "/my-learning", title: "تعلّمي", area: "learner" },
+  { href: "/preview/dashboard", title: "لوحة المتعلم", area: "learner" },
+  { href: "/preview/my-learning", title: "تعلّمي", area: "learner" },
   { href: "/learning/lessons/demo-lesson", title: "مشغّل الدرس", area: "learner" },
   { href: "/quizzes", title: "اختباراتي", area: "learner" },
   { href: "/quizzes/demo-quiz", title: "أسئلة الاختبار", area: "learner" },
@@ -82,13 +82,16 @@ export const experienceRoutes: ExperienceRouteExample[] = [
   { href: "/preview/admin/settings/integrations", title: "إعدادات التكاملات", area: "admin" },
 ];
 
-const examplesByPath = new Map(experienceRoutes.map((route) => [route.href.slice(1).replace(/^preview\/admin\//, "admin/"), route]));
+const examplesByPath = new Map(experienceRoutes.map((route) => [route.href.slice(1).replace(/^preview\/admin\//, "admin/").replace(/^preview\/(dashboard|my-learning)$/, "$1"), route]));
 const adminRecordSections = new Set(["users", "offerings", "subjects", "lessons", "quizzes", "question-bank", "payments", "coupons", "offers", "groups", "events", "meetings", "attendance", "certificates", "projects", "campaigns", "notifications", "audit-log"]);
 const adminEditorSections = new Set(["users", "offerings", "subjects", "lessons", "quizzes", "question-bank", "coupons", "offers", "groups", "events", "meetings", "campaigns", "notifications"]);
 const learnerSections = new Set(["dashboard", "learning", "my-learning", "quizzes", "certificates", "projects", "notifications", "achievements", "orders", "instructor", "supervisor", "evaluator"]);
 
 export function resolveExperienceRoute(slug: string[]): ExperienceRoute | null {
   let path = [...slug];
+  const explicitLearnerPreview = path[0] === "preview" && path.length === 2 && ["dashboard", "my-learning"].includes(path[1]);
+  if (explicitLearnerPreview) path = path.slice(1);
+  if (!explicitLearnerPreview && (path.length === 1 && ["dashboard", "my-learning", "learning", "admin"].includes(path[0]) || path.join("/") === "admin/dashboard")) return null;
   const explicitAdminPreview = path[0] === "preview" && path[1] === "admin";
   if (explicitAdminPreview) path = path.slice(1);
   if (!explicitAdminPreview && path[0] === "admin" && ["users", "roles", "offerings", "subjects", "lessons", "students", "tracks", "courses", "programs", "seasonal-programs", "initiatives"].includes(path[1])) return null;

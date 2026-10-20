@@ -1,3 +1,5 @@
+import { resolveWorkspaceRoute } from "@/features/workspaces/routes";
+import { WorkspacePage } from "@/features/workspaces/pages";
 import { resolveAdminRoute, isLiveAdminPath } from "@/features/administration/route-resolution";
 import { AdministrationPage } from "@/features/administration/pages";
 import type { Metadata } from "next";
@@ -58,6 +60,8 @@ function matchesRouteKind(route: NonNullable<ReturnType<typeof resolveCatalogRou
 
 export async function generateMetadata({ params }: RouteParams): Promise<Metadata> {
   const { slug } = await params;
+  const workspaceRoute = resolveWorkspaceRoute(slug);
+  if (workspaceRoute) return { title: workspaceRoute === "admin" ? "لوحة الإدارة" : workspaceRoute === "learning" ? "تعلّمي" : "لوحتي", robots: { index: false, follow: false } };
   const adminRoute = resolveAdminRoute(slug);
   if (adminRoute) return { title: "إدارة الأكاديمية", robots: { index: false, follow: false } };
   const experience = resolveExperienceRoute(slug);
@@ -88,6 +92,8 @@ export default async function PlatformRoute({ params, searchParams }: PlatformRo
     const queryString = new URLSearchParams(Object.entries(query).flatMap(([key, value]) => { const item = first(value); return item === undefined ? [] : [[key, item]]; })).toString();
     redirect(`${authAlias}${queryString ? `?${queryString}` : ""}`);
   }
+  const workspaceRoute = resolveWorkspaceRoute(slug);
+  if (workspaceRoute) return <PlatformFrame><WorkspacePage route={workspaceRoute} /></PlatformFrame>;
   const adminRoute = resolveAdminRoute(slug);
   if (adminRoute) return <PlatformFrame><AdministrationPage route={adminRoute} query={Object.fromEntries(Object.entries(query).map(([key,value])=>[key,first(value)]))}/></PlatformFrame>;
   if (isLiveAdminPath(slug)) notFound();

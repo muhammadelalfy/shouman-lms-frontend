@@ -33,7 +33,7 @@ it("retains drafts and associates server field errors with the input", async () 
     document.getElementById(input.getAttribute("aria-describedby")!)
       ?.textContent,
   ).toContain("عنوان غير صالح");
-  expect(document.activeElement).toBe(input);
+  await waitFor(() => expect(document.activeElement).toBe(input));
 });
 it("associates nested action schema errors with their field", async () => {
   const action = async () => ({

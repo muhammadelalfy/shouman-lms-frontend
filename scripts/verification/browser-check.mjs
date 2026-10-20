@@ -27,8 +27,8 @@ const routes = [
   "/catalog/test-course",
   "/auth/login",
   "/account",
-  "/dashboard",
-  "/my-learning",
+  "/preview/dashboard",
+  "/preview/my-learning",
   "/learning/lessons/demo-lesson",
   "/quizzes/demo-quiz",
   "/certificates",
@@ -78,18 +78,18 @@ try {
       });
       if (
         (route === "/admin/offerings/4" ||
-          route === "/dashboard" ||
+          route === "/preview/dashboard" ||
           route === "/") &&
         [390, 1440].includes(width)
       )
         await page.screenshot({
-          path: `${out}/${route === "/" ? "home" : route === "/dashboard" ? "learner" : "admin"}-${width}.png`,
+          path: `${out}/${route === "/" ? "home" : route === "/preview/dashboard" ? "learner" : "admin"}-${width}.png`,
           fullPage: true,
         });
     }
   }
   await page.setViewportSize({ width: 390, height: 900 });
-  await page.goto(`${base}/dashboard`, {
+  await page.goto(`${base}/preview/dashboard`, {
     waitUntil: "domcontentloaded",
   });
   const menu = page.getByRole("button", { name: "فتح قائمة المساحة" });
