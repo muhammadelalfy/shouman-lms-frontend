@@ -8,3 +8,6 @@ lovable-project
 /build-exactly-web/
 /build-exactly-web.zip
 *.log
+
+.next-*
+.frontend-evidence
