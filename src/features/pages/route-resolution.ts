@@ -84,6 +84,8 @@ export function isPricingModel(value: string | undefined): value is "free" | "pa
 
 /** Must run before any offering-slug resolution. Preserve the first supported scalar. */
 export function resolveCatalogSearchAlias(slug: string[], query: Record<string, string | string[] | undefined>): string | null {
-  return slug.length === 2 && slug[0] === "catalog" && slug[1] === "search"
-    ? catalogListingHref("/search", catalogQueryValues(query)) : null;
+  if (slug.length !== 2 || slug[0] !== "catalog" || slug[1] !== "search") return null;
+  const values = catalogQueryValues(query);
+  if (values.q === "") delete values.cursor;
+  return catalogListingHref("/search", values);
 }

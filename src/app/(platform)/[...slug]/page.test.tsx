@@ -51,6 +51,10 @@ describe("operational catalog search orchestration", () => {
     await expect(page({ q: ["علم", "ignored"], kind: "course", cursor: "x", unknown: "drop" }, ["catalog", "search"])).rejects.toThrow("REDIRECT:/search?q=%D8%B9%D9%84%D9%85&kind=course&cursor=x");
     expect(list).not.toHaveBeenCalled();
   });
+  it("redirects an explicit whitespace alias query without its stale cursor or an API call", async () => {
+    await expect(page({ q: ["\u0085\u00a0\u3000", "علم"], kind: "course", pricing: "free", featured: "1", per_page: "5", cursor: "OLD", unknown: "drop" }, ["catalog", "search"])).rejects.toEqual(new Error("REDIRECT:/search?kind=course&pricing=free&featured=1&per_page=5"));
+    expect(list).not.toHaveBeenCalled();
+  });
   it.each([422, 429, 0, 500, 401, 403])("shows safe distinct failure for status %s, preserves q, and never sample results", async (status) => {
     list.mockRejectedValue(new ApiError(status, "PRIVATE ERROR DETAILS", null, status === 422 ? { q: ["PRIVATE VALIDATION"] } : {}));
     render(await page({ q: "علم" }));

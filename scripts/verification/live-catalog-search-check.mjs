@@ -97,6 +97,18 @@ try {
     await page.waitForURL((url) => !url.searchParams.has("q") && !url.searchParams.has("cursor"));
     assert.equal(new URL(page.url()).searchParams.get("pricing"), "free");
     record("whitespace query canonicalization preserves filters and drops stale cursor");
+    const retained = { kind: "course", pricing: "free", featured: "1", per_page: "2" };
+    for (const empty of ["", "\u00a0 "]) {
+      await page.goto(`${base}/catalog/search?${new URLSearchParams({ ...retained, q: empty, cursor: nextParams.get("cursor") })}`);
+      await page.waitForURL((url) => url.pathname === "/search" && !url.searchParams.has("q") && !url.searchParams.has("cursor"));
+      assert.deepEqual(Object.fromEntries(new URL(page.url()).searchParams), retained);
+    }
+    record("alias empty/whitespace query drops q/cursor and preserves complete filters");
+    await page.goto(`${base}/catalog/search?${new URLSearchParams({ ...retained, cursor: nextParams.get("cursor") })}`);
+    await page.waitForURL((url) => url.pathname === "/search");
+    assert.deepEqual(Object.fromEntries(new URL(page.url()).searchParams), { ...retained, cursor: nextParams.get("cursor") });
+    record("alias with absent query preserves valid cursor and complete filters");
+
   }
 
   await page.goto(searchUrl({ q: fixture.prefix, kind: "course", pricing: "free", featured: "1", per_page: "2" }));

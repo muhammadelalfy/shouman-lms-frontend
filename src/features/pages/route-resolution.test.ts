@@ -9,6 +9,15 @@ describe("catalog route resolution", () => {
     expect(resolveCatalogSearchAlias(["catalog", "search"], { q: ["علم % &", "ignored"], kind: "track", featured: "0", per_page: "5", cursor: "token", unknown: "drop" })).toBe("/search?q=%D8%B9%D9%84%D9%85+%25+%26&kind=track&featured=0&per_page=5&cursor=token");
     expect(resolveCatalogSearchAlias(["courses", "search"], {})).toBeNull();
   });
+  it.each(["", "\u0085", "\u00a0", "\u3000", "\u0085\u00a0\u3000", ["\u0085\u00a0\u3000", "علم"]])("drops stale alias cursor for explicit empty first q %j", (q) => {
+    expect(resolveCatalogSearchAlias(["catalog", "search"], { q, kind: "course", pricing: "free", featured: "1", per_page: "5", cursor: "OLD", unknown: "drop" })).toBe("/search?kind=course&pricing=free&featured=1&per_page=5");
+  });
+  it("preserves alias cursor when q is absent", () => {
+    expect(resolveCatalogSearchAlias(["catalog", "search"], { kind: "course", pricing: "free", featured: "1", per_page: "5", cursor: "OLD", unknown: "drop" })).toBe("/search?kind=course&pricing=free&featured=1&per_page=5&cursor=OLD");
+  });
+  it("preserves alias cursor for a nonempty normalized first q", () => {
+    expect(resolveCatalogSearchAlias(["catalog", "search"], { q: ["\u0085علم\u00a0", ""], kind: "course", pricing: "free", featured: "1", per_page: "5", cursor: "OLD", unknown: "drop" })).toBe("/search?q=%D8%B9%D9%84%D9%85&kind=course&pricing=free&featured=1&per_page=5&cursor=OLD");
+  });
   it("maps public list routes to only their supported kinds", () => {
     expect(resolveCatalogRoute(["tracks"])).toMatchObject({ type: "listing", kinds: ["track"] });
     expect(resolveCatalogRoute(["courses"])).toMatchObject({ type: "listing", kinds: ["course"] });
