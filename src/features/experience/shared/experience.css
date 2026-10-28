@@ -35,7 +35,7 @@
 .xp-section-heading h2 { margin: 0; }
 .xp-section-heading a { font-size: 12px; color: var(--primary); font-weight: 700; }
 .xp-button, .xp-button-outline { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 44px; padding: 10px 19px; border: 1px solid var(--primary); border-radius: 9px; background: var(--primary); color: var(--primary-foreground); font-weight: 700; font-size: 13px; line-height: 1.6; text-align: center; transition: background .18s, border-color .18s, box-shadow .18s; }
-.xp-button:hover { background: var(--navy); border-color: var(--navy); box-shadow: 0 4px 12px color-mix(in oklch, var(--primary) 16%, transparent); }
+.xp-button:hover { color: var(--navy-foreground); background: var(--navy); border-color: var(--navy); box-shadow: 0 4px 12px color-mix(in oklch, var(--primary) 16%, transparent); }
 .xp-button:active { box-shadow: inset 0 2px 5px color-mix(in oklch, black 18%, transparent); }
 .xp-button-outline { color: var(--primary); background: var(--card); border-color: var(--border); }
 .xp-button-outline:hover { color: var(--primary); background: var(--gold-soft); border-color: var(--gold); }
@@ -46,9 +46,9 @@
 .xp-icon-button:active { background: var(--gold-soft); }
 .xp-icon-tile { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; flex: none; border-radius: 12px; background: var(--gold-soft); color: var(--accent-foreground); }
 .xp-badge { display: inline-flex; align-items: center; gap: 5px; width: fit-content; border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px; color: var(--muted-foreground); background: var(--background); font-size: 11px; font-weight: 700; white-space: nowrap; }
-.xp-badge--success { color: var(--xp-success); border-color: color-mix(in oklch, var(--xp-success) 20%, white); background: color-mix(in oklch, var(--xp-success) 7%, white); }
-.xp-badge--warning { color: var(--xp-warning); border-color: color-mix(in oklch, var(--xp-warning) 20%, white); background: color-mix(in oklch, var(--xp-warning) 7%, white); }
-.xp-badge--info { color: var(--xp-info); border-color: color-mix(in oklch, var(--xp-info) 20%, white); background: color-mix(in oklch, var(--xp-info) 7%, white); }
+.xp-badge--success { color: var(--xp-success); border-color: color-mix(in oklch, var(--xp-success) 20%, var(--card)); background: color-mix(in oklch, var(--xp-success) 7%, var(--card)); }
+.xp-badge--warning { color: var(--xp-warning); border-color: color-mix(in oklch, var(--xp-warning) 20%, var(--card)); background: color-mix(in oklch, var(--xp-warning) 7%, var(--card)); }
+.xp-badge--info { color: var(--xp-info); border-color: color-mix(in oklch, var(--xp-info) 20%, var(--card)); background: color-mix(in oklch, var(--xp-info) 7%, var(--card)); }
 .xp-search { display: flex; align-items: center; gap: 9px; min-height: 46px; min-width: 0; padding-inline: 14px 3px; background: var(--card); border: 1px solid var(--border); border-radius: 9px; color: var(--muted-foreground); }
 .xp-search input { min-width: 0; width: 100%; background: transparent; color: var(--foreground); border: 0; padding: 9px 0; outline-offset: 6px; }
 .xp-search input::-webkit-search-cancel-button { appearance: none; }
@@ -79,7 +79,7 @@
 .experience th, .experience td { padding: 15px 17px; border-bottom: 1px solid var(--border); text-align: start; white-space: nowrap; }
 .experience th { background: var(--background); color: var(--muted-foreground); font-weight: 700; }
 .experience tbody tr:last-child td { border-bottom: 0; }
-.experience tbody tr:hover { background: color-mix(in oklch, var(--gold-soft) 38%, white); }
+.experience tbody tr:hover { background: color-mix(in oklch, var(--gold-soft) 38%, var(--card)); }
 .experience caption { text-align: start; padding: 14px 17px; color: var(--muted-foreground); font-size: 12px; }
 .xp-dialog { width: min(450px, calc(100vw - 32px)); max-height: calc(100dvh - 40px); overflow: auto; margin: auto; padding: 28px; border: 1px solid var(--border); border-radius: 18px; color: var(--foreground); background: var(--card); box-shadow: 0 24px 100px color-mix(in oklch, var(--navy) 25%, transparent); }
 .xp-dialog::backdrop { background: color-mix(in oklch, var(--navy) 55%, transparent); backdrop-filter: blur(3px); }
@@ -88,7 +88,7 @@
 .xp-dialog > p { line-height: 1.9; }
 .xp-sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
 .xp-workspace { max-width: 1500px; margin: 0 auto; display: grid; grid-template-columns: 228px minmax(0, 1fr); align-items: start; }
-.xp-sidebar { position: sticky; top: 0; padding: 26px 17px; max-height: 100dvh; overflow: auto; border-inline-end: 1px solid var(--border); background: var(--card); }
+.xp-sidebar { position: static; padding: 26px 17px; border-inline-end: 1px solid var(--border); background: var(--card); }
 .xp-sidebar-intro { display: flex; align-items: center; gap: 10px; padding: 0 4px 24px; }
 .xp-sidebar-intro strong { display: block; font-size: 13px; }
 .xp-sidebar-intro small { color: var(--muted-foreground); font-size: 10px; }
@@ -146,3 +146,30 @@
   .experience *, .experience *::before, .experience *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
 }
 @media print { .xp-sidebar, .xp-bottom-nav, .xp-workspace-mobile-bar { display: none !important; } .xp-workspace { display: block; } .xp-preview-notice, .xp-data-label { print-color-adjust: exact; } }
+
+.dark .experience { --xp-success: #86dbaf; --xp-warning: #edc47a; --xp-info: #9acbff; }
+
+/* Student header, sidebar and canvas share one boundary and background owner. */
+.platform-page:has(.xp-workspace--student) { --student-workspace-max:none; }
+.platform-page:has(.xp-workspace--student) > :is(.platform-header,.platform-footer),
+.xp-workspace--student { width:calc(100% - 48px); max-width:none; margin-inline:auto; }
+.xp-workspace--student { position:relative; isolation:isolate; min-height:calc(100svh - 84px); border:0; border-radius:0; }
+.xp-workspace--student > .xp-sidebar { align-self:stretch; border-start-start-radius:inherit; border-end-start-radius:inherit; background:color-mix(in oklch,var(--card) 96%,transparent); }
+.xp-workspace--student > .islamic-pattern-student { position:fixed; inset:0; z-index:-1; mask-image:none; border-radius:inherit; }
+.islamic-pattern-student .islamic-pattern-field { opacity:.16; }
+@media(max-width:800px) {
+  .platform-page:has(.xp-workspace--student) > :is(.platform-header,.platform-footer), .xp-workspace--student { width:100%; }
+  .xp-workspace--student { border-inline:0; border-radius:0; }
+}
+
+/* Shared dashboard typography: Cairo has real 600–900 weights loaded by layout. */
+.experience :is(.xp-workspace-body, .admin-live) { font-weight: 600; font-size: 16px; line-height: 1.9; }
+.experience .xp-nav-group a { font-size: 14px; font-weight: 700; line-height: 1.7; min-height: 46px; }
+.experience .xp-nav-group a[aria-current="page"] { font-weight: 800; }
+.experience .xp-nav-group > p { font-size: 12px; font-weight: 800; }
+.experience .xp-sidebar-intro strong { font-size: 15px; font-weight: 800; }
+.experience .xp-sidebar-intro small { font-size: 11px; font-weight: 600; }
+.experience .xp-sidebar-footer { font-size: 13px; font-weight: 700; }
+.experience :is(.xp-workspace-body, .admin-live) :is(h2, h3, h4, strong, th) { font-weight: 800; }
+.experience :is(.xp-workspace-body, .admin-live) :is(label, summary, .xp-tabs a, .xp-tabs button, .xp-button) { font-weight: 700; }
+.experience .xp-bottom-nav a { font-weight: 700; }

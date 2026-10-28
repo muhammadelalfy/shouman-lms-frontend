@@ -10,13 +10,13 @@
 .learner-section-heading > a { display: inline-flex; gap: 6px; align-items: center; color: var(--primary); font-size: 13px; font-weight: 700; }
 .learner-section-heading > a:hover { text-decoration: underline; }
 .learner-eyebrow { font-size: 12px; color: var(--gold); font-weight: 700; }
-.learner-welcome { display: grid; grid-template-columns: 1.15fr 1fr; background: var(--navy); border-radius: 20px; overflow: hidden; color: var(--primary-foreground); min-height: 330px; }
+.learner-welcome { display: grid; grid-template-columns: 1.15fr 1fr; background: var(--navy); border-radius: 20px; overflow: hidden; color: var(--navy-foreground); min-height: 330px; }
 .learner-welcome-copy { padding: 36px; display: flex; flex-direction: column; align-items: flex-start; gap: 15px; }
 .learner-welcome h2 { font-size: clamp(30px, 3.5vw, 45px); line-height: 1.5; letter-spacing: -.025em; margin: 0; }
-.learner-welcome p { margin: 0; color: color-mix(in oklch, var(--primary-foreground) 85%, transparent); max-width: 380px; }
-.learner-welcome .xp-button { background: var(--gold-soft); border-color: var(--gold-soft); color: var(--navy); }
-.learner-welcome .xp-button:hover { background: var(--gold); border-color: var(--gold); }
-.learner-welcome small { font-size: 10px; color: color-mix(in oklch, var(--primary-foreground) 78%, transparent); }
+.learner-welcome p { margin: 0; color: color-mix(in oklch, var(--navy-foreground) 85%, transparent); max-width: 380px; }
+.learner-welcome .xp-button { background: var(--gold-soft); border-color: var(--gold-soft); color: var(--accent-foreground); }
+.learner-welcome .xp-button:hover { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+.learner-welcome small { font-size: 10px; color: color-mix(in oklch, var(--navy-foreground) 78%, transparent); }
 .learner-welcome-art { min-height: 300px; position: relative; }
 .learner-welcome-art img { object-fit: cover; }
 .learner-welcome-art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, color-mix(in oklch, var(--navy) 88%, transparent), transparent 70%); }
@@ -73,17 +73,17 @@
 .learner-inline-note p { margin: 0; }
 .learner-inline-note > a { flex: none; margin-inline-start: auto; }
 .learner-lesson-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(245px, .43fr); gap: 25px; align-items: start; }
-.learner-player { background: var(--navy); border-radius: 16px; overflow: hidden; color: var(--primary-foreground); }
+.learner-player { background: var(--navy); border-radius: 16px; overflow: hidden; color: var(--navy-foreground); }
 .learner-player-stage { aspect-ratio: 16/10; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 14px; text-align: center; padding: 25px; background-image: radial-gradient(circle at 25% 5%, color-mix(in oklch, var(--gold) 15%, transparent), transparent 60%); }
 .learner-player-icon { display: grid; place-items: center; width: 66px; height: 66px; border: 1px solid color-mix(in oklch, var(--gold) 50%, transparent); border-radius: 50%; color: var(--gold); }
-.learner-player-stage p { margin: 0; font-size: 12px; color: color-mix(in oklch, var(--primary-foreground) 75%, transparent); }
+.learner-player-stage p { margin: 0; font-size: 12px; color: color-mix(in oklch, var(--navy-foreground) 75%, transparent); }
 .learner-player-stage strong { font-size: clamp(18px, 2vw, 27px); }
-.learner-player-stage small { font-size: 10px; color: color-mix(in oklch, var(--primary-foreground) 75%, transparent); }
-.learner-play-button { display: inline-flex; gap: 10px; align-items: center; justify-content: center; min-height: 48px; background: var(--primary-foreground); border: 1px solid var(--primary-foreground); color: var(--navy); border-radius: 9px; padding: 10px 18px; font-size: 12px; font-weight: 700; }
-.learner-play-button:hover { background: var(--gold-soft); }
+.learner-player-stage small { font-size: 10px; color: color-mix(in oklch, var(--navy-foreground) 75%, transparent); }
+.learner-play-button { display: inline-flex; gap: 10px; align-items: center; justify-content: center; min-height: 48px; background: var(--navy-foreground); border: 1px solid var(--navy-foreground); color: var(--navy); border-radius: 9px; padding: 10px 18px; font-size: 12px; font-weight: 700; }
+.learner-play-button:hover { background: var(--gold-soft); color: var(--accent-foreground); }
 .learner-play-button:active { transform: translateY(1px); }
 .experience .learner-play-button:focus-visible { outline-color: var(--gold); }
-.learner-player-caption { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding: 14px 18px; font-size: 10px; border-top: 1px solid color-mix(in oklch, var(--primary-foreground) 15%, transparent); }
+.learner-player-caption { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding: 14px 18px; font-size: 10px; border-top: 1px solid color-mix(in oklch, var(--navy-foreground) 15%, transparent); }
 .learner-player-caption > span:first-child { display: inline-flex; gap: 7px; align-items: center; }
 .learner-lesson-info h1 { font-size: clamp(22px, 2.6vw, 30px); margin-block: 15px 12px; }
 .learner-lesson-info > p { font-size: 13px; }
@@ -160,10 +160,10 @@
 .learner-neutral-result > svg { flex: none; }
 .learner-neutral-result h3 { font-size: 16px; margin: 0 0 6px; }
 .learner-neutral-result p { font-size: 12px; margin: 0; }
-.learner-result-hero { background: var(--navy); color: var(--primary-foreground); display: flex; align-items: center; flex-direction: column; padding: 40px 28px; border-radius: 17px; text-align: center; gap: 17px; }
+.learner-result-hero { background: var(--navy); color: var(--navy-foreground); display: flex; align-items: center; flex-direction: column; padding: 40px 28px; border-radius: 17px; text-align: center; gap: 17px; }
 .learner-result-hero > svg { color: var(--gold); }
 .learner-result-hero h2 { font-size: 28px; margin: 0; }
-.learner-result-hero p { max-width: 640px; color: color-mix(in oklch, var(--primary-foreground) 85%, transparent); margin: 0; font-size: 14px; }
+.learner-result-hero p { max-width: 640px; color: color-mix(in oklch, var(--navy-foreground) 85%, transparent); margin: 0; font-size: 14px; }
 .learner-result-stat { text-align: center; }
 .learner-result-stat p { font-size: 12px; margin: 0 0 8px; }
 .learner-result-stat strong { font-size: 21px; }
@@ -253,10 +253,10 @@
 .learner-preference-row small { display: block; font-size: 11px; color: var(--muted-foreground); margin-top: 5px; }
 .learner-preference-row input { width: 21px; height: 21px; accent-color: var(--primary); flex: none; cursor: pointer; }
 .learner-preferences .xp-field { font-size: 13px; font-weight: 700; margin: 0; }
-.learner-role-hero { display: flex; gap: 28px; align-items: center; padding: 34px; color: var(--primary-foreground); background: var(--navy); border-radius: 18px; }
+.learner-role-hero { display: flex; gap: 28px; align-items: center; padding: 34px; color: var(--navy-foreground); background: var(--navy); border-radius: 18px; }
 .learner-role-emblem { display: grid; place-items: center; width: 100px; height: 100px; border: 1px solid var(--gold); border-radius: 20px; color: var(--gold); flex: none; }
 .learner-role-hero h2 { font-size: 26px; margin: 16px 0 12px; }
-.learner-role-hero p { color: color-mix(in oklch, var(--primary-foreground) 83%, transparent); font-size: 13px; margin: 0; max-width: 650px; }
+.learner-role-hero p { color: color-mix(in oklch, var(--navy-foreground) 83%, transparent); font-size: 13px; margin: 0; max-width: 650px; }
 .learner-work-list li { display: flex; align-items: center; gap: 12px; min-height: 58px; padding-block: 10px; border-bottom: 1px solid var(--border); font-size: 13px; }
 .learner-work-list li:last-child { border: 0; }
 .learner-work-list svg { color: var(--muted-foreground); flex: none; }
@@ -345,3 +345,16 @@
   .learner-role-hero h2 { font-size: 23px; }
 }
 @media (prefers-reduced-motion: reduce) { .learner-play-button:active { transform: none; } }
+
+/* Soft study surfaces keep the geometric canvas visible without fading text. */
+.learner-account-greeting { margin-block:0 20px; font-size:18px; color:var(--foreground); }
+.learner-page .xp-card { background:color-mix(in oklch,var(--card) 88%,transparent); }
+.learner-page > .learner-stat-grid, .learner-dashboard-columns > .xp-stack { padding:20px; border:1px solid color-mix(in oklch,var(--border) 70%,transparent); border-radius:24px; background:color-mix(in oklch,var(--card) 72%,transparent); }
+.learner-page, .learner-dashboard-columns > *, .learner-list-toolbar > * { min-width:0; }
+@media(max-width:540px) { .learner-page > .learner-stat-grid, .learner-dashboard-columns > .xp-stack { padding:12px; border-radius:18px; } .learner-list-toolbar .xp-search { min-width:0; width:100%; max-width:none; } }
+
+.teacher-overview { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.teacher-overview a { text-decoration: none; color: var(--primary); }
+.teacher-overview small { display: block; color: var(--muted-foreground); font-size: 11px; margin-block-start: 6px; }
+:is(#teacher-teaching, #teacher-review, #teacher-guidance, #teacher-communication) { scroll-margin-block-start: 24px; }
+@media (max-width: 540px) { .teacher-overview { grid-template-columns: minmax(0, 1fr); gap: 12px; } }

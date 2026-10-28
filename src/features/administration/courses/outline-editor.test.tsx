@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+vi.mock("next/navigation", () => ({ useRouter: () => ({ refresh: vi.fn() }) }));
 import { act, cleanup, fireEvent, render, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { AdminOffering, AdminSubject } from "../types";

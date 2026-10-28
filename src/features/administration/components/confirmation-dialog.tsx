@@ -5,6 +5,7 @@ export function ConfirmationDialog({
   description,
   confirmLabel,
   pending,
+  disabled = false,
   onConfirm,
   children,
 }: {
@@ -12,6 +13,7 @@ export function ConfirmationDialog({
   description: string;
   confirmLabel: string;
   pending: boolean;
+  disabled?: boolean;
   onConfirm: () => void;
   children: ReactNode;
 }) {
@@ -28,7 +30,7 @@ export function ConfirmationDialog({
       <button
         type="button"
         className="xp-button"
-        disabled={pending}
+        disabled={pending || disabled}
         ref={trigger}
         onClick={() => {
           dialog.current?.showModal();
@@ -62,7 +64,7 @@ export function ConfirmationDialog({
           <button
             type="button"
             className="xp-button"
-            disabled={pending}
+            disabled={pending || disabled}
             onClick={() => {
               close();
               onConfirm();

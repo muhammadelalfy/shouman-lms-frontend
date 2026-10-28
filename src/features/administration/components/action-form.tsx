@@ -20,13 +20,18 @@ export function ActionForm({
   children,
   label = "حفظ التغييرات",
   confirmation,
+  disabled = false,
+  onPendingChange,
 }: {
   action: AdminAction;
   children: ReactNode;
   label?: string;
   confirmation?: string;
+  disabled?: boolean;
+  onPendingChange?: (pending: boolean) => void;
 }) {
   const [state, submit, pending] = useActionState(action, initialFormState);
+  useEffect(() => { onPendingChange?.(pending); }, [pending, onPendingChange]);
   const form = useRef<HTMLFormElement>(null);
   const approved = useRef(false);
   const id = useId();
@@ -48,13 +53,13 @@ export function ActionForm({
         aria-busy={pending}
         onSubmit={(e) => {
           e.preventDefault();
-          if (pending || (confirmation && !approved.current)) return;
+          if (pending || disabled || (confirmation && !approved.current)) return;
           approved.current = false;
           const data = new FormData(e.currentTarget);
           startTransition(() => submit(data));
         }}
       >
-        <fieldset disabled={pending} className="admin-fieldset">
+        <fieldset disabled={pending || disabled} className="admin-fieldset">
           {children}
         </fieldset>
         <div aria-live="polite" aria-atomic="true" id={id}>
@@ -81,6 +86,7 @@ export function ActionForm({
             description={confirmation}
             confirmLabel={label}
             pending={pending}
+            disabled={disabled}
             onConfirm={() => {
               approved.current = true;
               form.current?.requestSubmit();
@@ -89,7 +95,7 @@ export function ActionForm({
             {label}
           </ConfirmationDialog>
         ) : (
-          <button className="xp-button" type="submit" disabled={pending}>
+          <button className="xp-button" type="submit" disabled={pending || disabled}>
             {pending ? "جارٍ الحفظ…" : label}
           </button>
         )}

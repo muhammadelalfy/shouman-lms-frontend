@@ -1,0 +1,14 @@
+.homepage-needs-editor { margin-block:24px; }
+.homepage-needs-editor h2 { margin-block-end:12px; font-size:20px; }
+.homepage-needs-editor p { line-height:1.9; }
+.homepage-needs-editor .admin-fieldset { display:grid; gap:24px; min-width:0; border:0; padding:0; margin:0 0 18px; }
+.homepage-editor-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+.homepage-editor-grid > * { min-width:0; }
+.homepage-editor-toolbar { display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:space-between; }
+.homepage-check { display:flex; align-items:center; gap:12px; min-height:44px; }
+.homepage-check input { width:20px; height:20px; accent-color:var(--primary); }
+.homepage-card-preview { display:flex; align-items:center; gap:20px; border:1px solid var(--border); background:var(--background); padding:16px; border-radius:14px; }
+.homepage-card-preview img { width:88px; height:88px; object-fit:contain; }
+.homepage-card-preview .homepage-photo-preview { object-fit:cover; border-radius:10px; }
+.homepage-needs-editor a { color:var(--primary); text-decoration:underline; text-underline-offset:4px; }
+@media(max-width:800px) { .homepage-editor-grid { grid-template-columns:minmax(0,1fr); } }

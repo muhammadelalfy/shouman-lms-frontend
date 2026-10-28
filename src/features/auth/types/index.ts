@@ -12,6 +12,8 @@ export type AccountStatus = "active" | "disabled";
 
 /** Every permission registered in the backend PermissionRegistry (grows as modules add theirs). */
 export type Permission =
+  | "audit.view"
+  | "homepage.manage"
   | "users.view"
   | "users.manage-status"
   | "users.assign-roles"

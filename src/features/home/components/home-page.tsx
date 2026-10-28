@@ -89,9 +89,9 @@ export function HomePreview() {
       <header className="lovable-header bg-navy-deep text-primary-foreground">
         <div className="mx-auto flex max-w-7xl items-center gap-6 px-6 py-3">
           <a href="#home" className="flex items-center gap-3">
-            <Image width={44} height={44} src={logo} alt="شعار الأكاديمية" className="h-11 w-11 rounded" />
+            <Image width={44} height={44} src={logo} alt="شعار المركز" className="h-11 w-11 rounded" />
             <div>
-              <div className="whitespace-nowrap font-display font-bold leading-tight">أكاديمية د. حازم شومان</div>
+              <div className="whitespace-nowrap font-display font-bold leading-tight">مركز د. حازم شومان</div>
               <div className="text-[10px] tracking-widest opacity-70">DR. HAZEM SHOUMAN ACADEMY</div>
             </div>
           </a>
@@ -123,15 +123,15 @@ export function HomePreview() {
         <div className="hero-overlay absolute inset-0" />
         <div className="relative mx-auto max-w-7xl px-6 pb-8 pt-16">
           <div className="max-w-xl">
-            <h1 className="font-display text-4xl font-extrabold md:text-5xl xl:text-6xl">أكاديمية د. حازم شومان</h1>
+            <h1 className="font-display text-4xl font-extrabold md:text-5xl xl:text-6xl">مركز د. حازم شومان</h1>
             <p className="mt-4 text-2xl">رحلة علم .. وتربية .. وصناعة أثر</p>
-            <p className="mt-4 text-lg leading-relaxed opacity-90">أكاديمية إسلامية متكاملة تستهدف الشباب لتأهيل جيل واعٍ أقرب إلى الله بالعلم والعمل.</p>
+            <p className="mt-4 text-lg leading-relaxed opacity-90">مركز إسلامية متكاملة تستهدف الشباب لتأهيل جيل واعٍ أقرب إلى الله بالعلم والعمل.</p>
             <div className="mt-8 flex flex-wrap gap-4">
               <a href="#tracks" className="flex items-center gap-6 rounded-md bg-accent px-8 py-3 font-bold text-accent-foreground hover:brightness-105">
                 ابدأ رحلتك الآن <ChevronLeft className="h-5 w-5" />
               </a>
               <a href="#video" className="flex items-center gap-3 rounded-md border border-primary-foreground/60 px-6 py-3 font-bold hover:bg-primary-foreground/10">
-                <Play className="h-5 w-5 fill-current" /> تعرف على الأكاديمية
+                <Play className="h-5 w-5 fill-current" /> تعرف على المركز
               </a>
             </div>
           </div>
@@ -186,7 +186,7 @@ export function HomePreview() {
             <Image width={640} height={480} sizes="(max-width: 1023px) 50vw, 320px" src={videoImg} alt="" className="absolute inset-y-0 left-0 h-full w-1/2 object-cover" />
             <div className="hero-overlay absolute inset-0" />
             <div className="relative p-8">
-              <h3 className="max-w-[16rem] font-display text-3xl font-extrabold leading-snug">شرح طريقة التعلم في الأكاديمية</h3>
+              <h3 className="max-w-[16rem] font-display text-3xl font-extrabold leading-snug">شرح طريقة التعلم في المركز</h3>
               <ComingSoonButton title="الفيديو التعريفي" className="mt-6 inline-flex items-center gap-3 rounded-md bg-card px-6 py-3 font-bold text-primary">
                 <Play className="h-5 w-5 fill-current" /> شاهد الفيديو
               </ComingSoonButton>
@@ -236,7 +236,7 @@ export function HomePreview() {
 
       {/* Footer */}
       <footer id="footer" className="relative mx-auto grid max-w-7xl gap-8 px-6 py-10 md:grid-cols-3 lg:pl-56">
-        <Image width={176} height={280} src={phone} alt="تطبيق الأكاديمية" className="absolute -top-28 left-6 hidden w-44 rounded-xl lg:block" />
+        <Image width={176} height={280} src={phone} alt="تطبيق المركز" className="absolute -top-28 left-6 hidden w-44 rounded-xl lg:block" />
         <div>
           <h3 className="font-display text-lg font-bold text-primary">تابعنا على</h3>
           <div className="mt-4 flex gap-3">
@@ -253,7 +253,7 @@ export function HomePreview() {
           <NewsletterForm />
         </div>
         <div>
-          <h3 className="font-display text-lg font-bold text-primary">تطبيق الأكاديمية</h3>
+          <h3 className="font-display text-lg font-bold text-primary">تطبيق المركز</h3>
           <p className="text-sm text-muted-foreground">تعلم أينما كنت .. واستمر في رحلتك</p>
           <div className="mt-3 flex gap-2" dir="ltr">
             <ComingSoonButton title="تطبيق Google Play" className="rounded-md bg-foreground px-3 py-1.5 text-xs text-background"><span className="block text-[9px] opacity-70">GET IT ON</span>Google Play</ComingSoonButton>

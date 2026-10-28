@@ -43,11 +43,11 @@ const definitions: Record<string, PageDefinition> = {
   },
   faq: {
     title: "الأسئلة الشائعة", englishTitle: "Frequently asked questions", eyebrow: "نساعدك على البدء",
-    description: "تنتظر هذه الصفحة إجابات معتمدة من الأكاديمية قبل نشرها للزوار.", kind: "preview", previewLabel: "معاينة تصميم — المحتوى ينتظر الاعتماد",
+    description: "تنتظر هذه الصفحة إجابات معتمدة من المركز قبل نشرها للزوار.", kind: "preview", previewLabel: "معاينة تصميم — المحتوى ينتظر الاعتماد",
     links: discoveryLinks,
     cards: [
       { title: "البدء والتسجيل", description: "ستظهر هنا معلومات التسجيل المعتمدة." },
-      { title: "المسارات والدورات", description: "ستظهر هنا إجابات فريق الأكاديمية عن المحتوى." },
+      { title: "المسارات والدورات", description: "ستظهر هنا إجابات فريق المركز عن المحتوى." },
       { title: "الحساب والدعم", description: "ستُنشر قنوات المساعدة بعد اعتمادها." },
     ],
   },
@@ -105,7 +105,7 @@ const definitions: Record<string, PageDefinition> = {
     description: "سيتم تفعيل الاختبارات بعد اعتماد قواعد المحاولات والنجاح والمؤقت وعرض الإجابات.", kind: "coming-soon", previewLabel: "تصميم أولي — سياسة الاختبارات غير معتمدة",
     links: [{ label: "رحلتي التعليمية", href: "/learning" }],
     cards: [
-      { title: "الأسئلة والمحاولات", description: "عدد الأسئلة والمحاولات تحدده سياسة الأكاديمية." },
+      { title: "الأسئلة والمحاولات", description: "عدد الأسئلة والمحاولات تحدده سياسة المركز." },
       { title: "النتيجة", description: "لن نعرض درجة أو نجاحًا قبل اتصال خدمة الاختبارات." },
     ],
   },
@@ -135,7 +135,7 @@ const definitions: Record<string, PageDefinition> = {
   },
   achievements: {
     title: "الإنجازات", englishTitle: "Achievements", eyebrow: "كل خطوة لها أثر",
-    description: "تحتاج النقاط والشارات إلى قواعد تحفيز تعتمدها الأكاديمية.", kind: "coming-soon", previewLabel: "تصميم أولي — قواعد التحفيز غير معتمدة",
+    description: "تحتاج النقاط والشارات إلى قواعد تحفيز تعتمدها المركز.", kind: "coming-soon", previewLabel: "تصميم أولي — قواعد التحفيز غير معتمدة",
     links: [{ label: "رحلتي التعليمية", href: "/learning" }],
   },
   account: {
@@ -145,12 +145,12 @@ const definitions: Record<string, PageDefinition> = {
   },
   "auth/login": {
     title: "تسجيل الدخول", englishTitle: "Sign in", eyebrow: "مرحبًا بعودتك",
-    description: "ادخل إلى حسابك لمتابعة رحلتك التعليمية.", kind: "preview", previewLabel: "حساب الأكاديمية",
+    description: "ادخل إلى حسابك لمتابعة رحلتك التعليمية.", kind: "preview", previewLabel: "حساب المركز",
     links: [{ label: "إنشاء حساب", href: "/auth/register" }, { label: "الفهرس", href: "/catalog" }],
   },
   "auth/register": {
     title: "إنشاء حساب", englishTitle: "Create account", eyebrow: "ابدأ رحلتك",
-    description: "أنشئ حساب متعلم للانضمام إلى الأكاديمية.", kind: "preview", previewLabel: "حساب متعلم",
+    description: "أنشئ حساب متعلم للانضمام إلى المركز.", kind: "preview", previewLabel: "حساب متعلم",
     links: [{ label: "لديك حساب؟ سجل الدخول", href: "/auth/login" }],
   },
   "auth/forgot-password": {
@@ -164,7 +164,7 @@ const definitions: Record<string, PageDefinition> = {
     links: [{ label: "طلب رابط جديد", href: "/auth/forgot-password" }],
   },
   "admin/dashboard": {
-    title: "لوحة الإدارة", englishTitle: "Admin dashboard", eyebrow: "إدارة الأكاديمية",
+    title: "لوحة الإدارة", englishTitle: "Admin dashboard", eyebrow: "إدارة المركز",
     description: "تحتاج لوحة الإدارة إلى جلسة وصلاحيات وخدمات تشغيلية. هذه الصفحة لا تعرض بيانات أو مؤشرات تجريبية.", kind: "coming-soon", previewLabel: "معاينة تصميم — لوحة الإدارة غير متصلة",
     links: [{ label: "إدارة المسارات", href: "/admin/offerings" }, { label: "المستخدمون والأدوار", href: "/admin/users" }],
     cards: [
@@ -218,18 +218,18 @@ const definitions: Record<string, PageDefinition> = {
     description: "لا تتوفر خدمة لإدارة أقسام الصفحة أو الأسئلة الشائعة بعد.", kind: "coming-soon", previewLabel: "معاينة تصميم — نظام إدارة المحتوى غير متصل",
     links: [{ label: "لوحة الإدارة", href: "/admin/dashboard" }],
   },
-  "admin/analytics": { title: "التحليلات", englishTitle: "Analytics", eyebrow: "مؤشرات الأكاديمية", description: "لا تتوفر بعد مصادر بيانات معتمدة لعرض مؤشرات الأداء.", kind: "coming-soon", previewLabel: "معاينة تصميم — لا توجد مؤشرات مباشرة", links: [{ label: "لوحة الإدارة", href: "/admin/dashboard" }] },
+  "admin/analytics": { title: "التحليلات", englishTitle: "Analytics", eyebrow: "مؤشرات المركز", description: "لا تتوفر بعد مصادر بيانات معتمدة لعرض مؤشرات الأداء.", kind: "coming-soon", previewLabel: "معاينة تصميم — لا توجد مؤشرات مباشرة", links: [{ label: "لوحة الإدارة", href: "/admin/dashboard" }] },
   "admin/groups": { title: "المجموعات التعليمية", englishTitle: "Community groups", eyebrow: "إدارة المجتمع", description: "تحتاج المجموعات إلى خدمة المجتمع وسياسة إشراف منشورة.", kind: "coming-soon", previewLabel: "معاينة تصميم — المجتمع غير متصل", links: [{ label: "لوحة الإدارة", href: "/admin/dashboard" }] },
   "admin/coupons": { title: "القسائم والعروض", englishTitle: "Coupons and offers", eyebrow: "الأسعار والعروض", description: "لا تتوفر خدمة عروض أو دفع معتمدة.", kind: "coming-soon", previewLabel: "معاينة تصميم — الدفع غير متصل", links: [{ label: "لوحة الإدارة", href: "/admin/dashboard" }] },
   "admin/projects": { title: "مشروعات التخرج", englishTitle: "Graduation projects", eyebrow: "التقييم والمراجعة", description: "تحتاج هذه الشاشة إلى خدمة المشروعات ومعايير تقييم معتمدة.", kind: "coming-soon", previewLabel: "معاينة تصميم — لا توجد مشروعات حية", links: [{ label: "لوحة الإدارة", href: "/admin/dashboard" }] },
-  "admin/rubrics": { title: "معايير التقييم", englishTitle: "Rubrics", eyebrow: "معايير مراجعة واضحة", description: "لا تُبنى معايير التقييم قبل اعتمادها من الأكاديمية.", kind: "coming-soon", previewLabel: "معاينة تصميم — المعايير غير معتمدة", links: [{ label: "لوحة الإدارة", href: "/admin/dashboard" }] },
-  "admin/gamification": { title: "التحفيز والشارات", englishTitle: "Gamification", eyebrow: "رحلة الإنجاز", description: "تحتاج النقاط والشارات إلى قواعد تعتمدها الأكاديمية.", kind: "coming-soon", previewLabel: "معاينة تصميم — قواعد التحفيز غير معتمدة", links: [{ label: "لوحة الإدارة", href: "/admin/dashboard" }] },
+  "admin/rubrics": { title: "معايير التقييم", englishTitle: "Rubrics", eyebrow: "معايير مراجعة واضحة", description: "لا تُبنى معايير التقييم قبل اعتمادها من المركز.", kind: "coming-soon", previewLabel: "معاينة تصميم — المعايير غير معتمدة", links: [{ label: "لوحة الإدارة", href: "/admin/dashboard" }] },
+  "admin/gamification": { title: "التحفيز والشارات", englishTitle: "Gamification", eyebrow: "رحلة الإنجاز", description: "تحتاج النقاط والشارات إلى قواعد تعتمدها المركز.", kind: "coming-soon", previewLabel: "معاينة تصميم — قواعد التحفيز غير معتمدة", links: [{ label: "لوحة الإدارة", href: "/admin/dashboard" }] },
   "admin/distinguished": { title: "الطلاب المتميزون", englishTitle: "Distinguished students", eyebrow: "مراجعة بشرية عادلة", description: "لا تتوفر معايير ترشيح معتمدة أو بيانات تقييم.", kind: "coming-soon", previewLabel: "معاينة تصميم — لا توجد ترشيحات", links: [{ label: "لوحة الإدارة", href: "/admin/dashboard" }] },
   "admin/campaigns": { title: "الإشعارات والحملات", englishTitle: "Notifications and campaigns", eyebrow: "تواصل مع المتعلمين", description: "تحتاج الحملات إلى خدمة إشعارات وقواعد استهداف معتمدة.", kind: "coming-soon", previewLabel: "معاينة تصميم — لا توجد حملات", links: [{ label: "لوحة الإدارة", href: "/admin/dashboard" }] },
   "admin/audit-log": { title: "سجل التدقيق", englishTitle: "Audit log", eyebrow: "سجل التغييرات", description: "لا تتوفر بعد واجهة أمامية مصرح بها لاستعراض سجل التدقيق.", kind: "coming-soon", previewLabel: "معاينة تصميم — لا توجد سجلات معروضة", links: [{ label: "لوحة الإدارة", href: "/admin/dashboard" }] },
   "admin/meetings": { title: "إدارة اللقاءات", englishTitle: "Meeting management", eyebrow: "المواعيد والحضور", description: "تتطلب هذه الشاشة خدمة أحداث وسياسات حضور معتمدة.", kind: "coming-soon", previewLabel: "معاينة تصميم — اللقاءات غير متصلة", links: [{ label: "لوحة الإدارة", href: "/admin/dashboard" }] },
   "admin/notifications": { title: "إدارة الإشعارات", englishTitle: "Notification management", eyebrow: "التواصل التشغيلي", description: "تحتاج الإشعارات إلى خدمة وقواعد تسليم معتمدة.", kind: "coming-soon", previewLabel: "معاينة تصميم — الإشعارات غير متصلة", links: [{ label: "لوحة الإدارة", href: "/admin/dashboard" }] },
-  "admin/settings": { title: "إعدادات الأكاديمية", englishTitle: "Academy settings", eyebrow: "إعدادات المنصة", description: "لا تتوفر واجهة إعدادات أو صلاحيات معتمدة لتغيير إعدادات الأكاديمية.", kind: "coming-soon", previewLabel: "معاينة تصميم — الإعدادات غير متصلة", links: [{ label: "لوحة الإدارة", href: "/admin/dashboard" }] },};
+  "admin/settings": { title: "إعدادات المركز", englishTitle: "Academy settings", eyebrow: "إعدادات المنصة", description: "لا تتوفر واجهة إعدادات أو صلاحيات معتمدة لتغيير إعدادات المركز.", kind: "coming-soon", previewLabel: "معاينة تصميم — الإعدادات غير متصلة", links: [{ label: "لوحة الإدارة", href: "/admin/dashboard" }] },};
 
 export function isKnownPlatformRoute(slug: string[]): boolean {
   const key = slug.join("/");
@@ -269,7 +269,7 @@ export function getPageDefinition(slug: string[]): PageDefinition {
 
   if (slug[0] === "admin") {
     return {
-      title: "واجهة الإدارة", englishTitle: "Admin workspace", eyebrow: "إدارة الأكاديمية",
+      title: "واجهة الإدارة", englishTitle: "Admin workspace", eyebrow: "إدارة المركز",
       description: "هذه الواجهة التصميمية لا تعرض سجلات أو تنفذ تغييرات. يلزم ربطها بصلاحيات وخدمة معتمدة.", kind: "coming-soon", previewLabel: "معاينة تصميم — لا توجد بيانات إدارية",
       links: [{ label: "لوحة الإدارة", href: "/admin/dashboard" }],
     };
@@ -296,7 +296,7 @@ export function getPageDefinition(slug: string[]): PageDefinition {
   }
 
   return {
-    title: "الصفحة غير موجودة", englishTitle: "Page not found", eyebrow: "أكاديمية د. حازم شومان",
+    title: "الصفحة غير موجودة", englishTitle: "Page not found", eyebrow: "مركز د. حازم شومان",
     description: "تعذر العثور على الصفحة المطلوبة.", kind: "coming-soon", previewLabel: "404",
     links: discoveryLinks,
   };

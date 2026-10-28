@@ -41,7 +41,7 @@ components:
   status: "Text and icon accompany color; never color-only."
 ---
 
-# Shoman Academy Design System
+# Shoman Center Design System
 
 ## Overview
 
@@ -131,3 +131,126 @@ The live authoring signature is the restrained gold start-edge on nested curricu
 ### Authenticated workspace landing pages — 2026-10-20
 
 `features/workspaces` owns the real learner dashboard, learning-availability view and admin overview. The visual anchor is a quiet welcome panel with a gold book-edge rule and small geometric star; task cards use existing cream/navy tokens, Cairo, native links and a single outline icon. No made-up KPI totals or synthetic progress appear in authenticated surfaces. Admin list previews state that they show only a first-page excerpt. Natural document scroll, wrapped task grids/account identifiers, visible focus and reduced-motion overrides follow sibling pages. `AdminShell` remains the administration navigation owner with an active dashboard tab; learner landing navigation belongs to the workspace feature. Existing authored demo dashboards stay in the preview gallery.
+
+
+## Academy motion — 2026-10-21
+
+The academy now vendors actual component source listed on 21st.dev, with full MIT licenses and pinned upstream revisions in `THIRD-PARTY-NOTICES.md`.
+
+- `src/components/ui/shimmer-button.tsx`: Magic UI Shimmer Button's moving conic perimeter, highlight and backdrop; adds a semantic Next.js link variant. Used by primary landing CTAs and learner/admin preview sidebar discovery links.
+- `src/components/ui/animated-grid-pattern.tsx`: Magic UI Animated Grid Pattern's ResizeObserver, generated cells and Motion opacity sequence. Geometric star tiles and gold replace the original grey Cartesian grid. Used in hero and preview/live admin shell edges.
+- `src/components/ui/border-beam.tsx`: Magic UI Border Beam's offset-path animation and border mask, gold/cream instead of purple. Used on track cards and preview dashboard sidebar intro.
+- `src/components/ui/carousel.tsx`: shadcn/ui Carousel's Embla hook, context, select/reInit synchronization and controls. RTL direction, Arabic controls and instant navigation under reduced motion are academy adaptations. `AcademySlider` is its wrapper for tracks and the content hub.
+- `src/components/ui/blur-fade.tsx`: Magic UI Blur Fade reveals landing sections on viewport entry, including repeat entry. Dashboard cards use the same rise/fade direction through native Web Animations. Keyboard focus reveals content immediately. Server-rendered content remains readable.
+- `motion` and `embla-carousel-react` are explicit runtime dependencies. Sliders show a partial next card at every breakpoint and advance every 4.5 seconds while visible. Arabic pause/resume, previous/next and pagination controls supplement RTL drag and keyboard navigation. Hover, focus, hidden tabs and reduced motion suspend autoplay; manual pause persists until resumed. Content remains horizontally scrollable without JavaScript.
+- Decorative effects replay on viewport entry: grid pulse under four seconds, beam four seconds. Shimmer runs for three seconds on mount; hover/focus adds an 850ms face sweep and 4px lift. Landing reveals take 750ms and dashboard cards 700ms, without layout shifts. Reduced motion uses static tiles, no border beam, no shimmer and instant carousel transitions. Native semantics, focus indicators, existing preview disclaimers and API/session behavior are preserved.
+- Global styles and animation keyframes live in `src/app/globals.css`; runtime color tokens retain their authority.
+
+### Counters and scroll progress — 2026-10-21
+
+- `src/components/ui/animated-counter.tsx` (Magic UI Number Ticker pattern, locally written): counts up once on viewport entry for landing stats, learner stat tiles and admin stat cards. Handles Latin and Arabic-Indic digits, thousands separators and prefixes like "+". Server HTML and reduced motion show the final value; `aria-label` carries the final value. Sample values stay labelled as examples.
+- `src/components/ui/scroll-progress.tsx`: 3px gold progress bar on the landing page and the learner/admin workspace shell; hidden under reduced motion.
+- `parallax-layer.tsx`: stats-section photo drifts ±60px against scroll. `tilt-card.tsx`: track cards lean up to 6° toward a mouse/pen pointer (not touch/keyboard). Hero gold heading text shifts its gradient slowly. All three are off under reduced motion.
+- `islamic-pattern.tsx`: chained eight-pointed-star (khatam) geometry drifting diagonally over 28s; the medallion and light sweep were removed at product owner request. Fixed behind the whole landing page (and stretched over the full learner/admin workspace body), plus on top of the stats and CTA photos; static under reduced motion. Gold via `currentColor` from the `--gold` token.
+- Learner and admin workspaces get a top-fading `IslamicPattern` (lattice only, stronger than the original design restraint, per product owner request) behind content; it follows the same reduced-motion and forced-colors rules.
+- `scroll-effects.tsx`: on the landing page, section headings rise, grid items stagger in (every fourth zooms), two-column layouts slide in from opposite sides, footer columns rise. Uses the individual `translate`/`scale` properties with a backwards-filled animation so hover transforms still work. Not applied under reduced motion; content is visible without JS.
+- Slider update: looping, center-aligned coverflow style (active card full size with gold ring, neighbours scaled .9 and dimmed), 2.2s autoplay with a 20-frame glide, and smaller cards (about 3.8 visible on desktop, 66% width on mobile). Supersedes the 4.5s / partial-next-card description above.
+
+### Authentication glass surface — 2026-10-21
+
+The supplied login design now owns the auth route family: a centered translucent card over a smoky navy/blue canvas. Auth-local tokens are deep navy `#0b1d3a`, royal blue `#1b3a66` / `#4678d2`, cream `#fbf7ee`, and gold `#d4af55` for the book-emblem ring, focus indicators, and small feedback borders only. Other route tokens retain their existing ownership. Cairo, Arabic RTL, real Server Actions, password visibility, field errors and recovery routes remain canonical. `src/components/ui/login-form.tsx` owns the shared visual shell/background; feature auth components own form behavior. No social OAuth controls or divider are rendered. Smoke animates for at most 4.5 seconds per entrance/resize, pauses in hidden tabs, respects live reduced-motion preference, and falls back to a static navy/blue CSS background without WebGL. All animation frames, listeners and GPU resources are cleaned up on unmount.
+
+### Marketing journeys — 2026-10-22
+
+`src/features/marketing` extends the established Cairo/Arabic RTL academy identity with a navy introductory band, a quiet learning-journey rail, book-spine sample track cards and cream reading surfaces. Gold remains a thin marker/ring rather than a large surface. Existing global tokens remain authoritative; feature CSS derives its colors from them. `/preview/marketing` owns fifteen explicitly labeled exploration/tool pages covering the adopted marketing scope. Desktop section navigation becomes a native mobile selector (platform popup accepted). The scannable certificate QR uses the `qrcode` library with a sufficient quiet zone and points only to an explicit sample verification route; it does not represent a real credential.
+
+### Student and teacher entry placement — 2026-10-22
+
+The landing hero has two explicit role-preview entries: «انضم كطالب» opens `/preview/dashboard`; «انضم كمعلم» opens `/instructor`. Both are labeled preview navigation and never create accounts or assign roles. Registration remains in the existing authentication flow. The landing adds a quiet four-card discovery section for optional guidance, track journeys/videos, free challenges and scholarships, using existing cream/navy tokens, Cairo and restrained accents.
+
+`features/marketing/discovery.tsx` owns reusable audience-specific cards. Student dashboards own discovery, companions, badges, family, scholarships, seasonal content, meetings and certificate samples. The teacher dashboard owns notification composition and a meeting link retaining teacher navigation context. Administration owns the track-card/video editor. Marketing sidebars and mobile selectors list only the current audience's pages; they are navigation organization, never authorization. This supersedes the earlier mixed public/tools marketing navigation.
+
+### Reference alignment and teacher canvas — 2026-10-23
+
+User reference: `/home/mohamed/Downloads/landing-page.jpeg`, a visual source for section layout, feature icon metaphors, device mockup, photographic counter ribbon and review/community composition. It supplies no verified academy outcomes, reviews, accreditation or totals. Existing runtime tokens and local media assets remain canonical; no new theme or duplicated icon system is introduced.
+
+Teacher dashboard and teacher marketing tools use one fixed decorative khatam layer behind the full viewport, covering sidebar/content spacing and long-page gaps. It is isolated beneath content, aria-hidden, ignores pointer events, and uses the existing no-preference animation/forced-colors/reduced-motion contract. Other dashboard backdrop variants retain their prior scope. Admin navigation now exposes student notifications separately from campaigns. Admin message composition reuses the canonical marketing audience component with admin-specific permission wording rather than duplicating filter/modal logic.
+
+### Auth Islamic motion and local trial entry — 2026-10-23
+
+The user replaced the smoky login background with the canonical animated khatam geometry. Auth screens keep the navy/royal-blue canvas and translucent card; restrained gold lines animate with the existing IslamicPattern motion and remain static for reduced motion. The shared pattern is decorative and noninteractive; forced colors removes it. This supersedes the earlier smoke-canvas background ownership; the old exported smoke component is no longer rendered by auth forms.
+
+Login may show «تعبئة بيانات التجربة» only when a dedicated local student trial account is explicitly configured. The button fills the normal email/password fields without submitting or changing return destinations. The nearby copy identifies a shared trial account. No existing administrator or user credentials are supplied. Server configuration is disabled by default and only accepts the reserved trial-email pattern.
+
+### Platform dark theme and rounded discovery panels — 2026-10-23
+
+User requested a platform-wide dark mode and header toggle. `globals.css` owns the `.dark` semantic token set: deep navy background, raised navy cards, cream body text, light royal-blue links/actions, restrained gold accents and visible dark borders. Dedicated navy photographic banners retain cream foregrounds; QR imagery remains white/navy for scanning. Feature CSS uses semantic surfaces rather than fixed white fields, including profile/catalog/workspaces/marketing controls and status colors. Auth retains its intentionally navy canvas in both modes.
+
+The shared ThemeToggle appears once in each runtime header, with an Arabic action label, pressed state, visible focus and44px target. Preference follows the device until explicitly selected, persists as appearance-only localStorage and synchronizes between tabs. A constrained head bootstrap applies it before first paint; ThemeSync owns device/storage listeners and cleanup. Storage failure leaves interactive toggling available. This supersedes the earlier light-only presentation policy without changing account settings or API behavior.
+
+The ambiguous “second three sections” request was interpreted as the three sections immediately after the hero: Needs, Tracks and landing discovery. They share softly rounded32px token-based background panels with responsive gutters; anchors, sliders and authentication behavior are preserved.
+
+### Open landing sections and revised footer — 2026-10-23
+
+The user withdrew the rounded-background treatment. Needs, Tracks and landing discovery again sit on the open page canvas, with their individual cards unchanged. This supersedes the rounded32px panel addition above.
+
+The footer now has a restrained navy surface, a deeper dark-mode variant, cream text with readable muted hierarchy, small gold heading/ring accents, one brand column and three navigation groups. Known learning/academy/account destinations use real internal links; account links reflect signed-in navigation. Social controls stay visibly unavailable pending channel configuration. Desktop uses four columns, tablet gives the brand a full row, and mobile places account links across the final row. The developer-directory footer link is removed.
+
+The all-pages sidebar shortcut is no longer rendered on student workspace surfaces. Staff role previews and administration retain their existing access to the design directory.
+
+### GPT category artwork — 2026-10-23
+
+At the user’s request, the eight Needs category symbols now use individually generated transparent GPT illustrations: a book, graduation cap, family, leaf, Quran stand, prayer niche, supplication hands and heart. A ninth full-bleed mosque illustration completes the row. New `need-*-gpt-v2.png` assets preserve earlier artwork. Navy, royal blue and cream dominate, with small gold edge accents. These are illustrative objects, not academy photography or verified outcomes. Arabic labels remain real text; decorative cutouts use empty alt text. Fixed image dimensions and Next Image optimization preserve layout and avoid delivering full-size originals to small cards. Both themes use the same transparent artwork. Section backgrounds remain open.
+
+### Student workspace routing and translucent panels — 2026-10-23
+
+Signed-in `/dashboard` and `/my-learning` now reuse the complete learner dashboard and activity-list presentation inside the canonical workspace shell, after the existing server-side session and current-user checks. The real account name accompanies the persistent sample-data notice: these screens do not claim actual enrollment or saved progress. Student sidebar and bottom navigation use `/dashboard`, `/my-learning`, and `/account`. Learning opens with the current-activity filter selected; completed and purchased samples remain available through explicit filters. Sidebar navigation flows with the document rather than owning a fixed-height scroll area; mobile keeps the existing collapsible navigation and bottom bar.
+
+The user restored rounded backgrounds for Needs, Tracks and landing discovery with an82% semantic-card surface, letting the underlying geometric pattern remain visible. Learner groups use72% panels and88% card surfaces. Opacity applies to backgrounds only; text and controls retain full contrast. This supersedes the open-section treatment while preserving both themes and reduced-motion behavior.
+
+### Wider landing canvas — 2026-10-23
+
+The landing page uses a shared 100rem (1600px) content maximum instead of 1280px, including the header, rounded sections, nested track content and footer. Existing responsive gutters and narrow reading measures remain in place. This wider canvas is specific to the public landing page.
+
+### Unified student workspace canvas — 2026-10-23
+
+The student workspace, platform header and footer share a 1600px maximum with 24px desktop outer gutters. One decorative pattern belongs to the workspace shell, spans both columns and uses 16% opacity to keep text clear. The student sidebar surface stretches with its content column; it remains in document flow without internal scrolling. Mobile uses the full width, the canonical collapsed menu and bottom navigation. Teacher and administration backdrop owners are unchanged.
+
+### Softer light landing pattern — 2026-10-23
+
+The light landing-page pattern uses 12% opacity, reduced from 40%. Dark-mode pattern opacity and rounded panel surfaces retain their existing values.
+
+### Published landing interests and open student canvas — 2026-10-24
+
+The student dashboard no longer has a maximum-width or rounded outer frame. Header, workspace and footer retain responsive gutters; one fixed decorative Islamic pattern covers the whole viewport, respecting reduced motion and forced colors. This supersedes the bounded student canvas. Light landing pattern opacity remains12%; dark mode retains40%.
+
+The Needs section is now sourced from the public Laravel homepage endpoint. Only published, enabled cards render; a load failure shows a retry state instead of hardcoded replacements. Known local illustration keys map to the nine GPT assets. Cards and the section action lead to validated catalogue destinations and direct guests through login. Administrators with `homepage.manage` use `/admin/homepage/needs` to edit section text, add/remove/reorder/hide cards, choose artwork and photo/icon treatments, save drafts and confirm publishing. Native image/style selects intentionally use platform popups. Unsaved navigation uses an academy dialog; page unload uses the native lifecycle warning. Version conflicts preserve the editor contents and offer a reload. Laravel owns validation, authorization, draft/public separation, version locking and audit writes.
+
+### Local admin trial entry — 2026-10-24
+
+The login form can show «تعبئة بيانات المدير» beside the student trial entry when local demo mode and the dedicated admin trial flag are explicitly enabled. Only a reserved `trial-admin-*` account may be exposed. Filling does not submit; explicit return destinations are preserved, otherwise admin trial login opens `/admin/dashboard`. Other administrator credentials remain private. Registration and recovery screens never render these controls.
+
+### Center naming and administrator entry — 2026-10-24
+
+The displayed brand is مركز د. حازم شومان. Administrator and center-manager logins default to `/admin/dashboard`, which presents the existing design directory with explicit preview labels and permission-based connected-service links. Real administrative records remain available through the expandable connected tools and dedicated routes. Student entry remains `/dashboard`; safe explicit return destinations are preserved.
+
+### Admin statistics and full-page geometry — 2026-10-24
+
+The admin preview dashboard presents its overview and sample statistics before charts, review tasks, activity, and marketing discovery. Preserve sample labels: these are not live platform totals. Admin workspace geometry has a single fixed viewport layer with restrained 16% field opacity; it spans page margins and gaps in both themes. The sidebar stretches with the document and keeps the existing mobile toggle. Live administrative pages share the same background treatment.
+
+### Teacher dashboard composition — 2026-10-24
+
+Teacher entry uses the fluid RTL workspace with a document-height sidebar and the shared restrained 16% geometry. Navigation covers the existing teaching tools, preparation checklist, discussions, communication previews, guidance and account. Overview cards count available interface tools, never students or operational activity. The order is heading, tool overview, preparation guidance, teaching tasks, checklist and permissions, then communication. Two communication cards fill two equal columns on wide screens. Mobile navigation remains collapsible without an internal scrolling sidebar.
+
+
+## CSV CRUD controls — CSV-CRUD-20261025
+
+Live admin CRUD surfaces share `src/features/administration/csv/controls.tsx` and the private same-origin `/api/admin/csv/[resource]/[operation]` boundary. Existing cards, native file inputs, inline Arabic feedback and confirmation dialog remain canonical. Export includes all matching results rather than one cursor page; templates come from Laravel. Imports are atomic, bounded to 200 rows/1 MiB, require explicit confirmation, expose server row errors and never automatically retry uncertain outcomes. Homepage imports save drafts only; unsaved homepage edits disable CSV and pending CSV disables save/publish. The FAQ CSV-only tool is permission-gated in the connected administration overview; it does not imply a delivered FAQ editor. Backend authorization remains authoritative and tokens never reach browser code.
+
+### Stronger dashboard typography — 2026-10-26
+
+All dashboard workspaces retain the existing Cairo family with loaded real font weights. Sidebar links use 14px/700 and active links800; group labels12px/800 and workspace names15px/800. Dashboard body defaults to16px/600 with generous1.9 line height, headings/table headers/key values800 and controls/labels700. Smaller contextual notices keep their documented size. Apply through shared workspace/admin selectors so learner, teacher, admin previews and connected CRUD screens agree, while the public landing and religious Amiri text retain their own hierarchy. Verify both themes and narrow widths for wrapping and overflow after the weight/size increase.
+
+### Read-only audit reader — SH-805C, 2026-10-28
+
+`src/features/administration/audit` owns the live redacted audit table. It reuses `AdminShell`, `CursorNavigation` and the audit export-only `CsvControls` variant; current system-administrator role and audit.view permission govern discovery and server reads. The dedicated `/admin/audit-logs` route owns its shared style imports and localized noindex metadata. `audit/audit.css` owns only table geometry and the labeled overflow region's visible focus; natural document scrolling, shared tokens and sibling forms retain their established owners. The native RTL table displays seven permitted metadata fields, LTR-isolated identifiers, explicit UTC timestamps and neutral unavailable values. No total, analytics or historical identity/detail lookup is implied. Contract evidence: workspace `docs/superpowers/specs/2026-10-28-live-audit-log-design.md`, Binding contract; backend `Modules/Administration/app/Http/Resources/AuditLogResource.php`, toArray.

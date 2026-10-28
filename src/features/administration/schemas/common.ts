@@ -16,6 +16,7 @@ export const roles = [
   "system-administrator",
 ] as const;
 export const permissions = [
+  "homepage.manage",
   "users.view",
   "users.manage-status",
   "users.assign-roles",
@@ -29,10 +30,11 @@ export const roleNames: Record<string, string> = {
   instructor: "مدرّس",
   supervisor: "مشرف",
   evaluator: "مقيّم",
-  "academy-manager": "مدير الأكاديمية",
+  "academy-manager": "مدير المركز",
   "system-administrator": "مدير النظام",
 };
 export const permissionNames: Record<string, string> = {
+  "homepage.manage": "إدارة قسم الاهتمامات في الصفحة الرئيسية",
   "users.view": "عرض المستخدمين",
   "users.manage-status": "تغيير حالة الحساب",
   "users.assign-roles": "تعيين الأدوار",

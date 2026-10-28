@@ -1,3 +1,5 @@
+import { ThemeSync } from "@/components/theme/theme-toggle";
+import { themeBootstrap } from "@/components/theme/bootstrap";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Amiri, Cairo } from "next/font/google";
@@ -19,20 +21,21 @@ const quranFont = Amiri({
 
 export const metadata: Metadata = {
   title: {
-    default: "أكاديمية د. حازم شومان | رحلة علم وتربية وصناعة أثر",
-    template: "%s | أكاديمية د. حازم شومان",
+    default: "مركز د. حازم شومان | رحلة علم وتربية وصناعة أثر",
+    template: "%s | مركز د. حازم شومان",
   },
-  description: "أكاديمية إسلامية رقمية مجانية: مسارات تعليمية، مبادرات وبرامج موسمية، وشهادات إتمام.",
+  description: "مركز إسلامية رقمية مجانية: مسارات تعليمية، مبادرات وبرامج موسمية، وشهادات إتمام.",
   openGraph: {
-    title: "أكاديمية د. حازم شومان",
-    description: "رحلة علم .. وتربية .. وصناعة أثر — أكاديمية إسلامية مجانية للشباب.",
+    title: "مركز د. حازم شومان",
+    description: "رحلة علم .. وتربية .. وصناعة أثر — مركز إسلامية مجانية للشباب.",
   },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ar" dir="rtl" className={`${arabicHeading.variable} ${quranFont.variable} h-full antialiased`}>
-      <body suppressHydrationWarning className="flex min-h-full flex-col font-sans">{children}</body>
+    <html suppressHydrationWarning lang="ar" dir="rtl" className={`${arabicHeading.variable} ${quranFont.variable} h-full antialiased`}>
+      <head><script dangerouslySetInnerHTML={{ __html: themeBootstrap }} /></head>
+      <body suppressHydrationWarning className="flex min-h-full flex-col font-sans"><ThemeSync />{children}</body>
     </html>
   );
 }

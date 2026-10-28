@@ -1,4 +1,5 @@
 "use client";
+import { CsvControls } from "../csv/controls";
 import type { AdminRole } from "../types";
 import { permissions, permissionNames, roleNames } from "../schemas/common";
 import { ActionForm } from "../components/action-form";
@@ -6,6 +7,7 @@ import { updateRolePermissionsAction } from "./actions";
 export function RoleEditor({ roles }: { roles: AdminRole[] }) {
   return (
     <div className="xp-stack">
+      <CsvControls resource="roles" label="الأدوار والصلاحيات" canImport />
       {roles.map((role) => (
         <section className="xp-card" key={role.name}>
           <h2>{roleNames[role.name]}</h2>

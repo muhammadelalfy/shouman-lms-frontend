@@ -1,0 +1,43 @@
+.mk-tools-track > svg { margin-block: 1.4rem; color: var(--primary); }
+.mk-tools-track h3 { font-size: 1.7rem; line-height: 1.7; }
+.mk-tools-track li { margin-block: .5rem; }
+.mk-tools-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding-block: 1rem; border-block: 1px solid var(--border); }
+.mk-tools-facts dt { font-size: .8rem; color: var(--muted-foreground); }
+.mk-tools-facts dd { margin: .4rem 0 0; font-weight: 600; }
+.mk-tools-video { padding: 1.2rem; margin-block-start: 1rem; background: var(--background); border: 1px dashed var(--border); border-radius: .75rem; }
+.mk-tools-video strong { display: block; margin-block: .6rem; }
+.mk-tools-error { color: var(--destructive); font-size: .875rem; }
+.mk-tools-checks { border: 1px solid var(--border); padding: 1rem; border-radius: .75rem; }
+.mk-tools-checks label { display: flex; align-items: center; gap: .7rem; min-height: 44px; }
+.mk-tools-checks input { width: 18px; height: 18px; accent-color: var(--primary); }
+.mk-tools-count { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem; padding-block: 2rem; }
+.mk-tools-count strong { font-size: 3rem; color: var(--primary); }
+.mk-tools-count span { flex-basis: 100%; color: var(--muted-foreground); }
+.mk-tools-recipient-list { padding-inline-start: 1.2rem; line-height: 2.5; }
+.mk-tools-dialog { margin: auto; background: var(--card); color: var(--foreground); width: min(560px, calc(100% - 2rem)); border: 1px solid var(--border); padding: 2rem; border-radius: 1.25rem; max-height: calc(100dvh - 2rem); overflow-y: auto; }
+.mk-tools-dialog::backdrop { background: color-mix(in oklch, var(--navy) 70%, transparent); }
+.mk-tools-dialog h2 { font-size: 1.4rem; font-weight: 700; margin-block-end: 1rem; }
+.mk-tools-dialog p, .mk-tools-dialog h3 { margin-block: 1rem; overflow-wrap: anywhere; }
+.mk-tools-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-block-start: 1.5rem; }
+.mk-tools-message { white-space: pre-wrap; }
+.mk-tools-readiness { margin-block: 1.5rem; border-block: 1px solid var(--border); padding-block: 1.5rem; }
+.mk-tools-readiness h3 { font-weight: 700; margin-block: .75rem; }
+.mk-tools-meeting { background: var(--navy); color: var(--navy-foreground); border-radius: 1.25rem; overflow: hidden; display: flex; flex-direction: column; min-height: 430px; }
+.mk-tools-meeting-heading { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem; border-block-end: 1px solid color-mix(in oklch, var(--navy-foreground) 20%, transparent); }
+.mk-tools-meeting-heading .mk-pill { background: var(--navy-foreground); color: var(--navy); }
+.mk-tools-meeting-body { text-align: center; padding: 2rem; margin: auto; max-width: 34rem; display: grid; justify-items: center; gap: 1.25rem; }
+.mk-tools-meeting-body h2 { font-size: 1.5rem; font-weight: 700; }
+.mk-tools-meeting-body .mk-button-outline { background: var(--navy-foreground); color: var(--navy); }
+.mk-tools-certificate { background: var(--card); border: 1px solid var(--border); outline: 1px solid var(--gold); outline-offset: -12px; padding: clamp(1.5rem, 5vw, 4rem); text-align: center; border-radius: .5rem; }
+.mk-tools-certificate-top { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 1rem; color: var(--primary); }
+.mk-tools-certificate-eyebrow { margin-block: 2rem 1rem; color: var(--muted-foreground); }
+.mk-tools-certificate h2 { font-family: var(--font-amiri), Amiri, serif; font-size: clamp(2rem, 5vw, 3rem); color: var(--primary); line-height: 1.7; }
+.mk-tools-certificate h2 + p { margin-block: 1.5rem; }
+.mk-tools-certificate-rule { width: 60px; border-block-start: 2px solid var(--gold); margin: 2rem auto; }
+.mk-tools-qr { display: flex; gap: 2rem; justify-content: center; align-items: center; margin-block-start: 2rem; text-align: start; }
+.mk-tools-qr-image { width: 224px; height: 224px; flex-shrink: 0; display: grid; place-items: center; background: white; color: #0b1d3a; }
+.mk-tools-qr > div:last-child { max-width: 24rem; }
+.mk-tools-qr h3 { font-weight: 700; margin-block: .75rem; }
+.mk-tools-qr .mk-button-outline { margin-block-start: 1rem; }
+.mk-tools-verification { max-width: 48rem; margin-inline: auto; text-align: center; display: grid; justify-items: center; gap: 1rem; }
+@media (max-width: 640px) { .mk-tools-qr { flex-direction: column; text-align: center; } .mk-tools-facts { grid-template-columns: 1fr; } .mk-tools-dialog { padding: 1.25rem; } }

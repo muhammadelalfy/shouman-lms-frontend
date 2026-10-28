@@ -97,3 +97,42 @@ describe("AuthForm", () => {
     expect(document.querySelector<HTMLInputElement>('input[name="redirectTo"]')?.value).toBe("/account");
   });
 });
+
+it("preserves the selected marketing card when switching between login and registration", () => {
+  const destination = "/preview/marketing/scholarships";
+  const { rerender } = render(<AuthForm mode="login" redirectTo={destination} />);
+  expect(screen.getByRole("link", { name: "إنشاء حساب" }).getAttribute("href")).toBe(`/auth/register?redirectTo=${encodeURIComponent(destination)}`);
+  rerender(<AuthForm mode="register" redirectTo={destination} />);
+  expect(screen.getByRole("link", { name: "تسجيل الدخول" }).getAttribute("href")).toBe(`/auth/login?redirectTo=${encodeURIComponent(destination)}`);
+  cleanup();
+});
+
+it("fills trial credentials only on request without submitting the login form", () => {
+  actions.loginAction.mockReset();
+  const { container } = render(<AuthForm mode="login" trialCredentials={{ email: "trial-test@integration.example.invalid", password: "public-trial-password" }} />);
+  expect((screen.getByLabelText("البريد الإلكتروني") as HTMLInputElement).value).toBe("");
+  fireEvent.click(screen.getByRole("button", { name: "تعبئة بيانات التجربة" }));
+  expect((screen.getByLabelText("البريد الإلكتروني") as HTMLInputElement).value).toBe("trial-test@integration.example.invalid");
+  expect((screen.getByLabelText("كلمة المرور") as HTMLInputElement).value).toBe("public-trial-password");
+  expect(actions.loginAction).not.toHaveBeenCalled();
+  expect(container.querySelector('canvas')).toBeNull();
+  expect(container.querySelector('.auth-islamic-background [data-component="islamic-pattern"]')).toBeTruthy();
+  cleanup();
+});
+
+it("fills the dedicated admin account without submitting and opens admin by default", () => {
+  actions.loginAction.mockReset();
+  const credentials = {email:"trial-admin-local@integration.example.invalid",password:"local-admin-test-password"};
+  const {container,rerender}=render(<AuthForm mode="login" adminTrialCredentials={credentials}/>);
+  fireEvent.click(screen.getByRole("button",{name:"تعبئة بيانات المدير"}));
+  expect((screen.getByLabelText("البريد الإلكتروني") as HTMLInputElement).value).toBe(credentials.email);
+  expect((screen.getByLabelText("كلمة المرور") as HTMLInputElement).value).toBe(credentials.password);
+  expect(container.querySelector<HTMLInputElement>('input[name="redirectTo"]')?.value).toBe("/admin/dashboard");
+  expect(actions.loginAction).not.toHaveBeenCalled();
+  rerender(<AuthForm mode="login" redirectTo="/admin/homepage/needs" adminTrialCredentials={credentials}/>);
+  expect(container.querySelector<HTMLInputElement>('input[name="redirectTo"]')?.value).toBe("/admin/homepage/needs");
+  rerender(<AuthForm mode="register" adminTrialCredentials={credentials}/>);
+  expect(screen.queryByRole("button",{name:"تعبئة بيانات المدير"})).toBeNull();
+  expect(container.querySelector('input[name="redirectTo"]')).toBeNull();
+  cleanup();
+});

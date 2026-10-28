@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { CsvControls } from "../csv/controls";
 import { useState } from "react";
 import type { AdminOffering } from "../types";
 import { ActionForm } from "../components/action-form";
@@ -131,6 +132,7 @@ export function OutlineEditor({
           </Link>
         )}
       </div>
+      <CsvControls resource="subjects" label="المواد" canImport={manage} filters={{ offering_id: offering.id }} />
       {!subjects.length && (
         <p className="xp-muted">لم تُضف مواد بعد. ابدأ بإضافة المادة الأولى.</p>
       )}
@@ -167,6 +169,7 @@ export function OutlineEditor({
             publish={publish}
           />
           <h3>الدروس</h3>
+          <CsvControls resource="lessons" label={`دروس ${s.title}`} canImport={manage} filters={{ subject_id: s.id }} />
           {!s.lessons?.length && (
             <p className="xp-muted">لا توجد دروس في هذه المادة.</p>
           )}

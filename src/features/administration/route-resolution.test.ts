@@ -33,6 +33,8 @@ it("does not allow malformed live paths to fall back to legacy previews", async 
     "admin/users/demo-user",
     "admin/offerings/0",
     "admin/subjects/99",
+    "admin/audit-logs/99",
+    "admin/audit-logs/new",
   ])
     expect(isLiveAdminPath(path.split("/"))).toBe(true);
   expect(isLiveAdminPath(["preview", "admin", "users"])).toBe(false);

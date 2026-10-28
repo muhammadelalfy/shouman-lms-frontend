@@ -1,5 +1,6 @@
 "use server";
 
+import { defaultLoginDestination } from "../login-destination";
 import { redirect } from "next/navigation";
 import { getSessionToken, endSession, startSession } from "@/lib/auth/session";
 import { apiFailure, type FormState, validationFailure } from "@/lib/forms";
@@ -19,14 +20,16 @@ export async function loginAction(_previous: FormState, formData: FormData): Pro
     return validationFailure(parsed.error);
   }
 
+  let destination = "/dashboard";
   try {
     const issued = await authApi.login(parsed.data);
+    destination = defaultLoginDestination(issued.user);
     await startSession(issued.token, issued.expires_at);
   } catch (error) {
     return apiFailure(error);
   }
 
-  redirect(safeRedirectPath(formData.get("redirectTo")));
+  redirect(safeRedirectPath(formData.get("redirectTo"), destination));
 }
 
 export async function registerAction(_previous: FormState, formData: FormData): Promise<FormState> {

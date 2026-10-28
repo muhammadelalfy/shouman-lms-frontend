@@ -36,7 +36,7 @@ function listingProps(
   return {
     offerings,
     title: "استكشف المحتوى",
-    description: "تصفّح المواد المنشورة في الأكاديمية واختر ما يناسب رحلتك.",
+    description: "تصفّح المواد المنشورة في المركز واختر ما يناسب رحلتك.",
     basePath: "/catalog",
     nextCursor: null,
     previousCursor: null,

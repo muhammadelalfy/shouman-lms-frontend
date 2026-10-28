@@ -46,7 +46,7 @@ export function UserDetail({
       {statusAllowed && (
         <section className="xp-card">
           <h2>حالة الحساب</h2>
-          <p>تعطيل الحساب يمنع الوصول ويلغي جلساته وفق سياسة الأكاديمية.</p>
+          <p>تعطيل الحساب يمنع الوصول ويلغي جلساته وفق سياسة المركز.</p>
           <ActionForm
             action={updateUserStatusAction}
             label="تغيير حالة الحساب"

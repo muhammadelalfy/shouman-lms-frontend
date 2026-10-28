@@ -17,6 +17,7 @@ vi.mock("@/features/administration/courses/api", () => ({
   listOfferings: deps.offerings,
 }));
 vi.mock("next/navigation", () => ({
+  useRouter: () => ({ refresh: vi.fn() }),
   redirect: (href: string) => {
     throw new Error(`REDIRECT:${href}`);
   },
@@ -59,28 +60,24 @@ it("denies a learner admin access before any private list call", async () => {
   expect(deps.users).not.toHaveBeenCalled();
   expect(deps.offerings).not.toHaveBeenCalled();
 });
-it("shows actual account context with no synthetic progress or private token", async () => {
+it("shows the student dashboard with real account context and clearly labeled samples", async () => {
   const { container } = render(await WorkspacePage({ route: "dashboard" }));
   expect(
     screen.getByRole("heading", { name: "مرحبًا، متعلم حقيقي" }),
   ).toBeTruthy();
-  expect(
-    screen.getByRole("link", { name: /استكشف المحتوى/ }).getAttribute("href"),
-  ).toBe("/catalog");
+  expect(screen.getByRole("heading", { name: "خطوة جديدة في رحلة التعلّم" })).toBeTruthy();
+  expect(screen.getByRole("navigation", { name: "أقسام المتعلم" })).toBeTruthy();
+  for (const link of screen.getAllByRole("link", { name: "لوحتي" })) expect(link.getAttribute("href")).toBe("/dashboard");
   expect(container.textContent).not.toContain("private-token");
   expect(screen.queryByRole("link", { name: /افتح لوحة الإدارة/ })).toBeNull();
   expect(deps.users).not.toHaveBeenCalled();
 });
-it("keeps learning availability honest without made-up enrolled courses", async () => {
+it("labels activity examples and opens ongoing work by default", async () => {
   render(await WorkspacePage({ route: "learning" }));
-  expect(
-    screen.getByRole("heading", { name: "مساحتك التعليمية قيد التجهيز" }),
-  ).toBeTruthy();
-  expect(
-    screen
-      .getByRole("link", { name: /استعرض نموذج التعلم/ })
-      .getAttribute("href"),
-  ).toBe("/preview/my-learning");
+  expect(screen.getByRole("heading", { level: 1, name: "تعلّمي" })).toBeTruthy();
+  expect(screen.getByRole("button", { name: "قيد التعلم" }).getAttribute("aria-pressed")).toBe("true");
+  expect(screen.queryByRole("heading", { name: "محطات من السيرة النبوية" })).toBeNull();
+  expect(screen.getByText(/معاينة الواجهة · بيانات تجريبية/)).toBeTruthy();
   expect(deps.offerings).not.toHaveBeenCalled();
 });
 it("omits unauthorized panels and requests for a content-only operator", async () => {
@@ -155,4 +152,35 @@ it("handles revoked panel permissions without exposing rejected records", async 
   render(await WorkspacePage({ route: "admin" }));
   expect(screen.getByText("لم تعد لديك صلاحية لعرض هذه السجلات.")).toBeTruthy();
   expect(screen.queryByText("PRIVATE")).toBeNull();
+});
+
+it("opens the design directory after verified administrator access while retaining live tools",async()=>{
+ deps.me.mockResolvedValue({...user,roles:["system-administrator"],permissions:["homepage.manage","offerings.view"]});
+ render(await WorkspacePage({route:"admin"}));
+ expect(screen.getByRole("heading",{level:1,name:"كل أبواب المركز، في مكان واحد."})).toBeTruthy();
+ expect(screen.getByRole("link",{name:"إدارة قسم الاهتمامات"}).getAttribute("href")).toBe("/admin/homepage/needs");
+ expect(screen.getByRole("link",{name:"إدارة المحتوى التعليمي"}).getAttribute("href")).toBe("/admin/offerings");
+});
+it("routes an administrator's generic dashboard link to the admin landing",async()=>{
+ deps.me.mockResolvedValue({...user,roles:["academy-manager"],permissions:["offerings.view"]});
+ await expect(WorkspacePage({route:"dashboard"})).rejects.toThrow("REDIRECT:/admin/dashboard");
+});
+
+it("shows audit CSV as export-only only to system administrators with audit permission", async () => {
+  deps.me.mockResolvedValue({ ...user, roles: ["system-administrator"], permissions: ["audit.view"] });
+  render(await WorkspacePage({ route: "admin" }));
+  const toolbar = screen.getByRole("region", { name: "CSV · سجل التدقيق" });
+  expect(toolbar.querySelectorAll("button").length).toBe(1);
+  expect(toolbar.textContent).toContain("تصدير CSV");
+  expect(toolbar.querySelector('input[type="file"]')).toBeNull();
+  expect(deps.users).not.toHaveBeenCalled();
+  expect(deps.offerings).not.toHaveBeenCalled();
+});
+it.each([
+  { roles: ["academy-manager"], permissions: ["audit.view"] },
+  { roles: ["system-administrator"], permissions: ["users.view"] },
+])("omits audit CSV without both required role and permission: %j", async account => {
+  deps.me.mockResolvedValue({ ...user, ...account });
+  render(await WorkspacePage({ route: "admin" }));
+  expect(screen.queryByRole("region", { name: "CSV · سجل التدقيق" })).toBeNull();
 });

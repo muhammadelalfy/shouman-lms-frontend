@@ -1,7 +1,9 @@
+import { MarketingDiscovery } from "@/features/marketing/discovery";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Award, Bell, BookOpen, CalendarDays, CheckCircle2, ClipboardCheck, ClipboardList, Compass, FileCheck2, FileText, GraduationCap, Heart, Layers, Lightbulb, LockKeyhole, MessageCircle, ShieldCheck, Sparkles, Star, Target, Trophy, Users, Video } from "lucide-react";
 import { DemoDataLabel, EmptyState, ExperienceHeading, PreviewAction, StatusBadge } from "@/features/experience/shared/ui";
+import { AnimatedCounter } from "@/components/ui/animated-counter";
 import { sampleLearning } from "./fixtures";
 import { StudyCard } from "./study-card";
 import { LearningList } from "./learning-list";
@@ -12,7 +14,7 @@ import "./learner.css";
 
 function Dashboard() {
   return <div className="xp-stack learner-page">
-    <ExperienceHeading eyebrow="مساحتك في الأكاديمية" title="خطوة جديدة في رحلة التعلّم" description="تابع دروسك، ورتّب أولوياتك، وارجع إلى ما بدأت. هذه مساحة شخصية ببيانات توضيحية فقط." action={<Link className="xp-button xp-button-outline" href="/preview/my-learning">كل أمثلة تعلّمي<ArrowLeft size={17} aria-hidden="true" />
+    <ExperienceHeading eyebrow="مساحتك في المركز" title="خطوة جديدة في رحلة التعلّم" description="تابع دروسك، ورتّب أولوياتك، وارجع إلى ما بدأت. هذه مساحة شخصية ببيانات توضيحية فقط." action={<Link className="xp-button xp-button-outline" href="/my-learning">أنشطتي الحالية<ArrowLeft size={17} aria-hidden="true" />
     </Link>} />
     <section className="learner-welcome">
       <div className="learner-welcome-copy">
@@ -32,12 +34,13 @@ function Dashboard() {
         </div>
       </div>
     </section>
+    <MarketingDiscovery audience="student" />
     <div className="xp-grid xp-grid-3 learner-stat-grid">{[{ icon: BookOpen, value: "٢", label: "رحلات قيد التعلم — مثال" }, { icon: CheckCircle2, value: "١", label: "رحلة مكتملة — مثال" }, { icon: Award, value: "١", label: "تصميم شهادة تجريبية" }].map(({ icon: Icon, value, label }) => <article className="xp-card learner-stat" key={label}>
       <span className="learner-icon-tile">
         <Icon size={23} aria-hidden="true" />
       </span>
       <div>
-        <strong>{value}</strong>
+        <strong><AnimatedCounter value={value} duration={1.2} /></strong>
         <p>{label}</p>
       </div>
     </article>)}</div>
@@ -45,7 +48,7 @@ function Dashboard() {
       <section className="xp-stack">
         <div className="learner-section-heading">
           <h2>أكمل رحلتك</h2>
-          <Link href="/preview/my-learning">عرض الكل<ArrowLeft size={15} aria-hidden="true" />
+          <Link href="/my-learning">عرض الكل<ArrowLeft size={15} aria-hidden="true" />
           </Link>
         </div>
         <div className="xp-grid xp-grid-2">{sampleLearning.slice(0, 2).map((item) => <StudyCard key={item.id} item={item} />)}</div>
@@ -134,7 +137,7 @@ function Dashboard() {
 function MyLearning() {
   return <div className="xp-stack learner-page">
     <ExperienceHeading eyebrow="خطوة تتبعها خطوة" title="تعلّمي" description="اجمع مساراتك ودوراتك في مكان واحد، وجرّب تصفية أمثلة التعلم بحسب حالتها." action={<Link className="xp-button xp-button-outline" href="/catalog">استكشف الكتالوج الحقيقي</Link>} />
-    <LearningList />
+    <LearningList initialFilter="current" />
     <section className="learner-quiet-note learner-inline-note">
       <Compass size={25} aria-hidden="true" />
       <div>
@@ -228,7 +231,7 @@ function Certificates({ detail }: { detail: boolean }) {
         <div className="learner-certificate-watermark" aria-hidden="true">نموذج غير صالح</div>
         <div className="learner-certificate-content">
           <span className="learner-certificate-brand">
-            <GraduationCap size={38} aria-hidden="true" />أكاديمية د. حازم شومان</span>
+            <GraduationCap size={38} aria-hidden="true" />مركز د. حازم شومان</span>
           <DemoDataLabel />
           <h2>نموذج شهادة تعلّم</h2>
           <p>صُمّم هذا المثال لعرض اسم المتعلّم</p>
@@ -301,7 +304,7 @@ function Projects({ detail }: { detail: boolean }) {
         <section className="xp-card learner-reading-copy">
           <StatusBadge tone="info">تعليمات توضيحية</StatusBadge>
           <h2>ابنِ ملخصًا يعكس فهمك</h2>
-          <p>يعرض هذا المثال كيف يمكن ترتيب تعليمات مشروع تعليمي. الموضوع والموعد والصيغة ومعايير التقييم تعتمدها الأكاديمية عند توفير الخدمة.</p>
+          <p>يعرض هذا المثال كيف يمكن ترتيب تعليمات مشروع تعليمي. الموضوع والموعد والصيغة ومعايير التقييم تعتمدها المركز عند توفير الخدمة.</p>
           <h3>محتويات نموذج المشروع</h3>
           <ol>
             <li>مساحة لعنوان الفكرة أو السؤال.</li>
@@ -400,7 +403,7 @@ function Achievements() {
     </article>)}</div>
     <section className="learner-quiet-note">
       <h2>عن الشارات في هذه المعاينة</h2>
-      <p>لا تمثل الشارات إتمامًا أو تميزًا أو مكافأة. تظهر قواعدها الحقيقية عندما تعتمدها الأكاديمية وتتصل خدمة الإنجازات.</p>
+      <p>لا تمثل الشارات إتمامًا أو تميزًا أو مكافأة. تظهر قواعدها الحقيقية عندما تعتمدها المركز وتتصل خدمة الإنجازات.</p>
     </section>
   </div>;
 }
@@ -502,6 +505,10 @@ function RoleWorkspace({ role }: { role: StaffRole }) {
   const Icon = workspace.icon;
   return <div className="xp-stack learner-page">
     <ExperienceHeading eyebrow={workspace.eyebrow} title={workspace.title} description={workspace.description} />
+    {role === "instructor" && <section className="teacher-overview" aria-label="نظرة عامة على أدوات المعلم">
+      <a className="xp-card learner-stat" href="#teacher-teaching"><span className="learner-icon-tile"><Layers size={24} aria-hidden="true" /></span><div><strong>٣</strong><p>أدوات للتدريس والتحضير</p><small>أدوات متاحة في هذه المعاينة</small></div></a>
+      <a className="xp-card learner-stat" href="#teacher-communication"><span className="learner-icon-tile"><MessageCircle size={24} aria-hidden="true" /></span><div><strong>٢</strong><p>أدوات للتواصل واللقاءات</p><small>نماذج تجريبية دون إرسال أو جدولة</small></div></a>
+    </section>}
     <section className="learner-role-hero">
       <span className="learner-role-emblem">
         <Icon size={45} aria-hidden="true" />
@@ -512,6 +519,8 @@ function RoleWorkspace({ role }: { role: StaffRole }) {
         <p>{workspace.summary}</p>
       </div>
     </section>
+    <section id={role === "instructor" ? "teacher-teaching" : undefined} className="xp-stack">
+    {role === "instructor" && <h2>أدوات التدريس</h2>}
     <div className="xp-grid xp-grid-3">{workspace.tasks.map(({ title, text, href, icon: TaskIcon }) => <article className="xp-card xp-stack" key={title}>
       <span className="learner-icon-tile">
         <TaskIcon size={25} aria-hidden="true" />
@@ -521,7 +530,8 @@ function RoleWorkspace({ role }: { role: StaffRole }) {
       <Link href={href} className="learner-card-link">استعرض المساحة<ArrowLeft size={17} aria-hidden="true" />
       </Link>
     </article>)}</div>
-    <div className="xp-grid xp-grid-2">
+    </section>
+    <div id={role === "instructor" ? "teacher-review" : undefined} className="xp-grid xp-grid-2">
       <section className="xp-card">
         <h2>قائمة عمل توضيحية</h2>
         <ul className="learner-work-list">
@@ -539,12 +549,13 @@ function RoleWorkspace({ role }: { role: StaffRole }) {
           </li>
         </ul>
       </section>
-      <section className="learner-quiet-note">
+      <section id={role === "instructor" ? "teacher-guidance" : undefined} className="learner-quiet-note">
         <ShieldCheck size={25} aria-hidden="true" />
         <h2>الصلاحيات مسؤولية الخدمة</h2>
         <p>فتح هذه المعاينة لا يمنح دورًا ولا يكشف بيانات. الوصول الفعلي يحتاج جلسة صالحة وصلاحية يقرّها الخادم.</p>
       </section>
     </div>
+    {role === "instructor" && <div id="teacher-communication"><MarketingDiscovery audience="teacher" /></div>}
   </div>;
 }
 

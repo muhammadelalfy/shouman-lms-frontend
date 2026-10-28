@@ -1,6 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { IslamicPattern } from "@/components/ui/islamic-pattern";
+import type { TrialCredentials } from "../trial-credentials";
+import { safeRedirectPath } from "@/lib/navigation";
+import { ArrowLeft } from "lucide-react";
+import { LoginForm } from "@/components/ui/login-form";
 import { cloneElement, isValidElement, useActionState, useEffect, useRef, useState, type InputHTMLAttributes, type ReactElement, type ReactNode } from "react";
 import { useFormStatus } from "react-dom";
 import {
@@ -21,6 +26,8 @@ export type AuthFormProps = {
   email?: string;
   redirectTo?: string;
   sessionExpired?: boolean;
+  trialCredentials?: TrialCredentials;
+  adminTrialCredentials?: TrialCredentials;
 };
 
 type FieldProps = {
@@ -73,7 +80,7 @@ const copy: Record<AuthFormMode, { eyebrow: string; title: string; description: 
   register: {
     eyebrow: "بداية رحلتك",
     title: "أنشئ حساب طالب",
-    description: "املأ بياناتك الأساسية لإنشاء حسابك في الأكاديمية.",
+    description: "املأ بياناتك الأساسية لإنشاء حسابك في المركز.",
     submit: "إنشاء الحساب",
   },
   "forgot-password": {
@@ -90,11 +97,22 @@ const copy: Record<AuthFormMode, { eyebrow: string; title: string; description: 
   },
 };
 
-export function AuthForm({ mode, token = "", email: initialEmail = "", redirectTo, sessionExpired = false }: AuthFormProps) {
+export function AuthForm({ mode, token = "", email: initialEmail = "", redirectTo, sessionExpired = false, trialCredentials, adminTrialCredentials }: AuthFormProps) {
+  const returnQuery = redirectTo ? `?redirectTo=${encodeURIComponent(safeRedirectPath(redirectTo))}` : "";
   const formRef = useRef<HTMLFormElement>(null);
   const [email, setEmail] = useState(initialEmail);
   const [name, setName] = useState("");
+  const [trialFilled, setTrialFilled] = useState(false);
+  const [trialDestination, setTrialDestination] = useState<string>();
+  const fillTrial = (credentials: TrialCredentials, destination?: string) => {
+    setEmail(credentials.email);
+    const password = formRef.current?.querySelector<HTMLInputElement>('input[name="password"]');
+    if (password) password.value = credentials.password;
+    setTrialDestination(destination);
+    setTrialFilled(true);
+  };
   const [phone, setPhone] = useState("");
+  const formDestination = redirectTo ?? (mode === "login" ? trialDestination : undefined);
   const actions = { login: loginAction, register: registerAction, "forgot-password": forgotPasswordAction, "reset-password": resetPasswordAction };
   const [state, formAction, pending] = useActionState(actions[mode], initialFormState);
   const errors = state.status === "error" ? state.fieldErrors : undefined;
@@ -108,16 +126,8 @@ export function AuthForm({ mode, token = "", email: initialEmail = "", redirectT
 
   return (
     <section className="auth-page" dir="rtl" lang="ar" aria-labelledby="auth-title">
-      <div className="auth-page__frame">
-        <aside className="auth-page__aside" aria-label="أكاديمية د. حازم شومان">
-          <div className="auth-page__seal" aria-hidden="true"><span>أ</span></div>
-          <p className="auth-page__aside-kicker">أكاديمية د. حازم شومان</p>
-          <p className="auth-page__aside-title">رحلة علم، وتربية، وأثر.</p>
-          <span className="auth-page__aside-rule" aria-hidden="true" />
-          <p className="auth-page__aside-note">تعلّم بخطوات واضحة، وابدأ من المكان الذي يناسبك.</p>
-        </aside>
-
-        <div className="auth-card">
+      <div className="auth-islamic-background" aria-hidden="true"><IslamicPattern className="auth-islamic-pattern" /></div>
+      <LoginForm>
           <header className="auth-card__header">
             <p className="auth-card__eyebrow">{labels.eyebrow}</p>
             <h1 id="auth-title">{labels.title}</h1>
@@ -135,7 +145,7 @@ export function AuthForm({ mode, token = "", email: initialEmail = "", redirectT
           {sessionExpired ? <p className="auth-form__message auth-form__message--error" role="status">انتهت جلستك. سجّل الدخول للمتابعة إلى الصفحة التي طلبتها.</p> : null}
 
           <form ref={formRef} action={formAction} className="auth-form" noValidate aria-busy={pending}>
-            {redirectTo ? <input type="hidden" name="redirectTo" value={redirectTo} /> : null}
+            {formDestination ? <input type="hidden" name="redirectTo" value={formDestination} /> : null}
 
             {mode === "login" ? (
               <>
@@ -189,13 +199,17 @@ export function AuthForm({ mode, token = "", email: initialEmail = "", redirectT
               </>
             ) : null}
 
+            {mode === "login" && (trialCredentials || adminTrialCredentials) && <div className="auth-trial">
+              {trialCredentials && <><button type="button" disabled={pending} onClick={() => fillTrial(trialCredentials)}>تعبئة بيانات التجربة</button><p>حساب طالب تجريبي مشترك. لا تدخل بيانات شخصية في هذا الحساب.</p></>}
+              {adminTrialCredentials && <><button type="button" disabled={pending} onClick={() => fillTrial(adminTrialCredentials, "/admin/dashboard")}>تعبئة بيانات المدير</button><p>حساب مدير مشترك للاختبار المحلي فقط. التغييرات من هذا الحساب تؤثر على بيانات التجربة.</p></>}
+              {trialFilled && <p role="status">تمت تعبئة البيانات. اضغط تسجيل الدخول للمتابعة.</p>}
+            </div>}
             <SubmitButton label={labels.submit} pendingLabel="جارٍ الإرسال…" />
             {pending ? <p className="auth-form__pending" role="status" aria-live="polite">جارٍ إرسال الطلب.</p> : null}
           </form>
 
-          <AuthLinks mode={mode} />
-        </div>
-      </div>
+          <AuthLinks mode={mode} returnQuery={returnQuery} />
+      </LoginForm>
     </section>
   );
 }
@@ -206,15 +220,16 @@ function SubmitButton({ label, pendingLabel }: { label: string; pendingLabel: st
   return (
     <button className="auth-form__submit" type="submit" disabled={pending}>
       {pending ? pendingLabel : label}
+      <ArrowLeft size={18} aria-hidden="true" />
     </button>
   );
 }
 
-function AuthLinks({ mode }: { mode: AuthFormMode }) {
+function AuthLinks({ mode, returnQuery }: { mode: AuthFormMode; returnQuery: string }) {
   return (
     <nav className="auth-card__links" aria-label="روابط الحساب">
-      {mode === "login" ? <><Link href="/auth/forgot-password">نسيت كلمة المرور؟</Link><span aria-hidden="true">·</span><Link href="/auth/register">إنشاء حساب</Link></> : null}
-      {mode === "register" ? <><span>لديك حساب بالفعل؟</span><Link href="/auth/login">تسجيل الدخول</Link></> : null}
+      {mode === "login" ? <><Link href="/auth/forgot-password">نسيت كلمة المرور؟</Link><span aria-hidden="true">·</span><Link href={`/auth/register${returnQuery}`}>إنشاء حساب</Link></> : null}
+      {mode === "register" ? <><span>لديك حساب بالفعل؟</span><Link href={`/auth/login${returnQuery}`}>تسجيل الدخول</Link></> : null}
       {mode === "forgot-password" || mode === "reset-password" ? <Link href="/auth/login">العودة إلى تسجيل الدخول</Link> : null}
     </nav>
   );

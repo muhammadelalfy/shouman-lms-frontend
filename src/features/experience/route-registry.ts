@@ -8,7 +8,7 @@ export const experienceRoutes: ExperienceRouteExample[] = [
   { href: "/preview/catalog", title: "كتالوج المعاينة", area: "public" },
   { href: "/preview/catalog/demo-course", title: "تفاصيل دورة توضيحية", area: "public" },
   { href: "/faq", title: "الأسئلة الشائعة", area: "public" },
-  { href: "/about", title: "عن الأكاديمية", area: "public" },
+  { href: "/about", title: "عن المركز", area: "public" },
   { href: "/contact", title: "تواصل معنا", area: "public" },
   { href: "/events", title: "الفعاليات", area: "public" },
   { href: "/events/demo-event", title: "تفاصيل فعالية", area: "public" },
@@ -77,7 +77,7 @@ export const experienceRoutes: ExperienceRouteExample[] = [
   { href: "/preview/admin/analytics", title: "التحليلات", area: "admin" },
   { href: "/preview/admin/cms", title: "محتوى الموقع", area: "admin" },
   { href: "/preview/admin/audit-log", title: "سجل التدقيق", area: "admin" },
-  { href: "/preview/admin/settings", title: "إعدادات الأكاديمية", area: "admin" },
+  { href: "/preview/admin/settings", title: "إعدادات المركز", area: "admin" },
   { href: "/preview/admin/integrations", title: "التكاملات", area: "admin" },
   { href: "/preview/admin/settings/integrations", title: "إعدادات التكاملات", area: "admin" },
 ];
@@ -95,7 +95,7 @@ export function resolveExperienceRoute(slug: string[]): ExperienceRoute | null {
   const explicitAdminPreview = path[0] === "preview" && path[1] === "admin";
   if (explicitAdminPreview) path = path.slice(1);
   if (!explicitAdminPreview && path[0] === "admin" && ["users", "roles", "offerings", "subjects", "lessons", "students", "tracks", "courses", "programs", "seasonal-programs", "initiatives"].includes(path[1])) return null;
-  if (path.length === 1 && path[0] === "preview") return { area: "directory", title: "جميع واجهات الأكاديمية", path };
+  if (path.length === 1 && path[0] === "preview") return { area: "directory", title: "جميع واجهات المركز", path };
   if (path[0] === "learning" && path.length === 1) path = ["my-learning"];
   if (path[0] === "learn") {
     if (!isOfferingKind(path[1])) return null;

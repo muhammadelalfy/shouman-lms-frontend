@@ -11,13 +11,13 @@ import { AdminModeration } from "./admin-moderation";
 import "./admin.css";
 
 const workspaceTitles: Record<string, [string, string]> = {
-  dashboard: ["لوحة الإدارة", "نظرة عامة على أدوات الأكاديمية عبر بيانات اصطناعية، دون سجلات أو عمليات فعلية."],
+  dashboard: ["لوحة الإدارة", "نظرة عامة على أدوات المركز عبر بيانات اصطناعية، دون سجلات أو عمليات فعلية."],
   roles: ["الأدوار والصلاحيات", "استكشف تركيب الصلاحيات في نموذج محلي، مع بقاء التفويض وسياسات الحماية في الخادم."],
   subjects: ["محرر المادة", "نموذج بنية المادة وترتيب دروسها؛ لا يُحفظ أو يُنشر محتوى."],
   lessons: ["محرر الدرس", "هيئ عنوان الدرس وملخصه وشكل الوسائط في معاينة مستقلة عن التعلم الفعلي."],
   certificates: ["إدارة الشهادات", "قوالب وسجل وقواعد توضيحية؛ لا إصدار أو أهلية أو تحقق حقيقي."],
   rubrics: ["معايير التقييم", "بنية توضيحية لمراجعة المعايير، دون أوزان أو درجات أو اعتماد آلي."],
-  gamification: ["الشارات والتحفيز", "مكتبة نماذج للشارات. قواعد النقاط والمنح والمستويات تنتظر اعتماد الأكاديمية."],
+  gamification: ["الشارات والتحفيز", "مكتبة نماذج للشارات. قواعد النقاط والمنح والمستويات تنتظر اعتماد المركز."],
   distinguished: ["مراجعة مرشحي التميز", "مساحة مراجعة بشرية توضيحية؛ لا ترتيب أو ترشيح أو اعتماد فعلي."],
   reports: ["التقارير", "استكشف مكتبة التقارير ومصادرها المطلوبة باستخدام رسوم وقيم اصطناعية."],
   analytics: ["التحليلات", "تصورات توضيحية لا تمثل أداء متعلمين أو نشاطًا تشغيليًا أو تقارير إنتاج."],
@@ -64,5 +64,5 @@ export function AdminExperience({ path }: { path: string[] }) {
   else if (table) content = <div className="xp-stack"><AdminTable key={section} definition={table} />{table.related && <nav className="admin-related-links" aria-label="أدوات ذات صلة">{table.related.map((link) => <Link className="xp-button xp-button-outline" key={link.href} href={link.href}>{link.label} ←</Link>)}</nav>}</div>;
   else content = <section className="xp-card"><h2>اختر أداة من لوحة الإدارة</h2><p>القوائم المتاحة تقود إلى نماذج المحتوى والحسابات والمراجعة والتقارير.</p><Link className="xp-button" href="/preview/admin/dashboard">لوحة الإدارة</Link></section>;
 
-  return <div className="admin-experience"><ExperienceHeading eyebrow="إدارة الأكاديمية · معاينة" title={record && editing ? `${record === "new" ? "إضافة" : "تحرير"} — ${title}` : title} description={description} action={action} />{content}</div>;
+  return <div className="admin-experience"><ExperienceHeading eyebrow="إدارة المركز · معاينة" title={record && editing ? `${record === "new" ? "إضافة" : "تحرير"} — ${title}` : title} description={description} action={action} />{content}</div>;
 }

@@ -134,10 +134,10 @@ describe("homepage navigation", () => {
 
   it("offers a real section destination while search is unavailable", () => {
     render(<HeaderSearch />);
-    const trigger = screen.getByRole("button", { name: "ابحث في الأكاديمية" });
+    const trigger = screen.getByRole("button", { name: "ابحث في المركز" });
     trigger.focus();
     fireEvent.click(trigger);
-    const dialog = screen.getByRole("dialog", { name: "البحث في الأكاديمية — قريبًا" });
+    const dialog = screen.getByRole("dialog", { name: "البحث في المركز — قريبًا" });
     expect(within(dialog).getByText(/البحث غير متاح في هذه المعاينة/)).toBeDefined();
     const tracks = within(dialog).getByRole("link", { name: "تصفح المسارات" });
     expect(tracks.getAttribute("href")).toBe("#tracks");
@@ -246,7 +246,7 @@ describe("rendered homepage preview", () => {
     expect(screen.getByText(/أرقام توضيحية من مرجع التصميم/)).toBeDefined();
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
     expect(screen.getByRole("link", { name: "ابدأ رحلتك الآن" }).getAttribute("href")).toBe("#tracks");
-    expect(screen.getByRole("link", { name: "تعرف على الأكاديمية" }).getAttribute("href")).toBe("#video");
+    expect(screen.getByRole("link", { name: "تعرف على المركز" }).getAttribute("href")).toBe("#video");
     const links = Array.from(container.querySelectorAll<HTMLAnchorElement>("a[href]"));
     expect(links.length).toBeGreaterThan(0);
     for (const link of links) {
@@ -265,16 +265,17 @@ describe("rendered homepage preview", () => {
       else expect(href).toMatch(/^\/(?!\/)/);
     }
 
-    expect(screen.getAllByRole("link", { name: "البرامج" }).map((link) => link.getAttribute("href"))).toEqual(["#articles", "#articles"]);
-    expect(screen.getByRole("link", { name: "الأسئلة الشائعة" }).getAttribute("href")).toBe("#faq");
+    expect(screen.getAllByRole("link", { name: "البرامج" }).map((link) => link.getAttribute("href"))).toEqual(["#articles"]);
+    expect(within(container.querySelector("footer")!).getByRole("link", { name: "الأسئلة الشائعة" }).getAttribute("href")).toBe("/faq");
     expect(screen.getByRole("button", { name: "عن الشيخ" })).toBeDefined();
 
     const search = screen.getByRole("searchbox", { name: "ابحث عن دورة أو موضوع" });
     expect(search.getAttribute("name")).toBe("q");
     expect(search.closest("form")?.getAttribute("action")).toBe("/search");
     expect(search.closest("form")?.getAttribute("method")).toBe("get");
-    expect(screen.getByRole("link", { name: /تسجيل الدخول/ }).getAttribute("href")).toBe("/auth/login");
-    expect(screen.getByRole("link", { name: /إنشاء حساب/ }).getAttribute("href")).toBe("/auth/register");
-    expect(screen.getByRole("link", { name: "استكشف جميع الواجهات" }).getAttribute("href")).toBe("/preview");
+    const header = within(container.querySelector("header")!);
+    expect(header.getByRole("link", { name: "تسجيل الدخول" }).getAttribute("href")).toBe("/auth/login");
+    expect(header.getByRole("link", { name: "إنشاء حساب" }).getAttribute("href")).toBe("/auth/register");
+    expect(within(container.querySelector("footer")!).queryByRole("link", { name: "استكشف جميع الواجهات" })).toBeNull();
   });
 });

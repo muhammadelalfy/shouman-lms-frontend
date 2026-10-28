@@ -82,6 +82,7 @@ export function isLiveAdminPath(slug: string[]): boolean {
       "programs",
       "seasonal-programs",
       "initiatives",
+      "audit-logs",
     ].includes(slug[1])
   );
 }

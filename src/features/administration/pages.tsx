@@ -75,7 +75,7 @@ export async function AdministrationPage({
     ) : result.type === "invalid" ? (
       <InvalidFilters base={`/admin/${route.section}`} />
     ) : result.type === "users" ? (
-      <UserList result={result.data} query={result.query} />
+      <UserList result={result.data} query={result.query} canImport={user.permissions.includes("users.manage-status") || user.permissions.includes("users.assign-roles")} />
     ) : result.type === "user" ? (
       <UserDetail
         user={result.data}
@@ -115,6 +115,7 @@ export async function AdministrationPage({
     <AdminShell
       title={title}
       permissions={user.permissions}
+      roles={user.roles}
       currentSection={route.section}
     >
       {route.mode !== "list" && (

@@ -20,11 +20,11 @@ export type CatalogRoute = CatalogListingRoute | CatalogDetailRoute;
 const listingRoutes: Record<string, CatalogListingRoute> = {
   search: {
     type: "listing", basePath: "/search", title: "البحث في المحتوى",
-    description: "ابحث في المحتوى المنشور من الأكاديمية وصفِّ النتائج حسب النوع والسعر.", kinds: [],
+    description: "ابحث في المحتوى المنشور من المركز وصفِّ النتائج حسب النوع والسعر.", kinds: [],
   },
   catalog: {
     type: "listing", basePath: "/catalog", title: "الفهرس التعليمي",
-    description: "تصفح المسارات والبرامج والدورات المنشورة من الأكاديمية.", kinds: [],
+    description: "تصفح المسارات والبرامج والدورات المنشورة من المركز.", kinds: [],
   },
   tracks: {
     type: "listing", basePath: "/tracks", title: "المسارات التعليمية",
@@ -32,15 +32,15 @@ const listingRoutes: Record<string, CatalogListingRoute> = {
   },
   initiatives: {
     type: "listing", basePath: "/initiatives", title: "المبادرات التعليمية",
-    description: "مبادرات منشورة من الأكاديمية ومحتواها المتاح للزوار.", kinds: ["initiative"],
+    description: "مبادرات منشورة من المركز ومحتواها المتاح للزوار.", kinds: ["initiative"],
   },
   programs: {
     type: "listing", basePath: "/programs", title: "البرامج التعليمية",
-    description: "برامج مكثفة منشورة من الأكاديمية.", kinds: ["intensive_program"],
+    description: "برامج مكثفة منشورة من المركز.", kinds: ["intensive_program"],
   },
   "seasonal-programs": {
     type: "listing", basePath: "/seasonal-programs", title: "البرامج الموسمية",
-    description: "برامج موسمية منشورة من الأكاديمية.", kinds: ["seasonal_program"],
+    description: "برامج موسمية منشورة من المركز.", kinds: ["seasonal_program"],
   },
   courses: {
     type: "listing", basePath: "/courses", title: "الدورات التعليمية",

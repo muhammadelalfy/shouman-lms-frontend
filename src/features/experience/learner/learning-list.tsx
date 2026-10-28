@@ -7,8 +7,8 @@ import { StudyCard } from "./study-card";
 
 const filters = [{ id: "all", label: "الكل" }, { id: "current", label: "قيد التعلم" }, { id: "completed", label: "المكتمل" }, { id: "purchased", label: "المشتريات" }] as const;
 
-export function LearningList() {
-  const [filter, setFilter] = useState<string>("all");
+export function LearningList({ initialFilter = "all" }: { initialFilter?: "all" | "current" | "completed" | "purchased" }) {
+  const [filter, setFilter] = useState<string>(initialFilter);
   const [query, setQuery] = useState("");
   const filtered = sampleLearning.filter((item) => (filter === "all" || item.state === filter) && `${item.title} ${item.description}`.includes(query.trim()));
   return <div className="xp-stack">

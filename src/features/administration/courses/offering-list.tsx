@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CsvControls } from "../csv/controls";
 import type { AdminOffering } from "../types";
 import type { CursorPaginated } from "@/lib/api/types";
 import { kindNames, statusNames } from "../schemas/common";
@@ -18,6 +19,7 @@ export function OfferingList({
 }) {
   return (
     <>
+      <CsvControls resource="offerings" label="المحتوى التعليمي" canImport={manage} filters={query} />
       {manage && (
         <Link className="xp-button" href="/admin/offerings/new">
           إنشاء محتوى تعليمي

@@ -1,0 +1,11 @@
+import religion from "@/assets/homepage-cards/need-religion-gpt-v2.png";
+import student from "@/assets/homepage-cards/need-student-gpt-v2.png";
+import family from "@/assets/homepage-cards/need-family-gpt-v2.png";
+import renewal from "@/assets/homepage-cards/need-renewal-gpt-v2.png";
+import quran from "@/assets/homepage-cards/need-quran-gpt-v2.png";
+import prayer from "@/assets/homepage-cards/need-prayer-gpt-v2.png";
+import repentance from "@/assets/homepage-cards/need-repentance-gpt-v2.png";
+import closeness from "@/assets/homepage-cards/need-closeness-gpt-v2.png";
+import mosque from "@/assets/homepage-cards/need-mosque-gpt-v2.png";
+export const needsImages = {religion, student, family, renewal, quran, prayer, repentance, closeness, mosque};
+export const imageLabels = {religion:"كتاب العلم",student:"قبعة التخرج",family:"الأسرة",renewal:"ورقة التجدد",quran:"المصحف وحامله",prayer:"محراب الصلاة",repentance:"يدَا الدعاء",closeness:"القلب",mosque:"المسجد"};

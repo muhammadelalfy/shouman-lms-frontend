@@ -1,0 +1,2 @@
+/** Apply the saved/system theme before first paint; only validated appearance values are used. */
+export const themeBootstrap = `(function(){var p;try{p=localStorage.getItem('shouman-theme')}catch(e){}var d=p==='dark'||(p!=='light'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.classList.toggle('dark',!!d);document.documentElement.dataset.theme=d?'dark':'light'})()`;

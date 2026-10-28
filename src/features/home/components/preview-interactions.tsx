@@ -1,5 +1,7 @@
 "use client";
 
+import { ShimmerButton, ShimmerLink } from "@/components/ui/shimmer-button";
+
 import { useEffect, useId, useRef, useState, type ReactNode, type RefObject } from "react";
 import { ArrowLeft, Menu, Search, X } from "lucide-react";
 import Link from "next/link";
@@ -79,12 +81,15 @@ export function ComingSoonButton({ children, title = "هذه الميزة", clas
   href?: string;
 }) {
   const [open, setOpen] = useState(false);
+  const shimmer = className.split(" ").includes("academy-shimmer");
+  const ActionButton = shimmer ? ShimmerButton : "button";
+  if (href && shimmer) return <ShimmerLink href={href} className={className} aria-label={ariaLabel}>{children}</ShimmerLink>;
   if (href) return <Link href={href} className={className} aria-label={ariaLabel}>{children}</Link>;
   return (
     <>
-      <button type="button" className={className} aria-label={ariaLabel} onClick={() => setOpen(true)}>{children}</button>
+      <ActionButton type="button" className={className} aria-label={ariaLabel} onClick={() => setOpen(true)}>{children}</ActionButton>
       <PreviewDialog open={open} onClose={() => setOpen(false)} title={`${title} — قريبًا`}>
-        <p>نعمل على تجهيز هذه الميزة لتكون جزءًا من رحلتك في الأكاديمية.</p>
+        <p>نعمل على تجهيز هذه الميزة لتكون جزءًا من رحلتك في المركز.</p>
         <p className="dialog-note">هذه معاينة للواجهة ببيانات تجريبية. لم يُرسل أي طلب ولم تُنفّذ أي عملية.</p>
         <button type="button" className="button button-primary" onClick={() => setOpen(false)}>حسنًا، أتابع التصفح<ArrowLeft className="h-4 w-4" /></button>
       </PreviewDialog>
@@ -122,8 +127,8 @@ export function HeaderSearch() {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <button className="hidden items-center gap-2 rounded-md border xl:flex border-primary-foreground/20 px-3 py-1.5 text-sm" type="button" aria-label="ابحث في الأكاديمية" onClick={() => setOpen(true)}><span className="w-40 text-start text-primary-foreground/50">ابحث في الأكاديمية ...</span><Search className="h-4 w-4" /></button>
-      <PreviewDialog open={open} onClose={() => setOpen(false)} title="البحث في الأكاديمية — قريبًا">
+      <button className="hidden items-center gap-2 rounded-md border xl:flex border-primary-foreground/20 px-3 py-1.5 text-sm" type="button" aria-label="ابحث في المركز" onClick={() => setOpen(true)}><span className="w-40 text-start text-primary-foreground/50">ابحث في المركز ...</span><Search className="h-4 w-4" /></button>
+      <PreviewDialog open={open} onClose={() => setOpen(false)} title="البحث في المركز — قريبًا">
         <p>سيتيح لك البحث الوصول إلى المسارات والدروس والبرامج بسهولة.</p>
         <p className="dialog-note">البحث غير متاح في هذه المعاينة. يمكنك استكشاف المسارات المعروضة الآن.</p>
         <a href="#tracks" className="button button-primary" onClick={() => setOpen(false)}>تصفح المسارات<ArrowLeft className="h-4 w-4" /></a>

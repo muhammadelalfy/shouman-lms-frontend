@@ -1,19 +1,24 @@
+import { ExperienceDirectory } from "@/features/experience/directory";
+import { isCenterAdministrator } from "@/features/auth/login-destination";
+import { ExperienceWorkspace } from "@/features/experience/shared/workspace";
+import { LearnerExperience } from "@/features/experience/learner/learner-experience";
+import { PreviewNotice } from "@/features/experience/shared/ui";
+import { MarketingDiscovery } from "@/features/marketing/discovery";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import {
   BookOpen,
   Users,
   ShieldCheck,
-  Compass,
-  UserRound,
   ArrowLeft,
-  LayoutDashboard,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { getSessionToken } from "@/lib/auth/session";
 import { getCurrentUser } from "@/features/account/api";
 import { listUsers } from "@/features/administration/identity/api";
 import { listOfferings } from "@/features/administration/courses/api";
+import { CsvControls } from "@/features/administration/csv/controls";
+import { canUseCsv } from "@/features/administration/csv/resources";
 import { AdminShell } from "@/features/administration/components/admin-shell";
 import { statusNames } from "@/features/administration/schemas/common";
 import { isApiError } from "@/lib/api/errors";
@@ -44,6 +49,7 @@ export async function WorkspacePage({ route }: { route: WorkspaceRoute }) {
     if (!isApiError(error)) throw error;
     return <WorkspaceFailure path={path} forbidden={error.status === 403} />;
   }
+  if (route === "dashboard" && isCenterAdministrator(user)) redirect("/admin/dashboard");
   if (route !== "admin")
     return <LearnerHome user={user} learning={route === "learning"} />;
   if (!user.permissions.length)
@@ -68,9 +74,15 @@ export async function WorkspacePage({ route }: { route: WorkspaceRoute }) {
     <AdminShell
       title="لوحة الإدارة"
       permissions={user.permissions}
+      roles={user.roles}
       currentSection="dashboard"
+      landing={<><PreviewNotice /><ExperienceDirectory permissions={user.permissions}/></>}
     >
       <Welcome user={user} admin />
+      {canUseCsv("audit-logs", user.permissions, false, user.roles) && <CsvControls resource="audit-logs" label="سجل التدقيق" />}
+      {user.permissions.includes("homepage.manage") && <CsvControls resource="homepage-faq" label="الأسئلة الشائعة" canImport />}
+      {user.permissions.includes("homepage.manage") && <CsvControls resource="homepage-seo" label="بيانات الظهور في البحث" canImport />}
+      {user.permissions.includes("homepage.manage") && <section className="workspace-section"><Task href="/admin/homepage/needs" icon={<BookOpen />} title="إدارة قسم ماذا تحتاج الآن؟" text="حرر نصوص وبطاقات الصفحة الرئيسية، ثم انشر المسودة للزوار." /></section>}
       <section
         aria-labelledby="admin-tools-title"
         className="workspace-section"
@@ -102,7 +114,7 @@ export async function WorkspacePage({ route }: { route: WorkspaceRoute }) {
               href="/admin/roles"
               icon={<ShieldCheck />}
               title="راجع الأدوار والصلاحيات"
-              text="اضبط الوصول إلى أدوات الأكاديمية بعناية."
+              text="اضبط الوصول إلى أدوات المركز بعناية."
             />
           )}
           {user.permissions.includes("offerings.view") && (
@@ -115,6 +127,7 @@ export async function WorkspacePage({ route }: { route: WorkspaceRoute }) {
           )}
         </div>
       </section>
+      {user.permissions.includes("offerings.manage") && <MarketingDiscovery audience="admin" />}
       <div className="workspace-panel-grid">
         {user.permissions.includes("offerings.view") && (
           <RecordPanel
@@ -179,7 +192,7 @@ function WorkspaceFailure({
         <span className="workspace-icon" aria-hidden="true">
           <ShieldCheck />
         </span>
-        <p className="xp-eyebrow">مساحتك في الأكاديمية</p>
+        <p className="xp-eyebrow">مساحتك في المركز</p>
         <h1 id="workspace-failure-title">
           {forbidden ? "ليست لديك صلاحية الوصول" : "تعذر فتح المساحة الآن"}
         </h1>
@@ -223,7 +236,7 @@ function Welcome({
         </h2>
         <p>
           {admin
-            ? "المحتوى والحسابات وأدوات الأكاديمية، في مكان واحد."
+            ? "المحتوى والحسابات وأدوات المركز، في مكان واحد."
             : "من هنا تبدأ رحلتك، وتصل إلى حسابك والمحتوى الذي تريد استكشافه."}
         </p>
       </div>
@@ -233,135 +246,16 @@ function Welcome({
     </section>
   );
 }
-function LearnerHome({
-  user,
-  learning,
-}: {
-  user: CurrentUser;
-  learning: boolean;
-}) {
-  return (
-    <div className="experience">
-      <main id="platform-main" className="workspace-page">
-        <header className="workspace-page-heading">
-          <p className="xp-eyebrow">مساحتك في الأكاديمية</p>
-          <h1>{learning ? "تعلّمي" : "لوحتي"}</h1>
-        </header>
-        <nav className="workspace-nav" aria-label="مساحتك الشخصية">
-          <Link href="/dashboard" aria-current={!learning ? "page" : undefined}>
-            <LayoutDashboard size={18} aria-hidden="true" />
-            لوحتي
-          </Link>
-          <Link
-            href="/my-learning"
-            aria-current={learning ? "page" : undefined}
-          >
-            <BookOpen size={18} aria-hidden="true" />
-            تعلّمي
-          </Link>
-          <Link href="/account">
-            <UserRound size={18} aria-hidden="true" />
-            إعدادات حسابي
-          </Link>
-        </nav>
-        <Welcome user={user} />
-        {learning ? (
-          <section
-            className="workspace-state"
-            aria-labelledby="learning-state-title"
-          >
-            <span className="workspace-icon" aria-hidden="true">
-              <BookOpen />
-            </span>
-            <h2 id="learning-state-title">مساحتك التعليمية قيد التجهيز</h2>
-            <p>
-              متابعة الدروس وحفظ التقدم غير متاحين بعد. يمكنك الآن استكشاف
-              المحتوى المنشور، أو مشاهدة نموذج توضيحي لتجربة التعلم.
-            </p>
-            <div className="workspace-actions">
-              <Link className="xp-button" href="/catalog">
-                استكشف المحتوى التعليمي
-                <ArrowLeft size={17} aria-hidden="true" />
-              </Link>
-              <Link
-                className="xp-button xp-button-outline"
-                href="/preview/my-learning"
-              >
-                استعرض نموذج التعلم
-              </Link>
-            </div>
-          </section>
-        ) : (
-          <section
-            className="workspace-section"
-            aria-labelledby="workspace-next-title"
-          >
-            <SectionHeading
-              id="workspace-next-title"
-              title="خطوتك التالية"
-              description="اختر ما تريد الوصول إليه اليوم."
-            />
-            <div className="workspace-task-grid">
-              <Task
-                href="/catalog"
-                title="استكشف المحتوى التعليمي"
-                icon={<Compass />}
-                text="تصفّح المسارات والبرامج والدورات المنشورة من الأكاديمية."
-              />
-              <Task
-                href="/account"
-                title="راجع إعدادات حسابك"
-                icon={<UserRound />}
-                text="حدّث اسمك ورقم هاتفك أو غيّر كلمة المرور."
-              />
-              <Task
-                href="/my-learning"
-                title="افتح مساحتك التعليمية"
-                icon={<BookOpen />}
-                text="تعرّف على حالة متابعة التعلم، واستعرض نموذجًا توضيحيًا."
-              />
-              {Boolean(user.permissions.length) && (
-                <Task
-                  href="/admin/dashboard"
-                  title="افتح لوحة الإدارة"
-                  icon={<ShieldCheck />}
-                  text="انتقل إلى أدوات الأكاديمية التي تتيحها صلاحيات حسابك."
-                />
-              )}
-            </div>
-          </section>
-        )}
-        <section
-          className="workspace-account"
-          aria-labelledby="workspace-account-title"
-        >
-          <div>
-            <p className="workspace-kicker">حسابك</p>
-            <h2 id="workspace-account-title">بياناتك الأساسية</h2>
-          </div>
-          <dl>
-            <div>
-              <dt>الاسم</dt>
-              <dd>
-                <bdi>{user.name}</bdi>
-              </dd>
-            </div>
-            <div>
-              <dt>البريد الإلكتروني</dt>
-              <dd>
-                <bdi dir="ltr">{user.email}</bdi>
-              </dd>
-            </div>
-          </dl>
-          <Link href="/account">تعديل بيانات الحساب ←</Link>
-        </section>
-        <PreviewLink
-          href={learning ? "/preview/my-learning" : "/preview/dashboard"}
-          text="استعرض التصميم التجريبي"
-        />
+function LearnerHome({ user, learning }: { user: CurrentUser; learning: boolean }) {
+  return <div className="experience">
+    <ExperienceWorkspace area="learner" currentPath={learning ? "/my-learning" : "/dashboard"}>
+      <main id="platform-main">
+        <h2 className="learner-account-greeting">مرحبًا، <bdi>{user.name}</bdi></h2>
+        <PreviewNotice />
+        <LearnerExperience path={[learning ? "my-learning" : "dashboard"]} />
       </main>
-    </div>
-  );
+    </ExperienceWorkspace>
+  </div>;
 }
 function SectionHeading({
   id,

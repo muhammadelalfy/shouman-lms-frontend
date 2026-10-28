@@ -1,0 +1,19 @@
+.audit-table-region {
+  min-width: 0;
+  width: 100%;
+}
+.audit-table-region:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+}
+.audit-table-region table {
+  min-width: 1120px;
+}
+.audit-table-region :is(th, td) {
+  max-width: 280px;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+.audit-table-region time {
+  white-space: nowrap;
+}

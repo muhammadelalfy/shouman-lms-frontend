@@ -1,3 +1,5 @@
+import { HomepageNeedsAdmin } from "@/features/administration/homepage/page";
+import { getTrialCredentials, getAdminTrialCredentials } from "@/features/auth/trial-credentials";
 import { resolveWorkspaceRoute } from "@/features/workspaces/routes";
 import { WorkspacePage } from "@/features/workspaces/pages";
 import { resolveAdminRoute, isLiveAdminPath } from "@/features/administration/route-resolution";
@@ -60,12 +62,13 @@ function matchesRouteKind(route: NonNullable<ReturnType<typeof resolveCatalogRou
 
 export async function generateMetadata({ params }: RouteParams): Promise<Metadata> {
   const { slug } = await params;
+  if (slug.join("/") === "admin/homepage/needs") return { title: "إدارة قسم ماذا تحتاج الآن؟", robots: {index:false,follow:false} };
   const workspaceRoute = resolveWorkspaceRoute(slug);
   if (workspaceRoute) return { title: workspaceRoute === "admin" ? "لوحة الإدارة" : workspaceRoute === "learning" ? "تعلّمي" : "لوحتي", robots: { index: false, follow: false } };
   const adminRoute = resolveAdminRoute(slug);
-  if (adminRoute) return { title: "إدارة الأكاديمية", robots: { index: false, follow: false } };
+  if (adminRoute) return { title: "إدارة المركز", robots: { index: false, follow: false } };
   const experience = resolveExperienceRoute(slug);
-  if (experience) return { title: experience.title, description: "واجهة أكاديمية د. حازم شومان — معاينة تصميم تفاعلية ببيانات تجريبية.", robots: { index: false, follow: false } };
+  if (experience) return { title: experience.title, description: "واجهة مركز د. حازم شومان — معاينة تصميم تفاعلية ببيانات تجريبية.", robots: { index: false, follow: false } };
   const route = resolveCatalogRoute(slug);
   if (route?.type === "listing") return { title: route.title, description: route.description };
   if (route?.type === "detail") {
@@ -92,6 +95,7 @@ export default async function PlatformRoute({ params, searchParams }: PlatformRo
     const queryString = new URLSearchParams(Object.entries(query).flatMap(([key, value]) => { const item = first(value); return item === undefined ? [] : [[key, item]]; })).toString();
     redirect(`${authAlias}${queryString ? `?${queryString}` : ""}`);
   }
+  if (slug.join("/") === "admin/homepage/needs") return <PlatformFrame><HomepageNeedsAdmin /></PlatformFrame>;
   const workspaceRoute = resolveWorkspaceRoute(slug);
   if (workspaceRoute) return <PlatformFrame><WorkspacePage route={workspaceRoute} /></PlatformFrame>;
   const adminRoute = resolveAdminRoute(slug);
@@ -179,7 +183,7 @@ export default async function PlatformRoute({ params, searchParams }: PlatformRo
 
   if (slug[0] === "auth" && ["login", "register", "forgot-password", "reset-password"].includes(slug[1] ?? "")) {
     const mode = slug[1] as "login" | "register" | "forgot-password" | "reset-password";
-    return <PlatformFrame><main id="platform-main" className="platform-main"><AuthForm mode={mode} token={first(query.token)} email={first(query.email)} redirectTo={first(query.redirectTo)} sessionExpired={first(query.expired) === "1"} /></main></PlatformFrame>;
+    return <PlatformFrame><main id="platform-main" className="platform-main"><AuthForm mode={mode} trialCredentials={mode === "login" ? getTrialCredentials() : undefined} adminTrialCredentials={mode === "login" ? getAdminTrialCredentials() : undefined} token={first(query.token)} email={first(query.email)} redirectTo={first(query.redirectTo)} sessionExpired={first(query.expired) === "1"} /></main></PlatformFrame>;
   }
 
   if (slug.length === 1 && slug[0] === "account") {

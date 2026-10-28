@@ -37,7 +37,7 @@ export function AdminModeration() {
     <section className="xp-card admin-inline-note">
       <DemoDataLabel />
       <h2>المراجعة البشرية وسياسة المجتمع</h2>
-      <p>قواعد النشر والبلاغات وإجراءات الإشراف تنتظر اعتماد الأكاديمية ضمن OP-9. لا نفترض مخالفة أو عقوبة، ولا يُخفى أو يُحذف أو يُعتمد محتوى من هذه المعاينة.</p>
+      <p>قواعد النشر والبلاغات وإجراءات الإشراف تنتظر اعتماد المركز ضمن OP-9. لا نفترض مخالفة أو عقوبة، ولا يُخفى أو يُحذف أو يُعتمد محتوى من هذه المعاينة.</p>
       <StatusBadge tone="warning">سياسة المجتمع بانتظار الاعتماد</StatusBadge>
     </section>
     <div className="admin-editor-layout">

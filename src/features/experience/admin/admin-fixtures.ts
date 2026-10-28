@@ -31,7 +31,7 @@ export const adminTables: Record<string, AdminTableDefinition> = {
     related: [{ label: "محرر المادة", href: "/preview/admin/subjects/demo-subject" }, { label: "محرر الدرس", href: "/preview/admin/lessons/demo-lesson" }],
   },
   quizzes: {
-    title: "الاختبارات", description: "راجع بنية الاختبار وأسئلته. قواعد المحاولات والدرجات والوقت تنتظر اعتماد الأكاديمية.",
+    title: "الاختبارات", description: "راجع بنية الاختبار وأسئلته. قواعد المحاولات والدرجات والوقت تنتظر اعتماد المركز.",
     columns: ["الاختبار", "المحتوى المرتبط", "حالة المثال", "الأسئلة"], createHref: "/preview/admin/quizzes/new", createLabel: "معاينة اختبار جديد",
     rows: [row("quiz-1", ["مراجعة المفاهيم الأساسية", "مدخل إلى العلوم الشرعية", "مسودة تجريبية", "سؤالان للعرض"], "/preview/admin/quizzes/demo-quiz"), row("quiz-2", ["تدريب على الاستيعاب", "مهارات تدبر القرآن", "للمراجعة", "سؤال توضيحي"], "/preview/admin/quizzes/demo-quiz")],
     related: [{ label: "بنك الأسئلة", href: "/preview/admin/question-bank" }],
@@ -63,7 +63,7 @@ export const adminTables: Record<string, AdminTableDefinition> = {
     rows: [row("group-1", ["مجموعة تدبر تجريبية", "مهارات تدبر القرآن", "للمراجعة", "أسماء اصطناعية"], "/preview/admin/groups/demo-group"), row("group-2", ["مجموعة الآداب التجريبية", "آداب طلب العلم", "مسودة تجريبية", "أسماء اصطناعية"], "/preview/admin/groups/demo-group")],
   },
   events: {
-    title: "الفعاليات", description: "نماذج تنظيم فعاليات الأكاديمية. المواعيد المعروضة في المحرر لا تنشئ حجزًا أو حضورًا.",
+    title: "الفعاليات", description: "نماذج تنظيم فعاليات المركز. المواعيد المعروضة في المحرر لا تنشئ حجزًا أو حضورًا.",
     columns: ["الفعالية", "التنسيق", "حالة المثال", "الموعد"], createHref: "/preview/admin/events/new", createLabel: "معاينة فعالية جديدة",
     rows: [row("event-1", ["ملتقى طلب العلم التجريبي", "حضوري / للمعاينة", "مسودة تجريبية", "غير محدد"], "/preview/admin/events/demo-event"), row("event-2", ["ورشة القراءة الواعية", "عبر الإنترنت / للمعاينة", "للمراجعة", "غير محدد"], "/preview/admin/events/demo-event")],
     related: [{ label: "الحضور", href: "/preview/admin/attendance" }],

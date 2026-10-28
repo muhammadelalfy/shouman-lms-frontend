@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 import type { ReactNode } from "react";
 import type { PageDefinition } from "./page-content";
 import { PageAnimations } from "./page-animations";
@@ -22,16 +23,17 @@ export async function PlatformFrame({ children }: { children: ReactNode }) {
     <div className="platform-page">
       <PageAnimations />
       <a className="platform-skip-link" href="#platform-main">انتقل إلى المحتوى</a>
-      <header className="platform-header">
+      <header className="platform-header flex-wrap">
         <Link href="/" className="platform-brand" aria-label="العودة إلى الصفحة الرئيسية">
-          <span className="platform-mark" aria-hidden="true">أ</span>
-          <span><strong>أكاديمية د. حازم شومان</strong><small>رحلة علم وتربية وصناعة أثر</small></span>
+          <span className="platform-mark" aria-hidden="true">م</span>
+          <span><strong>مركز د. حازم شومان</strong><small>رحلة علم وتربية وصناعة أثر</small></span>
         </Link>
         <nav aria-label="التنقل الرئيسي" className="platform-nav">
           {primaryLinks.slice(1).map((item) => <Link href={item.href} key={item.href}>{item.label}</Link>)}
           <Link href="/preview">الواجهات</Link>
         </nav>
-        <div className="platform-header-actions">
+        <div className="platform-header-actions flex-wrap">
+          <ThemeToggle />
           {hasSession ? (
             <>
               <Link href="/dashboard" className="platform-login">لوحتي</Link>
@@ -44,7 +46,7 @@ export async function PlatformFrame({ children }: { children: ReactNode }) {
       </header>
       {children}
       <footer className="platform-footer">
-        <div className="platform-footer-brand"><span className="platform-mark" aria-hidden="true">أ</span><span>أكاديمية د. حازم شومان</span></div>
+        <div className="platform-footer-brand"><span className="platform-mark" aria-hidden="true">م</span><span>مركز د. حازم شومان</span></div>
         <p>مسارات علمية وإيمانية بلغة واضحة وخطوات متدرجة.</p>
         <nav aria-label="روابط التذييل">
           <Link href="/catalog">الفهرس التعليمي</Link>

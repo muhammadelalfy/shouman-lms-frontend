@@ -1,0 +1,76 @@
+/* Reference composition. Brand color values remain owned by globals.css. */
+#home-page { --landing-content-max:100rem; }
+#home-page .landing-container { max-width:var(--landing-content-max); }
+#home-page .landing-feature-layout { display:grid; grid-template-columns:minmax(230px,.4fr) minmax(0,1fr); gap:1.5rem; align-items:center; }
+#home-page .landing-feature-grid { grid-column:2; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:.65rem; }
+#home-page .landing-feature-tile { display:flex; min-height:8rem; flex-direction:column; align-items:center; justify-content:center; gap:.6rem; padding:.8rem .5rem; border:1px solid var(--border); border-radius:.75rem; text-align:center; background:var(--card); }
+#home-page .landing-feature-tile h3 { font-size:.72rem; font-weight:800; line-height:1.9; }
+#home-page .landing-feature-icon { display:inline-flex; flex-shrink:0; align-items:center; justify-content:center; width:2.5rem; height:2.5rem; border-radius:50%; color:var(--primary); background:var(--secondary); border:1px solid var(--border); }
+#home-page .landing-feature-tile:nth-child(3n) .landing-feature-icon { border-color:var(--gold); }
+#home-page .landing-need-mosque { min-height:12rem; }
+#home-page .landing-need-mosque > img { position:absolute; inset:0; height:100%; width:100%; }
+#home-page .landing-need-image { width:5rem; height:5rem; flex-shrink:0; margin-block:.3rem; object-fit:contain; }
+#home-page #needs > div:last-child { grid-template-columns:repeat(var(--needs-columns,9),minmax(0,1fr)); gap:.6rem; }
+#home-page #needs > div:last-child > button,#home-page #needs > div:last-child > a { padding:.75rem .4rem; }
+#home-page #needs > div:last-child > button > span:nth-child(2),#home-page #needs > div:last-child > a > span:nth-child(2) { font-size:.75rem; }
+#home-page .landing-device-mockup { grid-column:1; grid-row:1; position:relative; margin:0; padding-block-end:1rem; }
+#home-page .landing-device-mockup > img { border-radius:1rem; }
+#home-page .landing-device-mockup figcaption { position:relative; display:flex; align-items:center; gap:.6rem; width:max-content; max-width:95%; margin:-2rem auto 0; padding:.7rem 1rem; background:var(--card); border:1px solid var(--border); border-radius:.85rem; box-shadow:0 8px 28px color-mix(in oklch,var(--navy) 10%,transparent); }
+#home-page .landing-device-mockup figcaption strong { font-size:.85rem; color:var(--primary); }
+#home-page .landing-device-mockup figcaption p { font-size:.7rem; color:var(--muted-foreground); }
+#home-page .landing-device-play { position:absolute; inset-block-start:.5rem; inset-inline-end:.5rem; width:2.75rem; height:2.75rem; display:grid; place-items:center; border:4px solid var(--background); border-radius:50%; background:var(--primary); color:var(--primary-foreground); }
+#home-page .landing-stats-backdrop img { object-position:center 55%; }
+#home-page .landing-stats-shade { background:linear-gradient(90deg,color-mix(in oklch,var(--navy) 12%,transparent),color-mix(in oklch,var(--background) 93%,transparent) 27%,color-mix(in oklch,var(--background) 93%,transparent) 73%,color-mix(in oklch,var(--navy) 12%,transparent)); }
+#home-page .landing-stat-tile { display:flex; flex-direction:column; align-items:center; gap:.3rem; padding:1.1rem .5rem; text-align:center; background:color-mix(in oklch,var(--background) 96%,transparent); border:1px solid var(--border); border-radius:.9rem; box-shadow:0 5px 24px color-mix(in oklch,var(--navy) 8%,transparent); }
+#home-page .landing-community-grid { display:grid; grid-template-columns:1.05fr 1fr 1fr; }
+#home-page .landing-community-photo { min-height:20rem; }
+#home-page .landing-small-link { display:inline-flex; min-height:2.75rem; align-items:center; justify-content:center; flex-wrap:wrap; gap:.4rem; padding:.5rem .7rem; border-radius:1.5rem; background:var(--primary); color:var(--primary-foreground); font-size:.65rem; font-weight:800; }
+#home-page .landing-review-control { display:grid; place-items:center; width:2.75rem; height:2.75rem; border:1px solid var(--border); border-radius:50%; background:var(--background); color:var(--primary); }
+#home-page .landing-review-control:hover { background:var(--secondary); }
+#home-page .landing-final-grid { display:grid; grid-template-columns:1.2fr .8fr; align-items:start; }
+#home-page .landing-faq .mb-10 { margin-block-end:1rem; }
+#home-page .landing-faq h2 { font-size:1.3rem; }
+#home-page .landing-faq .mb-10 p { display:none; }
+#home-page .landing-faq summary { padding:.6rem .8rem; }
+#home-page .landing-faq summary > span:first-child { font-size:.75rem; }
+#home-page .landing-faq details > p { font-size:.75rem; }
+#home-page .landing-final-cta h2 { font-size:clamp(1.2rem,2vw,1.7rem); line-height:1.8; }
+#home-page .landing-final-cta p { font-size:.85rem; }
+@media(max-width:1100px) { #home-page .landing-feature-layout { grid-template-columns:1fr; } #home-page .landing-feature-grid,#home-page .landing-device-mockup { grid-column:auto; grid-row:auto; } #home-page .landing-device-mockup { width:min(100%,28rem); margin-inline:auto; } #home-page #needs > div:last-child { grid-template-columns:repeat(3,minmax(0,1fr)); } #home-page .landing-community-grid { grid-template-columns:1fr 1fr; } #home-page .landing-review { grid-column:1/-1; } }
+@media(max-width:700px) { #home-page .landing-feature-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } #home-page .landing-feature-tile { min-height:7rem; } #home-page .landing-community-grid,#home-page .landing-final-grid { grid-template-columns:1fr; } #home-page #needs > div:last-child { grid-template-columns:repeat(2,minmax(0,1fr)); } #home-page .landing-stats-shade { background:color-mix(in oklch,var(--background) 67%,transparent); } #home-page .landing-community-photo { min-height:23rem; } }
+
+#home-page .landing-discovery-panel > section { margin-block:0; }
+@media(max-width:390px) { #home-page .landing-home-header > div { gap:.5rem; padding-inline:.75rem; } #home-page .landing-header-search { display:none; } #home-page .landing-home-header a[href="#home"] > span:first-child { width:2rem; height:2rem; } #home-page .landing-home-header a[href="#home"] > span:last-child > span:last-child { font-size:.875rem; } }
+
+/* A quiet branded footer with readable hierarchy in either theme. */
+#home-page .landing-footer { border-block-start:1px solid color-mix(in oklch,var(--gold) 35%,var(--navy)); background:var(--navy); color:var(--navy-foreground); }
+.dark #home-page .landing-footer { background:color-mix(in oklch,var(--navy) 82%,black); }
+#home-page .landing-footer-inner { width:min(var(--landing-content-max),calc(100% - 48px)); margin-inline:auto; padding-block:56px 24px; }
+#home-page .landing-footer-grid { display:grid; grid-template-columns:1.5fr repeat(3,minmax(0,1fr)); gap:48px; }
+#home-page .landing-footer-logo { display:inline-flex; align-items:center; gap:14px; text-decoration:none; }
+#home-page .landing-footer-logo > span { display:grid; place-items:center; width:52px; height:52px; border:1px solid color-mix(in oklch,var(--gold) 65%,transparent); border-radius:16px; color:var(--gold); background:color-mix(in oklch,var(--navy-foreground) 5%,transparent); }
+#home-page .landing-footer-logo small { display:block; color:var(--gold); font-size:12px; margin-block-end:3px; }
+#home-page .landing-footer-logo strong { display:block; font-size:18px; }
+#home-page .landing-footer-brand > p { margin-block:20px; color:color-mix(in oklch,var(--navy-foreground) 80%,transparent); font-size:13px; line-height:2; }
+#home-page .landing-footer-socials { display:flex; flex-wrap:wrap; gap:8px; }
+#home-page .landing-footer-social { display:grid; place-items:center; width:44px; height:44px; border:1px solid color-mix(in oklch,var(--navy-foreground) 20%,transparent); border-radius:12px; background:transparent; color:var(--navy-foreground); transition:background-color 160ms,border-color 160ms; }
+#home-page .landing-footer-social:hover { background:color-mix(in oklch,var(--navy-foreground) 9%,transparent); border-color:var(--gold); }
+#home-page .landing-footer-availability { display:block; margin-block-start:12px; color:color-mix(in oklch,var(--navy-foreground) 70%,transparent); font-size:11px; }
+#home-page .landing-footer-column h2 { font-size:14px; font-weight:800; margin-block:7px 18px; color:var(--gold); }
+#home-page .landing-footer-column ul { list-style:none; padding:0; margin:0; }
+#home-page .landing-footer-column a { display:flex; align-items:center; min-height:44px; font-size:13px; color:color-mix(in oklch,var(--navy-foreground) 86%,transparent); text-decoration:none; }
+#home-page .landing-footer-column a:hover { color:var(--navy-foreground); text-decoration:underline; text-underline-offset:6px; text-decoration-color:var(--gold); }
+#home-page .landing-footer-bottom { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; border-block-start:1px solid color-mix(in oklch,var(--navy-foreground) 16%,transparent); margin-block-start:40px; padding-block-start:22px; color:color-mix(in oklch,var(--navy-foreground) 74%,transparent); font-size:11px; line-height:1.9; }
+#home-page .landing-footer-bottom p { margin:0; }
+#home-page .landing-footer-bottom > span { display:inline-flex; align-items:center; gap:8px; }
+#home-page .landing-footer-bottom svg { color:var(--gold); }
+@media(max-width:950px) { #home-page .landing-footer-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:30px; } #home-page .landing-footer-brand { grid-column:1/-1; } }
+@media(max-width:540px) { #home-page .landing-footer-inner { width:calc(100% - 36px); padding-block-start:36px; } #home-page .landing-footer-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:26px 18px; } #home-page .landing-footer-column h2 { margin-block-end:8px; } #home-page .landing-footer-bottom { margin-block-start:28px; } }
+
+@media(max-width:540px) { #home-page .landing-footer-column:last-child { grid-column:1/-1; } #home-page .landing-footer-column:last-child ul { display:flex; flex-wrap:wrap; gap:0 24px; } }
+
+#home-page .landing-rounded-panel { width:calc(100% - 32px); margin-block:24px; border:1px solid color-mix(in oklch,var(--border) 70%,transparent); border-radius:28px; background:color-mix(in oklch,var(--card) 82%,transparent); }
+@media(max-width:700px) { #home-page .landing-rounded-panel { width:calc(100% - 24px); border-radius:20px; } }
+
+/* Keep the landing canvas quiet on cream; preserve the dark-theme pattern. */
+:root:not(.dark) #home-page .islamic-pattern-page .islamic-pattern-field { opacity:.12; }

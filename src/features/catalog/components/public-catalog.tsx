@@ -79,7 +79,7 @@ export function PublicCatalogListing({
   return (
     <main className="public-catalog" dir="rtl">
       <header className="public-catalog__intro">
-        <p className="public-catalog__eyebrow">أكاديمية د. حازم شومان</p>
+        <p className="public-catalog__eyebrow">مركز د. حازم شومان</p>
         <h1>{title}</h1>
         <p className="public-catalog__description">{description}</p>
       </header>
@@ -152,7 +152,7 @@ export function PublicCatalogListing({
           <p>
             {q ? "جرّب كلمات أخرى أو امسح البحث مع الاحتفاظ بالتصفية." : hasFilters
               ? "جرّب اختيار نوع سعر آخر لعرض المواد المنشورة المتاحة."
-              : "ستظهر هنا المواد التي تنشرها الأكاديمية وتتيحها للزوار."}
+              : "ستظهر هنا المواد التي تنشرها المركز وتتيحها للزوار."}
           </p>
           {pricing ? (
               <Link className="public-catalog__empty-link" href={catalogListingHref(basePath, { ...values, pricing: undefined, cursor: undefined })}>

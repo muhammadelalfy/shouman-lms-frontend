@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CsvControls } from "../csv/controls";
 import type { AdminUser } from "../types";
 import type { CursorPaginated } from "@/lib/api/types";
 import { roleNames, statusNames } from "../schemas/common";
@@ -10,12 +11,15 @@ import {
 export function UserList({
   result,
   query,
+  canImport = false,
 }: {
   result: CursorPaginated<AdminUser>;
   query: ListQuery;
+  canImport?: boolean;
 }) {
   return (
     <>
+      <CsvControls resource="users" label="المستخدمون" canImport={canImport} filters={query} />
       <ListFilters base="/admin/users" query={query} users />
       {result.data.length ? (
         <div
@@ -25,7 +29,7 @@ export function UserList({
           aria-label="جدول المستخدمين"
         >
           <table>
-            <caption>المستخدمون · بيانات من سجل الأكاديمية</caption>
+            <caption>المستخدمون · بيانات من سجل المركز</caption>
             <thead>
               <tr>
                 <th>الاسم</th>

@@ -118,3 +118,11 @@ describe("local learner interactions", () => {
     expect(screen.getByRole("button", { name: "استعرض التفضيلات المحددة" }).closest("form")?.noValidate).toBe(true);
   });
 });
+
+it("orders teacher overview, preparation, tasks and review before communication", () => {
+  const { container } = render(<LearnerExperience path={["instructor"]} />);
+  const ordered = [".teacher-overview", ".learner-role-hero", "#teacher-teaching", "#teacher-review", "#teacher-communication"].map(selector => container.querySelector(selector)!);
+  for (let i = 0; i < ordered.length - 1; i++) expect(ordered[i].compareDocumentPosition(ordered[i + 1]) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  for (const link of container.querySelectorAll('.teacher-overview a')) expect(container.querySelector(link.getAttribute('href')!)).toBeTruthy();
+  expect(screen.getByText("أدوات متاحة في هذه المعاينة")).toBeTruthy();
+});

@@ -17,7 +17,10 @@ export default defineConfig({
     ...(process.platform === "win32" ? { pool: "threads" as const, maxWorkers: 1 } : {}),
     // Component tests opt in per file with `// @vitest-environment jsdom`.
     environment: "node",
+    setupFiles: ["./src/test/browser-apis.ts"],
     include: ["src/**/*.test.{ts,tsx}"],
+    // Parallel jsdom workers render the animated landing page slowly; 5s is too tight.
+    testTimeout: 20000,
     restoreMocks: true,
     unstubGlobals: true,
     unstubEnvs: true,

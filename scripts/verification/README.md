@@ -32,15 +32,15 @@ The state check switches fixture modes globally. Run it after the browser matrix
 
 ## Real Laravel verification
 
-`live-laravel-check.mjs` and `live-laravel-crud-check.mjs` exercise the frontend against actual Laravel, PostgreSQL and Redis. They accept local loopback services only and require synthetic `@integration.example.invalid` accounts. Use a separate backend checkout, a dedicated database named `shouman_integration`, and an independently migrated/seeded schema. `seed-live-laravel.php` refuses any other database name, uses existing backend factories, and writes random credentials to a private `/tmp/shouman-live-credentials.json` file.
+`live-laravel-check.mjs` and `live-laravel-crud-check.mjs` exercise the frontend against actual Laravel, PostgreSQL and Redis. They accept local loopback services only and require synthetic `@integration.example.invalid` accounts. Use only the canonical `../shouman-lms-backend` source checkout. These historical destructive fixture scripts require a separate disposable PostgreSQL instance with a database named `shouman_integration` and an independently migrated/seeded schema; never target the current Compose integration database, which holds preserved manual accounts. `seed-live-laravel.php` refuses any other database name, uses existing backend factories, and writes random credentials to a private `/tmp/shouman-live-credentials.json` file.
 
 ```bash
-LARAVEL_BACKEND_PATH=/absolute/path/to/isolated/backend php scripts/verification/seed-live-laravel.php
+LARAVEL_BACKEND_PATH=/home/mohamed/code/shouman/shouman-lms-backend php scripts/verification/seed-live-laravel.php
 PLAYWRIGHT_MODULE=/tmp/shouman-browser/node_modules/playwright/index.mjs PLATFORM_BASE_URL=http://127.0.0.1:3114 LARAVEL_API_URL=http://127.0.0.1:8130/api/v1 node scripts/verification/live-laravel-check.mjs
 PLAYWRIGHT_MODULE=/tmp/shouman-browser/node_modules/playwright/index.mjs PLATFORM_BASE_URL=http://127.0.0.1:3114 LARAVEL_API_URL=http://127.0.0.1:8130/api/v1 node scripts/verification/live-laravel-crud-check.mjs
 ```
 
-Start the backend from its isolated checkout so its own environment loads correctly, and run the frontend with `API_BASE_URL` pointing to that backend. The default credential file can be overridden with `LIVE_INTEGRATION_FIXTURE`. `FRONTEND_EVIDENCE_DIR` controls JSON/screenshot output as above. Every full run needs freshly seeded disposable records because it changes roles, status, publication state, prices, ordering and sessions. Reset only the explicitly isolated database between runs.
+Start the canonical backend source in a process/container with explicit disposable-database environment overrides, and run the frontend with `API_BASE_URL` pointing to that backend. The default credential file can be overridden with `LIVE_INTEGRATION_FIXTURE`. `FRONTEND_EVIDENCE_DIR` controls JSON/screenshot output as above. Every full run needs freshly seeded disposable records because it changes roles, status, publication state, prices, ordering and sessions. Reset only the explicitly isolated database between runs.
 
 The initial 2026-10-19 run passed 15/17 main checks and8/8 CRUD checks. Subsequent real-browser repair verification passed17/17 and8/8, both exit0, as recorded in workspace `docs/service-continuation/progress.md` and `docs/service-continuation/evidence/`. These historical results close the timestamp and reorder reproductions for that revision; they do not certify later search changes. Rerun both matrices with independent fresh fixtures for search regression.
 
@@ -49,10 +49,10 @@ The initial 2026-10-19 run passed 15/17 main checks and8/8 CRUD checks. Subseque
 
 `live-catalog-search-check.mjs` requires the same loopback Laravel/PostgreSQL/Redis and matching production Next build. It defaults to approved wide title/summary/description search; `SEARCH_SCOPE=title` supports the intermediate title-only revision and records that scope in its report. Do not run the wide scope against the intermediate implementation and report it passing.
 
-Coordinator must exclusively prepare a fresh `shouman_integration` schema, required roles/permissions, then run `seed-live-laravel.php` if the regular matrices need it. The separate search seeder requires the **active default connection** to be PostgreSQL and named `shouman_integration`; it adds synthetic search offerings and a randomly named synthetic administrator. It uses a fresh private manifest path and refuses to overwrite an existing file. It does not reset the database.
+For a separately authorized disposable fixture run only, the coordinator must prepare a fresh `shouman_integration` schema on a separate PostgreSQL instance (never the existing Compose database), required roles/permissions, then run `seed-live-laravel.php` if the regular matrices need it. The separate search seeder requires the **active default connection** to be PostgreSQL and named `shouman_integration`; it adds synthetic search offerings and a randomly named synthetic administrator. It uses a fresh private manifest path and refuses to overwrite an existing file. It does not reset the database.
 
 ```bash
-LARAVEL_BACKEND_PATH=/absolute/path/to/isolated/backend SEARCH_INTEGRATION_FIXTURE=/tmp/shouman-search-run-unique.json php scripts/verification/seed-live-catalog-search.php
+LARAVEL_BACKEND_PATH=/home/mohamed/code/shouman/shouman-lms-backend SEARCH_INTEGRATION_FIXTURE=/tmp/shouman-search-run-unique.json php scripts/verification/seed-live-catalog-search.php
 PLAYWRIGHT_MODULE=/tmp/shouman-browser/node_modules/playwright/index.mjs PLATFORM_BASE_URL=http://127.0.0.1:3114 LARAVEL_API_URL=http://127.0.0.1:8130/api/v1 SEARCH_INTEGRATION_FIXTURE=/tmp/shouman-search-run-unique.json FRONTEND_EVIDENCE_DIR=.frontend-evidence/search node scripts/verification/live-catalog-search-check.mjs
 ```
 
@@ -83,3 +83,15 @@ PLAYWRIGHT_MODULE=/tmp/shouman-browser/node_modules/playwright/index.mjs PLATFOR
 ```
 
 Covers guest/expired/forbidden access, actual account context and admin record summaries, honest learning-service availability, explicit previews/active navigation, four page families at320/390/768/1440px, mobile Escape/menu navigation, compact viewport and browser errors. It uses an existing production build. Server partial-failure/permission branches have component tests; this real-service script does not interrupt the backend. Use `npm test -- --maxWorkers=2` for the full suite when machine load makes the default worker count hit existing rendering timeouts. No assertions or timeout thresholds are relaxed.
+
+## Motion verification
+
+`motion-check.mjs` checks the real landing page and learner/admin previews, without an API fixture. Use a production server so hot reload cannot interrupt timed measurements:
+
+```bash
+NEXT_BUILD_DIR=.next-motion-source-check npm run build
+NEXT_BUILD_DIR=.next-motion-source-check npm run start -- --hostname 0.0.0.0 --port 3113
+PLAYWRIGHT_MODULE=/tmp/shouman-browser/node_modules/playwright/index.mjs PLATFORM_BASE_URL=http://localhost:3113 node scripts/verification/motion-check.mjs
+```
+
+It measures intermediate reveal opacity and carousel transforms; verifies autoplay, pause, pagination, button sweep, six viewport widths, dashboard scroll replay, live reduced-motion changes and no-JavaScript fallback. Evidence goes to `.frontend-evidence/motion` or `FRONTEND_EVIDENCE_DIR`. Motion sampling should run without concurrent builds/test workers. Preview dashboards remain design fixtures.

@@ -99,6 +99,7 @@
 .public-catalog__filter-submit:hover,
 .public-catalog__filter-submit:focus-visible {
   border-color: var(--navy);
+  color: var(--navy-foreground);
   background: var(--navy);
 }
 
