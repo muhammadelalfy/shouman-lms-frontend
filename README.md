@@ -1,5 +1,13 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## CI and container delivery
+
+The `Frontend CI` workflow runs on pull requests, pushes to `main`, and manual dispatch. It installs locked dependencies and runs lint, typecheck, tests, a production build, and the production-dependency audit before building the repository's Dockerfile.
+
+Pull requests build the container without registry login or publication. After successful checks and a container build, pushes to `main` or manual runs on `main` publish `ghcr.io/<owner>/<repository>:main` and `ghcr.io/<owner>/<repository>:sha-<commit>` using the workflow's GitHub token.
+
+This workflow delivers container images only. Server deployment remains unconfigured; no production runtime validation is implied.
+
 ## Getting Started
 
 First, run the development server:
